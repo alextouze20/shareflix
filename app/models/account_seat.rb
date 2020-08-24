@@ -1,0 +1,2 @@
+class AccountSeat < ApplicationRecord
+end
