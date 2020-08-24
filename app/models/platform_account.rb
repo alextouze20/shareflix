@@ -1,0 +1,2 @@
+class PlatformAccount < ApplicationRecord
+end
