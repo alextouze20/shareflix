@@ -7,4 +7,6 @@ class User < ApplicationRecord
   has_many :review_tenants, class_name: 'Review', foreign_key: "account_tenant_id"
   has_many :account_seats
   has_many :platform_accounts
+
+  validates :first_name, :last_name, :country, presence: true
 end

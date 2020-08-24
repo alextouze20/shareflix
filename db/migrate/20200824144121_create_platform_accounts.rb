@@ -3,7 +3,7 @@ class CreatePlatformAccounts < ActiveRecord::Migration[6.0]
     create_table :platform_accounts do |t|
       t.integer :seats_available
       t.integer :seats_total
-      t.boolean :family
+      t.boolean :family_account?
       t.user :references
       t.platform :references
 
