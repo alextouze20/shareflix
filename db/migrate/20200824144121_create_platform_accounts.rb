@@ -4,8 +4,8 @@ class CreatePlatformAccounts < ActiveRecord::Migration[6.0]
       t.integer :seats_available
       t.integer :seats_total
       t.boolean :family_account?
-      t.user :references
-      t.platform :references
+      t.references :user, null: false
+      t.references :platform, null: false
 
       t.timestamps
     end
