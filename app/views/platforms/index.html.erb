@@ -1,0 +1,5 @@
+<% link_to 'Add an account' new_platform_platform_account(platform) %>
+
+<% @platforms.each do |platform|%>
+<% link_to platform.name platform_path(platform) %>
+<% end %>
