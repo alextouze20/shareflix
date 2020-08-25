@@ -10,4 +10,5 @@ class User < ApplicationRecord
   has_many :chatrooms, through: :chatroom_users
   has_many :messages
   validates :first_name, :last_name, :country, presence: true
+  has_one_attached :photo
 end

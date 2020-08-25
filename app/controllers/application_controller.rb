@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  include Pundit
+before_action :configure_permitted_parameters, if: :devise_controller?
+include Pundit
 
   # Pundit: white-list approach.
   after_action :verify_authorized, except: :index, unless: :skip_pundit?
@@ -22,8 +23,7 @@ class ApplicationController < ActionController::Base
 
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :country])
-    devise_parameter_sanitizer.permit(:edit_account, keys: [:first_name, :last_name, :country])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :country, :photo])
+    devise_parameter_sanitizer.permit(:edit_account, keys: [:first_name, :last_name, :country, :photo])
   end
-
 end
