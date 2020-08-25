@@ -2,4 +2,5 @@
 
 <% @accounts.each do |account| %>
   <p><%= account.platform.name %><%= account.user.first_name %> - <%= account.seats_available%>/<%= account.seats_total%></p>
+  <%= link_to "Request", platform_account_path(account) %>
 <% end %>

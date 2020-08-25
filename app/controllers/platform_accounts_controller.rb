@@ -2,6 +2,8 @@ class PlatformAccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit]
 
   def show
+    @account = PlatformAccount.find(params[:id])
+    authorize @account
   end
 
   def edit
