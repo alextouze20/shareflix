@@ -1,0 +1,6 @@
+<h1>homepage / platform index</h1>
+
+<ul><% @platforms.each do |platform| %>
+<li>name: <%= platform.name %> | category: <%= platform.category %></li>
+<% end %>
+</ul>
