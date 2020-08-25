@@ -1,6 +1,7 @@
 <h1>homepage / platform index</h1>
 
-<ul><% @platforms.each do |platform| %>
-<li>name: <%= platform.name %> | category: <%= platform.category %></li>
+<% @platforms.each do |platform|%>
+<% link_to platform.name platform_path(platform) %>
 <% end %>
-</ul>
+
+<% link_to 'Add an account' new_platform_platform_account(platform) %>
