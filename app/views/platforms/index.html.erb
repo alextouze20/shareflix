@@ -1,5 +1,5 @@
-<% link_to 'Add an account' new_platform_platform_account(platform) %>
+<%= link_to 'Add an account', blabla_path %>
 
 <% @platforms.each do |platform|%>
-<% link_to platform.name platform_path(platform) %>
+<%= link_to platform.name, platform_path(platform.id) %>
 <% end %>
