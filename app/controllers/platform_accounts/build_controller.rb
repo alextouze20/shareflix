@@ -4,6 +4,7 @@ class PlatformAccounts::BuildController < ApplicationController
   steps *PlatformAccount.form_steps
 
   def show
+    skip_authorization
     @platform_account = PlatformAccount.find(params[:platform_account_id])
     @step = step
     render_wizard
@@ -11,11 +12,13 @@ class PlatformAccounts::BuildController < ApplicationController
 
   def update
     @platform_account = PlatformAccount.find(params[:platform_account_id])
+    authorize(@platform_account)
     @platform_account.update_attributes(strong_account(step))
     render_wizard @platform_account
   end
 
   def create
+    skip_authorization
     @platform = Platform.find(params[:platform_id])
     @platform_account = PlatformAccount.new
     @platform_account.platform = @platform
