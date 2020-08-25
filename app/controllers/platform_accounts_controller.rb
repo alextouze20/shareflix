@@ -4,14 +4,6 @@ class PlatformAccountsController < ApplicationController
   def show
   end
 
-  def new
-    @platform_account = PlatformAccount.new
-  end
-
-  def create
-    PlatformAccount.create
-  end
-
   def edit
   end
 
