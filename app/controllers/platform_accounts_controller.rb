@@ -1,8 +1,5 @@
 class PlatformAccountsController < ApplicationController
-  include Wicked::Wizard
   before_action :set_account, only: [:show, :edit]
-
-  steps :subscription, :seats
 
   def show
   end
