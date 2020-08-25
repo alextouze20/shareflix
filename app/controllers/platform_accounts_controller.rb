@@ -1,14 +1,10 @@
 class PlatformAccountsController < ApplicationController
+  include Wicked::Wizard
   before_action :set_account, only: [:show, :edit]
+
+  steps :subscription, :seats
+
   def show
-  end
-
-  def new
-    @platform_account = PlatformAccount.new
-  end
-
-  def create
-    PlatformAccount.create
   end
 
   def edit

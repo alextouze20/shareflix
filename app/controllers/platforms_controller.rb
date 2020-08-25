@@ -24,6 +24,10 @@ class PlatformsController < ApplicationController
     Platform.create(set_platform)
   end
 
+  def construct
+    @platforms = Platform.all
+  end
+
   private
 
   def set_platform
