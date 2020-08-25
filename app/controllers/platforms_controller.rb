@@ -1,10 +1,12 @@
 class PlatformsController < ApplicationController
   before_action :set_platform, only: [:show, :edit]
   def index
-    @platforms = Platform.all
+    @platforms = policy_scope(Platform)
   end
 
   def show
+    @platform = Platform.find(params[:id])
+    @accounts = @platform.platform_account
   end
 
   def edit

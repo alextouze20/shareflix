@@ -23,5 +23,5 @@ class PlatformAccount < ApplicationRecord
   # All fields from previous steps are required if the
   # step parameter appears before or we are on the current step
   return true if self.form_steps.index(step.to_s) <= self.form_steps.index(form_step)
-end
+  end
 end
