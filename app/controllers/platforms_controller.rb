@@ -1,34 +1,29 @@
 class PlatformsController < ApplicationController
   before_action :set_platform, only: [:show, :edit]
   def index
-    @platforms = Platform.all
-    authorize @platform
+    @platforms = policy_scope(Platform)
   end
 
   def show
-    authorize @platform
+    @platform = Platform.find(params[:id])
+    @accounts = @platform.platform_account
   end
 
   def edit
-    authorize @platform
   end
 
   def update
     platform = Platform.new(strong_platform)
     platform.id = params[:id]
-    authorize platform
     platform.save
   end
 
   def new
     @platform = Platform.new
-    authorize @platform
   end
 
   def create
-    platform = Platform.new(set_platform)
-    authorize platform
-    platform.save
+    Platform.create(set_platform)
   end
 
   private
