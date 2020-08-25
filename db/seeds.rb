@@ -5,36 +5,42 @@ Platform.destroy_all
 PlatformAccount.destroy_all
 
 
-puts "Creating 1 user"
+puts "Creating 2 user"
 alex = User.new( { first_name: "Alex", last_name: "Touze", password: "azertyuiop", email: "alex@shareflix.com", country: 'France' } )
 alex.save!
+
+fred = User.new( { first_name: "Fred", last_name: "Gégé", password: "azertyuiop", email: "fred@shareflix.com", country: 'France' } )
+fred.save!
+
 puts "Creating 1 platform"
 netflix = Platform.new( { category: "vod_streaming", name: "Netflix" } )
 netflix.save!
 
-puts "Creating 1 platform_account"
-alex_account = PlatformAccount.new( { seats_available: 2, seats_total: 5, family_account?: true } )
+puts "Creating 2 platform_account"
+alex_account_netflix = PlatformAccount.new( { seats_available: 2, seats_total: 5, family_account?: true } )
+fred_account_netflix = PlatformAccount.new( { seats_available: 4, seats_total: 5, family_account?: true } )
 
 puts "Merging tables"
-alex_account.platform = netflix
-alex_account.user = alex
-alex_account.save!
+alex_account_netflix.platform = netflix
+alex_account_netflix.user = alex
+alex_account_netflix.save!
+
+fred_account_netflix.platform = netflix
+fred_account_netflix.user = fred
+fred_account_netflix.save!
 
 puts "Agaaaaiiinnnnnn"
 
-puts "Creating 1 user"
-fred = User.new( { first_name: "Fred", last_name: "Gégé", password: "azertyuiop", email: "fred@shareflix.com", country: 'France' } )
-fred.save!
 puts "Creating 1 platform"
 spotify = Platform.new( { category: "music_streaming", name: "Spotify" } )
 spotify.save!
 
 puts "Creating 1 platform_account"
-fred_account = PlatformAccount.new( { seats_available: 3, seats_total: 4, family_account?: true } )
+fred_account_spotify = PlatformAccount.new( { seats_available: 3, seats_total: 4, family_account?: true } )
 
 puts "Merging tables"
-fred_account.platform = spotify
-fred_account.user = fred
-fred_account.save!
+fred_account_spotify.platform = spotify
+fred_account_spotify.user = fred
+fred_account_spotify.save!
 
 puts "Finished."

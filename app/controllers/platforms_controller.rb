@@ -5,8 +5,9 @@ class PlatformsController < ApplicationController
   end
 
   def show
+    authorize @platform
     @platform = Platform.find(params[:id])
-    @accounts = @platform.platform_account
+    @accounts = PlatformAccount.where(platform_id: params[:id])
   end
 
   def edit
