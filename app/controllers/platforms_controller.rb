@@ -1,8 +1,7 @@
 class PlatformsController < ApplicationController
   before_action :set_platform, only: [:show, :edit]
   def index
-    @platforms = Platform.all
-    authorize @platform
+    @platforms = policy_scope(Platform)
   end
 
   def show
