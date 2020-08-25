@@ -29,7 +29,7 @@ class PlatformPolicy < ApplicationPolicy
     user.admin
   end
 
-  def create
+  def create?
     user.admin
   end
 end
