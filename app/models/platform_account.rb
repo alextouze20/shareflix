@@ -4,9 +4,5 @@ class PlatformAccount < ApplicationRecord
   has_many :account_seats
   has_one :chatroom
 
-  validates :seats_available, :seats_total, :family_account?, presence: true, if: :active?
-
-  def active?
-    status == 'active'
-  end
+  validates :seats_available, :seats_total, :family_account?, presence: true
 end
