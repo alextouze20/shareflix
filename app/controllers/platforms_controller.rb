@@ -28,6 +28,7 @@ class PlatformsController < ApplicationController
   end
 
   def construct
+    skip_authorization
     @platforms = Platform.all
   end
 
