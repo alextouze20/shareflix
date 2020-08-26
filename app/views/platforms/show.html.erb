@@ -1,6 +1,5 @@
 <h1>Platform show / platform account index</h1>
 
 <% @accounts.each do |account| %>
-  <p><%= account.platform.name %><%= account.user.first_name %> - <%= account.seats_available%>/<%= account.seats_total%></p>
-  <%= link_to "Request", platform_account_path(account) %>
+  <p><%= account.platform.name %><%= account.user.first_name %> - <%= account.seats_available%>/<%= account.seats_total%> - <%= link_to "Request", platform_account_path(account) %></p>
 <% end %>
