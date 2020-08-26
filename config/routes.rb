@@ -14,6 +14,4 @@ Rails.application.routes.draw do
   resources :platform_accounts, only: [:show, :destroy, :edit, :update] do
     resources :build, controller: 'platform_accounts/build', only: [:show, :update]
   end
-
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
