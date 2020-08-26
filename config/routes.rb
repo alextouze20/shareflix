@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'platforms#index'
-
-  get '/chatrooms/', to: 'chatrooms#index'
+  get '/chatrooms/', to: 'chatroom#index'
   get '/construct/', to: 'platforms#construct'
 
   resources :platforms, only: [:index, :show] do
@@ -21,8 +20,8 @@ Rails.application.routes.draw do
     resources :chatrooms, only: [:index, :show]
     end
 
-  resources :profiles, only: [:edit, :update, :show, :destroy]
-
+  resources :profiles, only: [:edit, :update, :show, :destroy] do
+    resources :reviews, only: [ :new, :create ]
+  end
+  resources :reviews, only: [ :destroy]
 end
-
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
