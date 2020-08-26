@@ -1,0 +1,28 @@
+<div class="row chats" data-controller="chatrooms">
+  <div class="col-4 chatroom">
+    <% @chatrooms.each do |chatroom| %>
+      <span data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#getMessages">
+        <%=  chatroom.platform_account.platform.name %>
+      </span>
+    <% end %>
+  </div>
+  <div data-target = "chatrooms.messages" class="col-8 messages">
+  </div>
+</div>
+
+
+<script>
+
+// const interactChats = (element) => {
+//   element.addEventListener("click", (event) => {
+//     const chatroom = @chatrooms.find(chatroom => chatroom.id === )
+//     console.log(element);
+//     console.log(@chatroom)
+//   });
+// };
+// const chatrooms = document.querySelectorAll(".chatroom");
+// chatrooms.forEach((chatroom) => {
+//   interactChats(chatroom);
+// });
+
+</script>
