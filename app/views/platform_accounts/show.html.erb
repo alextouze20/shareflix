@@ -2,3 +2,13 @@
 
 <p>User: <%= @account.user.first_name %></p>
 <p>Platform: <%= @account.platform.name %></p>
+<p><%= @account.seats_available%>/<%= @account.seats_total%></p>
+<p><%= @account.account_type%> account</p>
+
+<% if @account.user != current_user && !current_user.subscribed?(@account) %>
+  <%=  simple_form_for @account_seat do |f|%>
+    <%= f.input_field :platform_account_id, value: @account.id, class: 'd-none' %>
+    <%= f.input_field :user_id, value: current_user.id, class: 'd-none' %>
+    <%= f.submit %>
+  <% end %>
+<% end %>
