@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'platforms#index'
 
-  get '/chatrooms/', to: 'chatroom#index'
+  get '/chatrooms/', to: 'chatrooms#index'
   get '/construct/', to: 'platforms#construct'
 
   resources :platforms, only: [:index, :show] do
@@ -15,6 +15,14 @@ Rails.application.routes.draw do
   
   resources :account_seats, only: [:create]
 
+  # API
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+    resources :chatrooms, only: [:index, :show]
+    end
+
   resources :profiles, only: [:edit, :update, :show, :destroy]
 
 end
+
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
