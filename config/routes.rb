@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :platform_accounts, only: [:show, :destroy, :edit, :update] do
     resources :build, controller: 'platform_accounts/build', only: [:show, :update]
   end
-  
+
   resources :account_seats, only: [:create]
 
   # API
@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     namespace :v1 do
     resources :chatrooms, only: [:index, :show]
     end
+  end
 
   resources :profiles, only: [:edit, :update, :show, :destroy]
 
