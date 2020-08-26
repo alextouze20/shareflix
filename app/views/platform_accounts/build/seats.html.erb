@@ -1,0 +1,7 @@
+<h1><%= @step %></h1>
+<%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
+      <%= f.input :seats_total %>
+      <%= f.input :seats_available %>
+      <%= f.submit  %>
+<% end %>
+<%= link_to 'Previous', previous_wizard_path %>
