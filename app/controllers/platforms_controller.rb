@@ -5,8 +5,9 @@ class PlatformsController < ApplicationController
   end
 
   def show
+    authorize @platform
     @platform = Platform.find(params[:id])
-    @accounts = @platform.platform_account
+    @accounts = PlatformAccount.where(platform_id: params[:id])
   end
 
   def edit
@@ -24,6 +25,11 @@ class PlatformsController < ApplicationController
 
   def create
     Platform.create(set_platform)
+  end
+
+  def construct
+    skip_authorization
+    @platforms = Platform.all
   end
 
   private

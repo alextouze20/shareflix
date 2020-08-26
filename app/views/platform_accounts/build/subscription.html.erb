@@ -1,0 +1,6 @@
+<h1><%= @step %></h1>
+<%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
+      <%= f.input :account_type %>
+
+      <%= f.submit  %>
+<% end %>
