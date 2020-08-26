@@ -13,12 +13,12 @@ fred = User.new( { first_name: "Fred", last_name: "Gégé", password: "azertyuio
 fred.save!
 
 puts "Creating 1 platform"
-netflix = Platform.new( { category: "vod_streaming", name: "Netflix" } )
+netflix = Platform.new( { category: "vod_streaming", name: "Netflix", max_seats_available: 6 } )
 netflix.save!
 
 puts "Creating 2 platform_account"
-alex_account_netflix = PlatformAccount.new( { seats_available: 2, seats_total: 5, family_account?: true } )
-fred_account_netflix = PlatformAccount.new( { seats_available: 4, seats_total: 5, family_account?: true } )
+alex_account_netflix = PlatformAccount.new( { seats_available: 2, seats_total: 5, account_type: 'family' } )
+fred_account_netflix = PlatformAccount.new( { seats_available: 4, seats_total: 5, account_type: 'prenium' } )
 
 puts "Merging tables"
 alex_account_netflix.platform = netflix
@@ -32,11 +32,11 @@ fred_account_netflix.save!
 puts "Agaaaaiiinnnnnn"
 
 puts "Creating 1 platform"
-spotify = Platform.new( { category: "music_streaming", name: "Spotify" } )
+spotify = Platform.new( { category: "music_streaming", name: "Spotify", max_seats_available: 6 } )
 spotify.save!
 
 puts "Creating 1 platform_account"
-fred_account_spotify = PlatformAccount.new( { seats_available: 3, seats_total: 4, family_account?: true } )
+fred_account_spotify = PlatformAccount.new( { seats_available: 3, seats_total: 4, account_type: 'prenium' } )
 
 puts "Merging tables"
 fred_account_spotify.platform = spotify
