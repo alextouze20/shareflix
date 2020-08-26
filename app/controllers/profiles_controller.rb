@@ -1,6 +1,8 @@
 class ProfilesController < ApplicationController
   def show
+    @review = Review.new
     @user = User.find(params[:id])
+    @reviews = Review.where(account_tenant_id: @user)
     authorize @user
   end
 

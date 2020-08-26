@@ -10,6 +10,19 @@
   data: { confirm: "Delete your account?" } %>
 <% else %>
 <!-- Display the profile of the user -->
-<p>The profile of someone else</p>
-
+  <p>The profile of someone else</p>
+  <!-- Review form -->
+  <h3>Leave a review for <%= @user.first_name %></h3>
+    <%= simple_form_for([@user, @review], url: profile_reviews_path(@user)) do |f| %>
+      <%= f.input :content, require: true %>
+      <%= f.input :rating, as: :select, collection: 1..5, require: true %>
+    <%= f.submit%>
+    <% end %>
 <% end %>
+
+<!-- List of reviews -->
+<ul>
+  <% @reviews.each do |review| %>
+    <li><%= review.content %> | <%= review.rating %>/5</li>
+  <% end %>
+</ul>
