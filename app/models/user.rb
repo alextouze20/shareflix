@@ -12,4 +12,8 @@ class User < ApplicationRecord
   has_many :messages
   validates :first_name, :last_name, :country, presence: true
   has_one_attached :photo
+
+  def subscribed?(account)
+    account_seats.where(platform_account: account).any?
+  end
 end
