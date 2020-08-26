@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   resources :platform_accounts, only: [:show, :destroy, :edit, :update] do
     resources :build, controller: 'platform_accounts/build', only: [:show, :update]
   end
+
+  resources :profiles, only: [:edit, :update, :show, :destroy]
 end

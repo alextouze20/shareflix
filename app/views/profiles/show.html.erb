@@ -1,0 +1,15 @@
+<h1>User profile</h1>
+
+<% if @user == current_user %>
+<!-- Display the dashboard of the current user -->
+<p>Your profile</p>
+<%= link_to "Edit my profile", edit_profile_path(current_user) %>
+<%= link_to "Delete my profile",
+  profile_path(current_user),
+  method: :delete,
+  data: { confirm: "Delete your account?" } %>
+<% else %>
+<!-- Display the profile of the user -->
+<p>The profile of someone else</p>
+
+<% end %>
