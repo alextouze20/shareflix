@@ -3,6 +3,7 @@ class PlatformAccountsController < ApplicationController
 
   def show
     @account = PlatformAccount.find(params[:id])
+    @account_seat = AccountSeat.new
     authorize @account
   end
 

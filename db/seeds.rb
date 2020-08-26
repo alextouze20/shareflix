@@ -16,9 +16,11 @@ puts "Creating 1 platform"
 netflix = Platform.new( { category: "vod_streaming", name: "Netflix", max_seats_available: 6 } )
 netflix.save!
 
+
 puts "Creating 2 platform_account"
 alex_account_netflix = PlatformAccount.new( { seats_available: 2, seats_total: 5, account_type: 'family' } )
 fred_account_netflix = PlatformAccount.new( { seats_available: 4, seats_total: 5, account_type: 'prenium' } )
+
 
 puts "Merging tables"
 alex_account_netflix.platform = netflix
@@ -28,6 +30,12 @@ alex_account_netflix.save!
 fred_account_netflix.platform = netflix
 fred_account_netflix.user = fred
 fred_account_netflix.save!
+
+# puts "Attempting to create an account seat for fred on alex's netflix account"
+# account_seat = AccountSeat.new( { status: 'pending' } )
+# account_seat.platform_account = alex_account_netflix
+# account_seat.user = fred
+# account_seat.save!
 
 puts "Agaaaaiiinnnnnn"
 
