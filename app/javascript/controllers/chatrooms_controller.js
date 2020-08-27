@@ -14,6 +14,7 @@ export default class extends Controller {
         console.log(messages);
         messages.innerHTML = "";
         data.messages.forEach (message => {
+            console.log(message.content)
             messages.insertAdjacentHTML("afterbegin", `
               <div class="message">
                 <p>${message.content}</p>
