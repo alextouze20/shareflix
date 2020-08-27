@@ -1,12 +1,25 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+.navbar.navbar-expand-sm.navbar-light {
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.navbar{
+  align-items: center;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+div#navbarSupportedContent {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#logo-text {
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  font-size: 1.5em;
+}
+
+a.nav-link {
+    font-family: Poppins, sans-serif;
+}
+
+a.nav-link:hover {
+    text-decoration: underline;
 }
