@@ -2,9 +2,9 @@
 <h1>Netflix, HBO, Spotify, Disney+, get them all.</h1>
 </div>
 
-<div class="card-container">
+<div class="platforms-container">
 <% @platforms.each do |platform|%>
-  <div class="cards">
+  <div class="platform-cards">
   <%= link_to platform_path(platform.id) do %>
   <%= cl_image_tag platform.logo.key, width: 150, crop: :fill %>
   </div>
@@ -13,3 +13,33 @@
 </div>
 
 <%= link_to 'Add an account', construct_path %>
+
+
+<style>
+
+.title-header {
+  background-color: #FF4949;
+  padding-top: 10%;
+  border-radius: 0 0 40% 40%;
+  padding-bottom: 15%;
+  padding-left: 20%;
+  padding-right: 20%;
+  margin-left: -5%;
+  margin-right: -5%;
+  text-align: center;
+}
+
+/* Navbar color */
+
+a.nav-link {
+    color: white !important;
+}
+
+#logo-text {
+  color: white;
+}
+
+.navbar.navbar-expand-sm.navbar-light {
+    background-color: #FF4949;
+}
+</style>
