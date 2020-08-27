@@ -1,10 +1,13 @@
 require "open-uri"
 
 puts "Cleaning database..."
-User.destroy_all
-Platform.destroy_all
+Message.destroy_all
+AccountSeat.destroy_all
+Chatroom.destroy_all
 PlatformAccount.destroy_all
-
+Platform.destroy_all
+Review.destroy_all
+User.destroy_all
 
 puts "Creating 2 user"
 alex = User.new( { first_name: "Alex", last_name: "Touze", password: "azertyuiop", email: "alex@shareflix.com", country: 'France' } )

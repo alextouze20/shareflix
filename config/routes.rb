@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'platforms#index'
-  get '/chatrooms/', to: 'chatroom#index'
+  get '/chatrooms/', to: 'chatrooms#index'
   get '/construct/', to: 'platforms#construct'
 
   resources :platforms, only: [:index, :show] do
