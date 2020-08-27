@@ -3,13 +3,61 @@
 <% if @user == current_user %>
 <!-- Display the dashboard of the current user -->
 <p>Your profile</p>
+<%= @user.first_name %>
+<%= @user.last_name %>
 <%= link_to "Edit my profile", edit_profile_path(current_user) %>
 <%= link_to "Delete my profile",
   profile_path(current_user),
   method: :delete,
   data: { confirm: "Delete your account?" } %>
+
+<h2>Your Requests to access other people's Accounts:</h2>
+<% requests = @user.account_seats.where(user: current_user) %>
+<% requests.each do |request|%>
+  <%= 'status: ' + request.status %>
+  <p>Platform: <%= request.platform_account.platform.name %></p>
+  <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
+  <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
+<% end %>
+
+<h2>The Request people have made to access your Accounts:</h2>
+<% requests = AccountSeat.where(platform_account: @user.platform_accounts) %>
+<% requests.each do |request|%>
+  <%= 'status: ' + request.status %>
+  <p>Platform: <%= request.platform_account.platform.name %></p>
+  <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
+  <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
+
+  <%=  simple_form_for(@account_seat) do |f|%>
+    <%= f.input_field :status, value: 'accepted', class: 'd-none' %>
+    <%= f.submit 'accept'%>
+  <% end %>
+
+  <%=  simple_form_for(@account_seat) do |f|%>
+    <%= f.input_field :status, value: 'denied', class: 'd-none' %>
+    <%= f.submit 'deny access'%>
+  <% end %>
+<% end %>
+
+
 <% else %>
 <!-- Display the profile of the user -->
-<p>The profile of someone else</p>
+  <p>The profile of someone else</p>
+  <%= @user.first_name %>
+  <%= @user.last_name %>
+  <!-- Review form -->
+  <h3>Leave a review for <%= @user.first_name %></h3>
+    <%= simple_form_for([@user, @review], url: profile_reviews_path(@user)) do |f| %>
+      <%= f.input :content, require: true %>
+      <%= f.input :rating, as: :select, collection: 1..5, require: true %>
+    <%= f.submit%>
+    <% end %>
 
 <% end %>
+
+<!-- List of reviews -->
+<ul>
+  <% @reviews.each do |review| %>
+    <li><%= review.content %> | <%= review.rating %>/5</li>
+  <% end %>
+</ul>
