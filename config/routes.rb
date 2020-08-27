@@ -20,7 +20,9 @@ Rails.application.routes.draw do
     namespace :v1 do
     resources :chatrooms, only: [:index, :show]
     end
-  end
+
+  resources :profiles, only: [:edit, :update, :show, :destroy]
+
 end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
