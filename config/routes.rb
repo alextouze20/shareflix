@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :build, controller: 'platform_accounts/build', only: [:show, :update]
   end
 
-  resources :account_seats, only: [:create]
+  resources :account_seats, only: [:create, :update]
 
   # API
   namespace :api, defaults: { format: :json } do

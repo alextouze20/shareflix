@@ -34,8 +34,11 @@ application.load(definitionsFromContext(context))
 
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
+ import { request_profile_display_accept_or_deny } from '../components/request_profile_display_accept_or_deny';
+
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
-  // initSelect2();
+  request_profile_display_accept_or_deny();
+
 });
