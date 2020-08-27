@@ -1,5 +1,15 @@
-<%= link_to 'Add an account', construct_path %>
+<div class="title-header">
+<h1>Netflix, HBO, Spotify, Disney+, get them all.</h1>
+</div>
 
+<div class="card-container">
 <% @platforms.each do |platform|%>
-<%= link_to platform.name, platform_path(platform.id) %>
+  <div class="cards">
+  <%= link_to platform_path(platform.id) do %>
+  <%= cl_image_tag platform.logo.key, width: 150, crop: :fill %>
+  </div>
+  <% end %>
 <% end %>
+</div>
+
+<%= link_to 'Add an account', construct_path %>
