@@ -1,7 +1,7 @@
 <div class="row chats" data-controller="chatrooms">
   <div class="col-4 chatroom">
     <% @chatrooms.each do |chatroom| %>
-      <span data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#getMessages">
+      <span data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#toto">
         <%=  chatroom.platform_account.platform.name %>
       </span>
     <% end %>
