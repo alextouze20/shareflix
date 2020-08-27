@@ -17,12 +17,17 @@ class AccountSeatsController < ApplicationController
     skip_authorization
     @account_seat = AccountSeat.find(params[:id])
     strong_seat[:id] = params[:id]
-    if account_seat.update(strong_seat)
-      redirect_to platforms_path
+
+    if @account_seat.update(strong_seat)
+      # redirect_to profile_path(@account_seat.platform_account.user.id)
+      # flash[:notice] = "request accepted"
+
     else
-      # account = @account_seat.platform_account
-      # render 'platform_accounts/show'
-      print 'stuff'
+      @review = Review.new
+      @user = @account_seat.platform_account.user
+      @reviews = Review.where(account_tenant_id: @user)
+      @requests = AccountSeat.where(platform_account: @user.platform_accounts)
+      render 'profiles/show'
     end
   end
 

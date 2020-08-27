@@ -21,21 +21,27 @@
 <% end %>
 
 <h2>The Request people have made to access your Accounts:</h2>
-<% requests = AccountSeat.where(platform_account: @user.platform_accounts) %>
-<% requests.each do |request|%>
+
+<% @requests.each do |request|%>
+  <% if request.status == 'pending' %>
   <%= 'status: ' + request.status %>
   <p>Platform: <%= request.platform_account.platform.name %></p>
   <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
   <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
 
-  <%=  simple_form_for(@account_seat) do |f|%>
-    <%= f.input_field :status, value: 'accepted', class: 'd-none' %>
-    <%= f.submit 'accept'%>
-  <% end %>
+  <div class="change-request-button-into-text">
+    <%=  simple_form_for(request, html: { id: 'change_request_button_into_accept' }) do |f|%>
+      <%= f.input_field :status, value: 'accepted', class: 'd-none' %>
+      <%= f.submit 'accept' %>
+    <% end %>
 
-  <%=  simple_form_for(@account_seat) do |f|%>
-    <%= f.input_field :status, value: 'denied', class: 'd-none' %>
-    <%= f.submit 'deny access'%>
+    <%=  simple_form_for(request, html: { id: 'change_request_button_into_deny' }) do |f|%>
+      <%= f.input_field :status, value: 'denied', class: 'd-none' %>
+      <%= f.submit 'deny access' %>
+    <% end %>
+  </div>
+  <% else %>
+    <h3>No Request for now</h3>
   <% end %>
 <% end %>
 
@@ -56,6 +62,7 @@
 <% end %>
 
 <!-- List of reviews -->
+<h2>Your Reviews</h2>
 <ul>
   <% @reviews.each do |review| %>
     <li><%= review.content %> | <%= review.rating %>/5</li>
