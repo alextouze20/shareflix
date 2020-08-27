@@ -13,17 +13,22 @@ Rails.application.routes.draw do
   end
 
   resources :account_seats, only: [:create, :update]
-
-  # API
-  namespace :api, defaults: { format: :json } do
-    namespace :v1 do
-    resources :chatrooms, only: [:index, :show]
-    end
-  end
-
-
+  resources :messages, only: [:new, :create]
   resources :profiles, only: [:edit, :update, :show, :destroy] do
     resources :reviews, only: [ :new, :create ]
   end
   resources :reviews, only: [ :destroy]
+
+  # API
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :chatrooms, only: [:index, :show]
+    end
+  end
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :messages, only: [:index, :create]
+  end
+  end
+
 end
