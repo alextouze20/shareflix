@@ -2,34 +2,20 @@ const request_profile_display_accept_or_deny = () => {
   const box = document.querySelector('.change-request-button-into-text')
 
 
-  const accept = document.getElementById("change-request-button-into-accept");
-  const deny = document.getElementById("change-request-button-into-deny");
-  console.log(accept)
+  const accept = document.getElementById("change_request_button_into_accept");
+  const deny = document.getElementById("change_request_button_into_deny");
 
   if (box) {
-    accept.addEventListener('submit', function() {
+    accept.addEventListener('click', function() {
 
-  //     if (y >= top) {
+    setTimeout(() => { box.innerHTML = '<h2>Accepted!</h2>'; }, 50);
 
-    console.log('test-accept')
-    accept.innerHTML = '';
+    });
 
+    deny.addEventListener('click', function() {
 
-  //       box.style.position = "fixed";
-  //       box.style.top = "4rem";
-  //       box.style.right = "110px";
-  //       boxLarge.style.position = "unset";
-  //     }
-  //   // else if (document.documentElement.scrollTop < box.top) {
-  //   // console.log('test')
-  //   // // box.style.position = "-webkit-sticky;";
-  //   // box.style.position = "fixed";
-  //   // box.style.top = "4rem";
-  //   // box.style.right = "110px";
+    setTimeout(() => { box.innerHTML = '<h2>Denied!</h2>'; }, 50);
 
-  //   // boxLarge.style.position = "unset";
-
-  //   // }
     });
   }
 }

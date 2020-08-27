@@ -23,11 +23,11 @@ class AccountSeatsController < ApplicationController
       # flash[:notice] = "request accepted"
 
     else
-      # @review = Review.new
-      # @user = @account_seat.platform_account.user
-      # @reviews = Review.where(account_tenant_id: @user)
-      # @requests = AccountSeat.where(platform_account: @user.platform_accounts)
-      # render 'profiles/show'
+      @review = Review.new
+      @user = @account_seat.platform_account.user
+      @reviews = Review.where(account_tenant_id: @user)
+      @requests = AccountSeat.where(platform_account: @user.platform_accounts)
+      render 'profiles/show'
     end
   end
 
