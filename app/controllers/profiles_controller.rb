@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
     @review = Review.new
     @user = User.find(params[:id])
     @reviews = Review.where(account_tenant_id: @user)
+    @requests = AccountSeat.where(platform_account: @user.platform_accounts)
     authorize @user
   end
 

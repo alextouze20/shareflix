@@ -21,22 +21,26 @@
 <% end %>
 
 <h2>The Request people have made to access your Accounts:</h2>
-<% requests = AccountSeat.where(platform_account: @user.platform_accounts) %>
-<% requests.each do |request|%>
+
+<% @requests.each do |request|%>
+
   <%= 'status: ' + request.status %>
   <p>Platform: <%= request.platform_account.platform.name %></p>
   <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
   <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
 
-  <%=  simple_form_for(@account_seat) do |f|%>
+  <div class="change-request-button-into-text">
+  <%=  simple_form_for(request, html: { id: 'change_request_button_into_accept' }) do |f|%>
     <%= f.input_field :status, value: 'accepted', class: 'd-none' %>
-    <%= f.submit 'accept'%>
+    <%= f.submit 'accept' %>
   <% end %>
 
-  <%=  simple_form_for(@account_seat) do |f|%>
+  <%=  simple_form_for(request, html: { id: 'change_request_button_into_deny' }) do |f|%>
     <%= f.input_field :status, value: 'denied', class: 'd-none' %>
-    <%= f.submit 'deny access'%>
+    <%= f.submit 'deny access' %>
   <% end %>
+  </div>
+
 <% end %>
 
 
