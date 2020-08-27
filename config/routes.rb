@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
+
   resources :profiles, only: [:edit, :update, :show, :destroy] do
     resources :reviews, only: [ :new, :create ]
   end
