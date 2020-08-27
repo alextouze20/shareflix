@@ -6,7 +6,7 @@
 <% @platforms.each do |platform|%>
   <div class="cards">
   <%= link_to platform_path(platform.id) do %>
-  <%= cl_image_tag platform.logo.key, width: 150, crop: :fill %>
+  <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
   </div>
   <% end %>
 <% end %>

@@ -11,6 +11,18 @@
   method: :delete,
   data: { confirm: "Delete your account?" } %>
 
+<h2>Your accounts</h2>
+<% @user.platform_accounts.each do |account| %>
+  <%= account.platform.name %>
+  <p> <%= account.user.first_name %> <%= account.user.last_name %> </p>
+
+  <% account.account_seats.where(status: 'accepted').each do |account_seat| %>
+    <p> <%= account_seat.user.first_name %> <%= account_seat.user.last_name %> </p>
+  <% end %>
+
+<% end %>
+
+
 <h2>Your Requests to access other people's Accounts:</h2>
 <% requests = @user.account_seats.where(user: current_user) %>
 <% requests.each do |request|%>
@@ -22,27 +34,29 @@
 
 <h2>The Request people have made to access your Accounts:</h2>
 
+<% if @requests.where(status: 'pending') != [] %>
 <% @requests.each do |request|%>
-  <% if request.status == 'pending' %>
+
   <%= 'status: ' + request.status %>
   <p>Platform: <%= request.platform_account.platform.name %></p>
   <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
   <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
 
   <div class="change-request-button-into-text">
-    <%=  simple_form_for(request, html: { id: 'change_request_button_into_accept' }) do |f|%>
+    <%=  simple_form_for(request, html: { class: 'change_request_button_into_accept' }) do |f|%>
       <%= f.input_field :status, value: 'accepted', class: 'd-none' %>
       <%= f.submit 'accept' %>
     <% end %>
 
-    <%=  simple_form_for(request, html: { id: 'change_request_button_into_deny' }) do |f|%>
+    <%=  simple_form_for(request, html: { class: 'change_request_button_into_deny' }) do |f|%>
       <%= f.input_field :status, value: 'denied', class: 'd-none' %>
       <%= f.submit 'deny access' %>
     <% end %>
   </div>
-  <% else %>
-    <h3>No Request for now</h3>
-  <% end %>
+
+<% end %>
+<% else %>
+  <h2>No requests for now</h2>
 <% end %>
 
 
