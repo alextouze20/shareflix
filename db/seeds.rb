@@ -1,13 +1,22 @@
 require "open-uri"
 
 puts "Cleaning database..."
-Message.destroy_all
+
 AccountSeat.destroy_all
-Chatroom.destroy_all
-PlatformAccount.destroy_all
+
+SubscriptionType.destroy_all
+
 Platform.destroy_all
-Review.destroy_all
+ChatroomUser.destroy_all
+Message.destroy_all
+Chatroom.destroy_all
+
+PlatformAccount.destroy_all
+
 User.destroy_all
+Review.destroy_all
+
+
 
 puts "Creating 2 user"
 alex = User.new( { first_name: "Alex", last_name: "Touze", password: "azertyuiop", email: "alex@shareflix.com", country: 'France' } )
@@ -26,12 +35,21 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/0/0f/Logo_Netfli
 netflix.logo.attach(io: File.open(file), filename: 'netflix-logo.jpg', content_type: 'image/jpg')
 netflix.save!
 
+puts "Creating 2 subscription types"
+normal = SubscriptionType.new( { name: "Standard", description: "Un compte Standard", price: 15.99, payment_frequency: 'monthly'} )
+premium = SubscriptionType.new( { name: "Premium", description: "Un compte Premium", price: 11.99, payment_frequency: 'monthly'} )
+
 puts "Creating 2 platform_account"
 alex_account_netflix = PlatformAccount.new( { seats_available: 2, seats_total: 5, account_type: 'family' } )
 fred_account_netflix = PlatformAccount.new( { seats_available: 4, seats_total: 5, account_type: 'premium' } )
 
 
 puts "Merging tables"
+normal.platform = netflix
+premium.platform = netflix
+normal.save!
+premium.save!
+
 alex_account_netflix.platform = netflix
 alex_account_netflix.user = alex
 alex_account_netflix.save!
@@ -57,7 +75,17 @@ spotify.save!
 puts "Creating 1 platform_account"
 fred_account_spotify = PlatformAccount.new( { seats_available: 3, seats_total: 4, account_type: 'premium' } )
 
+puts "Creating 2 subscription_types"
+normal1 = SubscriptionType.new( { name: "Standard", description: "Un compte Standard", price: 15.99, payment_frequency: 'monthly'} )
+premium1 = SubscriptionType.new( { name: "Premium", description: "Un compte Premium", price: 11.99, payment_frequency: 'monthly'} )
+
+
 puts "Merging tables"
+normal1.platform = spotify
+premium1.platform = spotify
+normal1.save!
+premium1.save!
+
 fred_account_spotify.platform = spotify
 fred_account_spotify.user = fred
 fred_account_spotify.save!

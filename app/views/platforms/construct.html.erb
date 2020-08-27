@@ -1,3 +1,14 @@
+<div class="title-header" id="header-smaller">
+<h1 id="header1-smaller">Select the platform to which your account belongs to:</h1>
+</div>
+
+<div class="card-container" id="container-smaller">
 <% @platforms.each do |platform|%>
-  <%= link_to platform.name, platform_build_index_path(platform), method: :post %>
+  <div class="cards" id="card-small">
+  <%= link_to platform_build_index_path(platform), method: :post do %>
+  <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
+  </div>
+  <% end %>
 <% end %>
+</div>
+

@@ -1,6 +1,11 @@
 <h1><%= @step %></h1>
-<%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
-      <%= f.input :account_type %>
-
-      <%= f.submit  %>
+<%  @platform_account.platform.subscription_types.each do |subscription_type| %>
+  <%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
+    <%= f.input_field :account_type, value: subscription_type.id, class: 'd-none' %>
+    <%= f.submit value: subscription_type.name  %>
+  <% end %>
 <% end %>
+
+
+
+
