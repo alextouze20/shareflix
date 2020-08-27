@@ -13,9 +13,22 @@ class AccountSeatsController < ApplicationController
     end
   end
 
+  def update
+    skip_authorization
+    @account_seat = AccountSeat.find(params[:id])
+    strong_seat[:id] = params[:id]
+    if account_seat.update(strong_seat)
+      redirect_to platforms_path
+    else
+      # account = @account_seat.platform_account
+      # render 'platform_accounts/show'
+      print 'stuff'
+    end
+  end
+
   private
 
   def strong_seat
-    params.require(:account_seat).permit(:platform_account_id, :user_id)
+    params.require(:account_seat).permit(:platform_account_id, :user_id, :status)
   end
 end
