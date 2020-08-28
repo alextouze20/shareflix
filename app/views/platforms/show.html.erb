@@ -15,21 +15,21 @@
         <%= image_tag "https://image.flaticon.com/icons/svg/1946/1946429.svg", class: "default-profile", width: 100, height: 100, crop: :fill  %>
       <% end %>
       <span class="account-title"><span><%= @platform.name %> - <%= account.account_type %></span><br/>
-      <span class="shared-by">Shared by <%= account.user.first_name.capitalize %> <%= account.user.last_name.first %>
+      <span class="shared-by">Shared by <%= account.user.first_name.capitalize %> <%= account.user.last_name.first %>.<br/>
       <% review_sum = 0 %>
-      <% review_num = 0 %>
+      <% review_num = 1 %>
       <% stars = "" %>
-      <% account.user.review_tenants.each do |review| %>
-        <% review_sum += review.rating.to_i %>
-        <% review_num += 1 %>
-        <% review_avrg = review_sum / review_num %>
-          <% review_avrg.times do  %>
-            <% stars += "⭐️" %>
+          <% account.user.review_tenants.each do |review| %>
+            <% review_sum += review.rating.to_i %>
+            <% review_num += 1 %>
           <% end %>
-        - <%= stars %>
-        <%= review_avrg %>/5
-      <% end %>
-      </span></span>
+            <% review_avrg = review_sum / review_num %>
+              <% review_avrg.round.times do  %>
+                <span>⭐️</span>
+              <% end %>
+          <span class="rating"><%= review_num > 1 ? "(#{review_avrg.to_f}/5)" : ""%></span>
+        </span>
+      </span>
       <span class="seats"><span class="seats_available_colorized"><%= account.seats_available %></span>/<%= account.seats_total %></span>
       <%= link_to "Join", platform_account_path(account), class: "main-button" %>
     </div>
@@ -47,6 +47,10 @@
   margin-left: -5%;
   margin-right: -5%;
   text-align: center;
+}
+
+.rating {
+  color: black;
 }
 
 /* Navbar color */
