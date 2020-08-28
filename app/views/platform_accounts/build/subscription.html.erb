@@ -1,11 +1,69 @@
-<h1><%= @step %></h1>
+
+
+<div class="title-header need-smaller-subscription" id="header-smaller">
+<h1 id="header1-smaller-subscription" class="header-red-for-sub"> What kind of account is it ?</h1>
+</div>
+
+<div class="card-container" id="container-smaller-subscription">
+  <div class="cards additonal-box-shadow smaller-border-radius" id="card-smaller">
+  <%= cl_image_tag @platform_account.platform.logo.key, width: 150, crop: :fill if @platform_account.platform.logo.attached? %>
+  </div>
+</div>
+
 <%  @platform_account.platform.subscription_types.each do |subscription_type| %>
-  <%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
+  <%= simple_form_for(@platform_account, html: { class: "form-subscription", data: {type_id: subscription_type.id} }, method: :put, url: wizard_path) do |f|%>
     <%= f.input_field :account_type, value: subscription_type.id, class: 'd-none' %>
-    <%= f.submit value: subscription_type.name  %>
+    <%= f.submit value: subscription_type.name, class: "d-none form-subscription-submit-#{subscription_type.id}" %>
+
   <% end %>
 <% end %>
 
+<div class="container-standard-subscription">
+  <%  @platform_account.platform.subscription_types.each do |subscription_type| %>
 
+    <div class="card-product" id='<%= subscription_type.id %>' data-type-id=<%= subscription_type.id %>>
+      <div class="card-product-infos">
 
+        <h1><%= subscription_type.name %></h1>
+        <p><%= subscription_type.description %></p>
+        <h2><%= subscription_type.price %> € / <%= subscription_type.payment_frequency %></h2>
 
+      </div>
+     </div>
+
+  <% end %>
+
+</div>
+<!-- <div class="choice-suscribe offer-service">
+  <ul>
+    <li>
+      <strong class="title-offer-sub">Standard</strong>
+      <br>
+      <span>Regardez Netflix sur 2 écrans à la fois. HD disponible</span>
+      <br>
+      <strong>11.99 € / month</strong>
+       <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 27.3 47.1" xml:space="preserve">
+        <g>
+          <g>
+            <path d="M1.1,41.2c-1.4,1.4-1.4,3.6,0,4.9c1.3,1.4,3.5,1.4,4.9,0l20-20c1.4-1.4,1.4-3.6,0-4.9l-20-20C4.5-0.2,2.3-0.2,1,1.2c-1.4,1.4-1.4,3.6,0,4.9l17.5,17.6L1.1,41.2z"></path>
+          </g>
+        </g>
+      </svg>
+    </li>
+    <li>
+      <strong class="title-offer-sub">Premium</strong>
+      <br>
+       <span>Regardez Netflix sur 4 écrans à la fois. HD et Ultra HD disponible</span>
+       <br>
+       <strong>15.99 € / month</strong>
+        <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 27.3 47.1" xml:space="preserve">
+          <g>
+            <g>
+              <path d="M1.1,41.2c-1.4,1.4-1.4,3.6,0,4.9c1.3,1.4,3.5,1.4,4.9,0l20-20c1.4-1.4,1.4-3.6,0-4.9l-20-20C4.5-0.2,2.3-0.2,1,1.2c-1.4,1.4-1.4,3.6,0,4.9l17.5,17.6L1.1,41.2z"></path>
+            </g>
+          </g>
+        </svg>
+      </li>
+    </ul>
+  </div>
+ -->
