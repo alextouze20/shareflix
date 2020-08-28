@@ -36,10 +36,12 @@ application.load(definitionsFromContext(context))
 
 import { conditions } from '../components/conditions';
 import { request_profile_display_accept_or_deny } from '../components/request_profile_display_accept_or_deny';
+import { assign_subscription_type_to_account } from '../components/assign_subscription_type_to_account';
 
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   conditions();
   request_profile_display_accept_or_deny();
+  assign_subscription_type_to_account();
 });

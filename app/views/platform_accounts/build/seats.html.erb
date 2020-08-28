@@ -1,7 +1,9 @@
-<h1><%= @step %></h1>
+<h2>How many people should access your account?</h2>
+<div>
 <%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
       <%= f.input :seats_total %>
       <%= f.input :seats_available %>
       <%= f.submit  %>
 <% end %>
+</div>
 <%= link_to 'Previous', previous_wizard_path %>

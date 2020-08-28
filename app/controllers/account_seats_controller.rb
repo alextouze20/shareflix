@@ -6,7 +6,7 @@ class AccountSeatsController < ApplicationController
     # @account_seat.platform_account = @account
     # @account_seat.user = current_user
     if @account_seat.save
-      redirect_to platforms_path
+      redirect_to profile_path(current_user)
     else
       @account = @account_seat.platform_account
       render 'platform_accounts/show'

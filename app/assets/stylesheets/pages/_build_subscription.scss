@@ -1,0 +1,95 @@
+
+.card-product {
+  overflow: hidden;
+  height: 120px;
+  width: 800px;
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.card-product:hover {
+    transform: scale(1.1);
+    transition-duration: 0.8s;
+    cursor: pointer;
+}
+
+// .card-product img {
+//   height: 100%;
+//   width: 120px;
+//   object-fit: cover;
+// }
+
+.card-product h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-product h1 {
+
+  color:black;
+}
+
+.card-product p {
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: .7;
+  margin-bottom: 0;
+  margin-top: 8px;
+  color: black;
+}
+
+.card-product .card-product-infos {
+  padding: 16px;
+}
+
+.container-standard-subscription {
+  margin-top: 5%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+
+}
+
+#container-smaller-subscription {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center !important;
+
+}
+
+h1#header1-smaller-subscription {
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 1%;
+}
+
+#card-smaller {
+  flex: unset !important;
+  width: 35%;
+  height: 100px;
+  margin: 1% 1% !important;
+  transform: unset !important;
+}
+
+.additonal-box-shadow {
+    box-shadow: 4px 12px 40px 6px rgba(43,59,93,.1);
+
+}
+
+.smaller-border-radius {
+  border-radius: 12px !important;
+}
+
+.header-red-for-sub {
+  color: black !important;
+}
+ // #FF4949
+.need-smaller-subscription {
+  padding-bottom: 10%;
+}
