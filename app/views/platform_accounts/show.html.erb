@@ -4,7 +4,7 @@
 <div class="full-box">
   <div class="about-request">
     <h1>Your request: <%= @account.platform.name %> - <%= @account.account_type %></h1>
-    <p>You are about to request to use a Netflix account of the member of the Shareflix community. By clicking “Send request” you agree to respect the behavior guidelines of the community. Any member that disrespect those guidelines will be banned from the website.</p>
+    <span>You are about to request to use a Netflix account of the member of the Shareflix community. By clicking “Send request” you agree to respect the behavior guidelines of the community. Any member that disrespect those guidelines will be banned from the website.</span>
   </div>
   <div class="about-account-owner">
     <% if @account.user.photo.attached?  %>
@@ -24,7 +24,7 @@
               <% review_avrg.round.times do  %>
                 <span>⭐️</span>
               <% end %>
-          <span class="rating"><%= review_num > 1 ? "(#{review_avrg.to_f}/5)" : ""%></span><br/>
+          <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span><br/>
       <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
     </div>
   </div>
@@ -35,23 +35,76 @@
     </div>
     <span class="seats"><span class="seats_available_colorized"><%= @account.seats_available %></span>/<%= @account.seats_total %></span>
   </div>
-    <% if @account.user != current_user && !current_user.subscribed?(@account) %>
-    <%=  simple_form_for @account_seat do |f|%>
-      <%= f.input_field :platform_account_id, value: @account.id, class: 'd-none' %>
-      <%= f.input_field :user_id, value: current_user.id, class: 'd-none' %>
-      <%= f.submit %>
-    <% end %>
-  <% end %>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn request-button" data-toggle="modal" data-target="#exampleModalCenter">
+    Request to use this account
+  </button>
   </div>
 
-  <div class = "userconditions unselected_conditions" id = "conditions" >
-    <p>Insérer les conditions d'utilisation</p>
-    <a href="" class="btn-primary accept-btn">J'accepte les conditions d'utilisation</a>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Community guidelines</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Before sending a request to use <%= @account.user.first_name.capitalize %>'s <%= @account.platform.name %> account, please read the guidelines of the community. The respect of those guidelines is essential to the sake of the Shareflix community.</p>
+        <ul>
+          <li>I will not share this account with others</li>
+          <li>I will not share this account with others</li>
+          <li>I will not share this account with others</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+          <%=  simple_form_for @account_seat do |f|%>
+          <%= f.input_field :platform_account_id, value: @account.id, class: 'd-none' %>
+          <%= f.input_field :user_id, value: current_user.id, class: 'd-none' %>
+          <%= f.submit value: "Accept and send request" %>
+          <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
 
 <style>
+
+.modal-content {
+  border-radius: 5px;
+  border: none;
+}
+
+input[type="submit"] {
+  background-color: #FF4949;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+  position: relative;
+  left: -40px;
+}
+
+.request-button {
+  background-color: #FF4949;
+  border-radius: 50px;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  color: white;
+  font-weight: 500;
+}
+
+.request-button:hover {
+  color: white;
+}
 
 body {
   background-color: #FFEAEA;
@@ -61,11 +114,25 @@ body {
   margin-top: -10%;
   margin-bottom: 10%;
   background-color: white;
-  border: solid red 2px;
   margin-left: 15%;
   margin-right: 15%;
   padding: 5%;
   border-radius: 35px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
+div#platform-img {
+  padding-right: 25px;
+  margin-right: 25px;
+  border-right: solid 2px lightgray;
+}
+
+.seats {
+    font-size: 3em;
+}
+
+span.seats_available_colorized {
+    color: #FF4949;
 }
 
 .title-header {
@@ -81,20 +148,21 @@ body {
 }
 
 .about-account-owner {
-    display: flex;
-    align-items: center;
-    margin-top: 5%;
-    border-top: 2px solid #f3f3f3;
-    padding-top: 5%;
+  display: flex;
+  align-items: center;
+  margin-top: 5%;
+  border-top: 2px solid #f3f3f3;
+  padding-top: 5%;
 }
 
 .user-name {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 
 img.user-profile {
-    margin-right: 3%;
+  margin-right: 3%;
+  border-radius: 50%;
 }
 
 .profile-link:hover {
@@ -115,22 +183,6 @@ img.user-profile {
   align-items: center;
 }
 
-div#platform-img {
-    padding-right: 10% !important;
-    margin-right: 10% !important;
-}
-
-input[type="submit"] {
-    border: none;
-    background-color: #FF4949;
-    color: white;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 7%;
-    padding-bottom: 7%;
-    border-radius: 50px;
-}
-
 /* Navbar color */
 
 a.nav-link {
@@ -145,3 +197,9 @@ a.nav-link {
     background-color: white;
 }
 </style>
+
+<script>
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+</script>

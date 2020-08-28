@@ -27,7 +27,7 @@
               <% review_avrg.round.times do  %>
                 <span>⭐️</span>
               <% end %>
-          <span class="rating"><%= review_num > 1 ? "(#{review_avrg.to_f}/5)" : ""%></span>
+          <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span>
         </span>
       </span>
       <span class="seats"><span class="seats_available_colorized"><%= account.seats_available %></span>/<%= account.seats_total %></span>
@@ -36,6 +36,76 @@
 <% end %>
 
 <style>
+
+.platform-box {
+    display: flex;
+    align-items: center;
+    border: solid 2px black;
+    padding: 3%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: -10%;
+    background-color: white;
+    border-radius: 15px;
+    margin-bottom: 2%;
+}
+
+div#platform-img {
+    padding: 2%;
+    border-right: solid 2px lightgray;
+}
+
+#platform-desc {
+  padding-left:  3%;
+}
+
+.card-account {
+  display: flex;
+  border: 2px solid #FF4949;
+  padding: 2%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 2%;
+  border-radius: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shared-by {
+  font-size: 0.6em;
+  text-align: left;
+}
+
+.seats {
+    font-size: 3em;
+}
+
+span.seats_available_colorized {
+    color: #FF4949;
+}
+
+a.main-button {
+    text-align: cemter;
+    text-align: center;
+    background-color: #FF4949;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-radius: 60px;
+    color: white;
+    font-weight: 600;
+}
+
+.account-title {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+img.user-profile {
+    border-radius: 50%;
+}
+
 
 .title-header {
   background-color: #FF4949;
