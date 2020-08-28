@@ -14,6 +14,7 @@
 </div> -->
 
 <!-- Display the dashboard of the current user -->
+<% if @user == current_user %>
 <p>Your profile</p>
 <%= @user.first_name %>
 <%= @user.last_name %>
