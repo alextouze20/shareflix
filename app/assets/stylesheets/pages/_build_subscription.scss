@@ -47,7 +47,7 @@
 }
 
 .container-standard-subscription {
-  margin-top: 200px;
+  margin-top: 5%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -63,19 +63,18 @@
 
 }
 
-#header1-smaller-subscription {
-margin-bottom: -28rem !important;
-margin-top: 220px !important;
-
+h1#header1-smaller-subscription {
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 1%;
 }
 
 #card-smaller {
   flex: unset !important;
-width: 20%;
-height: 100px;
-margin: 1% 1% !important;
-transform: unset !important;
-
+  width: 35%;
+  height: 100px;
+  margin: 1% 1% !important;
+  transform: unset !important;
 }
 
 .additonal-box-shadow {

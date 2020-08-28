@@ -1,14 +1,15 @@
 
 
 <div class="title-header need-smaller-subscription" id="header-smaller">
-<h1 id="header1-smaller-subscription" class="header-red-for-sub"> What kind of account is it ?</h1>
 </div>
 
-<div class="card-container" id="container-smaller-subscription">
-  <div class="cards additonal-box-shadow smaller-border-radius" id="card-smaller">
+<div class="platforms-container" id="container-smaller-subscription">
+  <div class="platform-cards additonal-box-shadow smaller-border-radius" id="card-smaller">
   <%= cl_image_tag @platform_account.platform.logo.key, width: 150, crop: :fill if @platform_account.platform.logo.attached? %>
   </div>
 </div>
+
+<h1 id="header1-smaller-subscription" class="header-red-for-sub"> What kind of account is it ?</h1>
 
 <%  @platform_account.platform.subscription_types.each do |subscription_type| %>
   <%= simple_form_for(@platform_account, html: { class: "form-subscription", data: {type_id: subscription_type.id} }, method: :put, url: wizard_path) do |f|%>
@@ -33,37 +34,73 @@
 
   <% end %>
 
-</div>
-<!-- <div class="choice-suscribe offer-service">
-  <ul>
-    <li>
-      <strong class="title-offer-sub">Standard</strong>
-      <br>
-      <span>Regardez Netflix sur 2 écrans à la fois. HD disponible</span>
-      <br>
-      <strong>11.99 € / month</strong>
-       <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 27.3 47.1" xml:space="preserve">
-        <g>
-          <g>
-            <path d="M1.1,41.2c-1.4,1.4-1.4,3.6,0,4.9c1.3,1.4,3.5,1.4,4.9,0l20-20c1.4-1.4,1.4-3.6,0-4.9l-20-20C4.5-0.2,2.3-0.2,1,1.2c-1.4,1.4-1.4,3.6,0,4.9l17.5,17.6L1.1,41.2z"></path>
-          </g>
-        </g>
-      </svg>
-    </li>
-    <li>
-      <strong class="title-offer-sub">Premium</strong>
-      <br>
-       <span>Regardez Netflix sur 4 écrans à la fois. HD et Ultra HD disponible</span>
-       <br>
-       <strong>15.99 € / month</strong>
-        <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 27.3 47.1" xml:space="preserve">
-          <g>
-            <g>
-              <path d="M1.1,41.2c-1.4,1.4-1.4,3.6,0,4.9c1.3,1.4,3.5,1.4,4.9,0l20-20c1.4-1.4,1.4-3.6,0-4.9l-20-20C4.5-0.2,2.3-0.2,1,1.2c-1.4,1.4-1.4,3.6,0,4.9l17.5,17.6L1.1,41.2z"></path>
-            </g>
-          </g>
-        </svg>
-      </li>
-    </ul>
-  </div>
- -->
+<style>
+
+body {
+  background-color: white;
+}
+
+.custom-container {
+  min-height: 90vh;
+}
+
+.platforms-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: -10%;
+}
+
+.platform-cards {
+    flex: 1 0 21%;
+    border: solid 1px #FF4949;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border-radius: 25px;
+    margin: 1%;
+
+}
+
+.platform-cards {
+  background-color: white;
+}
+
+.platform-cards:hover {
+    transform: scale(1.1);
+    transition-duration: 0.8s;
+}
+
+.title-header {
+  background-color: #FF4949;
+  padding-top: 10%;
+  border-radius: 0 0 40% 40%;
+  padding-bottom: 15%;
+  padding-left: 20%;
+  padding-right: 20%;
+  margin-left: -5%;
+  margin-right: -5%;
+  text-align: center;
+}
+
+h1 {
+  color: black !important;
+}
+
+/* Navbar color */
+
+a.nav-link {
+    color: white !important;
+}
+
+#logo-text {
+  color: white;
+}
+
+.navbar.navbar-expand-sm.navbar-light {
+    background-color: #FF4949;
+}
+</style>
