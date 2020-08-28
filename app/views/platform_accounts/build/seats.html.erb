@@ -1,9 +1,95 @@
-<h2>How many people should access your account?</h2>
-<div>
-<%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
-      <%= f.input :seats_total %>
-      <%= f.input :seats_available %>
-      <%= f.submit  %>
-<% end %>
+<div class="title-header need-smaller-subscription" id="header-smaller">
+</div>
+
+
+
+<div class="platforms-container" id="container-smaller-subscription">
+  <div class="platform-cards additonal-box-shadow smaller-border-radius" id="card-smaller">
+  <%= cl_image_tag @platform_account.platform.logo.key, width: 150, crop: :fill if @platform_account.platform.logo.attached? %>
+  </div>
+</div>
+
+
+<div class="d-flex justify-content-center align-items-center flex-column h-100" style="min-height: 90vh;">
+  <div class="w-100 negative-margin">
+    <h2 class="text-center">How many people should use your account?</h2>
+      <%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
+        <div class="login-container">
+          <div class="form-inputs login-form">
+          <%= f.input :seats_total, label: "How many people can use your account in total?" %>
+          <%= f.input :seats_available, label: "How many of those slots do you want to share on shareflix?" %>
+          </div>
+          <div class="form-actions btn-login">
+            <%= f.submit value: "Finalize Account"  %>
+          </div>
+        </div>
+      <% end %>
+  </div>
 </div>
 <%= link_to 'Previous', previous_wizard_path %>
+
+
+<style>
+body {
+  background-color: white;
+}
+h1, p {
+  color: white;
+}
+.custom-container {
+  min-height: 90vh;
+}
+
+.negative-margin {
+  margin-top: -150px;
+}
+.platforms-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: -10%;
+}
+.platform-cards {
+    flex: 1 0 21%;
+    border: solid 1px #FF4949;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border-radius: 25px;
+    margin: 1%;
+}
+.platform-cards {
+  background-color: white;
+}
+.platform-cards:hover {
+    transform: scale(1.1);
+    transition-duration: 0.8s;
+}
+.title-header {
+  background-color: #FF4949;
+  padding-top: 10%;
+  border-radius: 0 0 40% 40%;
+  padding-bottom: 9%;
+  padding-left: 20%;
+  padding-right: 20%;
+  margin-left: -5%;
+  margin-right: -5%;
+  text-align: center;
+}
+h1 {
+  color: white !important;
+}
+/* Navbar color */
+a.nav-link {
+    color: white !important;
+}
+#logo-text {
+  color: white;
+}
+.navbar.navbar-expand-sm.navbar-light {
+    background-color: #FF4949;
+}
+</style>

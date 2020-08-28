@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get '/chatrooms/', to: 'chatrooms#index'
   get '/construct/', to: 'platforms#construct'
 
+  # get '/others_accounts/', to: 'profiles#others_accounts'
+  # get '/your_accounts/', to: 'profiles#your_accounts'
+  # get '/requests/', to: 'profiles#requests'
+
   resources :platforms, only: [:index, :show] do
     resources :build, controller: 'platform_accounts/build', only: [:create]
   end
