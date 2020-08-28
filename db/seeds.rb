@@ -98,6 +98,14 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_l
 hbo.logo.attach(io: File.open(file), filename: 'hbo-logo.png', content_type: 'image/png')
 hbo.save!
 
+puts "Creating 2 subscription types"
+normalhbo = SubscriptionType.new( { name: "Standard", description: "Un compte Standard", price: 15.99, payment_frequency: 'monthly'} )
+premiumhbo = SubscriptionType.new( { name: "Premium", description: "Un compte Premium", price: 11.99, payment_frequency: 'monthly'} )
+normalhbo.platform = hbo
+premiumhbo.platform = hbo
+normalhbo.save!
+premiumhbo.save!
+
 yt_music = Platform.new( { category: "music_streaming", name: "Youtube Music", max_seats_available: 6 } )
 file = URI.open("https://www.ladn.eu/wp-content/uploads/2018/06/youtube.jpg")
 yt_music.logo.attach(io: file, filename: 'yt-music.jpg', content_type: 'image/jpg')
