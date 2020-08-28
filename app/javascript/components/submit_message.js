@@ -5,7 +5,6 @@ const postMessage = (chatroom, user, message) => {
     body: JSON.stringify(message)
   }).then(response => response.json())
     .then((data) => {
-      console.log(data);
     });
 };
 

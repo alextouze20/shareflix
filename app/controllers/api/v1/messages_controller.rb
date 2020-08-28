@@ -1,13 +1,12 @@
-class Api::V1::ChatroomsController < Api::V1::BaseController
+class Api::V1::MessagesController < Api::V1::BaseController
   def create
-    @message = Message.new(message_params)
-    @message.user = current_user
-    authorize @message
-    @message.save!
+    p "bojour"
   end
 
   def index
+    @messages = policy_scope(Messages)
   end
+
   private
 
   def message_params
