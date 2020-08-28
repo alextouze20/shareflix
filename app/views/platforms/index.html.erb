@@ -17,6 +17,48 @@
 
 <style>
 
+body {
+  background-color: white;
+}
+
+h1, p {
+  color: white;
+}
+
+.custom-container {
+  min-height: 90vh;
+}
+
+.platforms-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: -10%;
+}
+
+.platform-cards {
+    flex: 1 0 21%;
+    border: solid 1px #FF4949;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border-radius: 25px;
+    margin: 1%;
+
+}
+
+.platform-cards {
+  background-color: white;
+}
+
+.platform-cards:hover {
+    transform: scale(1.1);
+    transition-duration: 0.8s;
+}
+
 .title-header {
   background-color: #FF4949;
   padding-top: 10%;
@@ -27,6 +69,10 @@
   margin-left: -5%;
   margin-right: -5%;
   text-align: center;
+}
+
+h1 {
+  color: white !important;
 }
 
 /* Navbar color */
