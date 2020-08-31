@@ -14,7 +14,7 @@
       <% else %>
         <%= image_tag "https://image.flaticon.com/icons/svg/1946/1946429.svg", class: "default-profile", width: 100, height: 100, crop: :fill  %>
       <% end %>
-      <span class="account-title"><span><%= @platform.name %> - <%= account.account_type %></span><br/>
+      <span class="account-title"><span><%= @platform.name %> - <%= SubscriptionType.find_by(:id == account.account_type).name %></span><br/>
       <span class="shared-by">Shared by <%= account.user.first_name.capitalize %> <%= account.user.last_name.first %>.<br/>
       <% review_sum = 0 %>
       <% review_num = 1 %>
@@ -30,7 +30,7 @@
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span>
         </span>
       </span>
-      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Currently, <%= account.seats_total - account.seats_available %> users are already using this account."><span class="seats_available_colorized"><%= account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
+      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Currently, <%= account.seats_total - account.seats_available %> <%= (account.seats_total - account.seats_available) == 1 ? "user is" : "users are" %> using this account."><span class="seats_available_colorized"><%= account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
       <%= link_to "Join", platform_account_path(account), class: "main-button" %>
     </div>
 <% end %>

@@ -16,11 +16,11 @@
     <% review_sum = 0 %>
       <% review_num = 0 %>
       <% stars = "" %>
-          <% if review_num > 0 %>
+          <% if @account.user.review_tenants != [] %>
             <% @account.user.review_tenants.each do |review| %>
             <% review_sum += review.rating.to_i %>
             <% review_num += 1 %>
-          <% end %>
+            <% end %>
             <% review_avrg = review_sum / review_num %>
               <% review_avrg.round.times do  %>
                 <span>⭐️</span>
@@ -29,6 +29,7 @@
                <span>No reviews.</span>
             <% end %>
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span><br/>
+      <span style="font-style: italic;">"<%= @account.user.bio[0..300] %>"</span><br/><br/>
       <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
     </div>
   </div>
@@ -36,7 +37,7 @@
   <div class="about-reviews">
     <div class="last-reviews">
     <p id="title-review">
-      <%= @account.user.review_tenants == [] ? "#{@account.user.first_name.capitalize} doesn't have any reviews." : "#{@account.user.first_name.capitalize}'s reviews" %>
+      <%= @account.user.review_tenants == [] ? "#{@account.user.first_name.capitalize} doesn't have any reviews." : "#{@account.user.first_name.capitalize}'s last reviews:" %>
     <% @account.user.review_tenants.first(3).each do |review| %>
       <div class="review">
         <p><% review.rating.times do %><span>⭐️</span><% end %> <span class="review-content">"<%= review.content[0, 30] %>" - <strong><%= review.account_owner.first_name.capitalize %> <%= review.account_owner.last_name.first %></strong></span></p>
@@ -49,7 +50,7 @@
     <div id="platform-img">
       <%= cl_image_tag @account.platform.logo.key, width: 150, crop: :fill %>
     </div>
-    <span class="seats" data-toggle="tooltip" data-placement="top" title="Currently, <%= @account.seats_total - @account.seats_available %> users are already using this account."><span class="seats_available_colorized"><%= @account.seats_total - @account.seats_available %></span>/<%= @account.seats_total %></span>
+    <span class="seats" data-toggle="tooltip" data-placement="top" title="Currently, <%= @account.seats_total - @account.seats_available %> <%= (@account.seats_total - @account.seats_available) == 1 ? "user is" : "users are" %> using this account."><span class="seats_available_colorized"><%= @account.seats_total - @account.seats_available %></span>/<%= @account.seats_total %></span>
   </div>
   <!-- Button trigger modal -->
   <button type="button" class="btn request-button" data-toggle="modal" data-target="#exampleModalCenter">
