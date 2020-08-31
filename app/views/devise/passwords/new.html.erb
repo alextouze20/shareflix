@@ -1,18 +1,27 @@
-<h2>Forgot your password?</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
+<div class="container d-flex justify-content-center flex-column h-100" style="min-height: 90vh;">
+  <div class="h4 d-flex justify-content-center align-items-center flex-column font-weight-bold">
+    <p>Trouble accessing your account ?</p>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Send me reset password instructions" %>
+  <div class="mb-4 h5 d-flex justify-content-center align-items-center text-center flex-column font-weight-light bottom-black">
+    <p>Enter the email address you use for Shareflix and we'll send you a <br> password reset link.</p>
   </div>
-<% end %>
+  <div class="mt-5">
+    <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= f.error_notification %>
 
-<%= render "devise/shared/links" %>
+      <div class="form-inputs email-container mb-4">
+        <%= f.input :email,
+                    label: false,
+                    placeholder: "✉️ Email address",
+                    required: true,
+                    autofocus: true,
+                    input_html: { autocomplete: "email" } %>
+      </div>
+
+      <div class="form-actions btn-reset btn-signup d-flex justify-content-end">
+        <%= f.button :submit, "Send me a reset link" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
