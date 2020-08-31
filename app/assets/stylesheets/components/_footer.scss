@@ -1,0 +1,22 @@
+.footer {
+  color: #504646;
+  background-color: black;
+  padding-top: 10px;
+  padding-bottom: 1px ;
+  padding-left: 15px;
+
+  .paragraph a {
+    opacity: 1;
+    color: white;
+    margin-bottom: 5px;
+  }
+
+  .signature p {
+    text-align: center;
+    color: white;
+    span {
+      color: #FF4949;
+    }
+  }
+}
+
