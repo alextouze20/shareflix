@@ -129,7 +129,8 @@ deezer = Platform.new( { category: "music_streaming", name: "Deezer", max_seats_
 file = URI.open('https://uploads-eu-west-1.insided.com/deezer-fr/attachment/eb56b366-e8e5-4085-b794-237df52f81b1.png')
 deezer.logo.attach(io: file, filename: 'deezer.png', content_type: 'image/png')
 deezer.save!
-puts "seed for chat"
+
+puts "Seed for chat"
 require "faker"
 netflix_chat = Chatroom.new(platform_account: fred_account_netflix)
 spotify_chat = Chatroom.new(platform_account: fred_account_spotify)
