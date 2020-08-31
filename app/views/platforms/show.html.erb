@@ -4,7 +4,7 @@
   <div id="platform-img">
   <%= cl_image_tag @platform.logo.key, width: 150, crop: :fill %>
   </div>
-  <p id="platform-desc">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Obcaecati reprehenderit hic dignissimos, possimus molestias facere natus pariatur ipsum neque autem laborum sit eos necessitatibus, quae. Aspernatur, veritatis, adipisci. Delectus, adipisci.</p>
+  <p id="platform-desc"><%= @platform.description[0..300] %></p>
 </div>
 
 <% @accounts.each do |account| %>
@@ -30,7 +30,7 @@
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span>
         </span>
       </span>
-      <span class="seats"><span class="seats_available_colorized"><%= account.seats_available %></span>/<%= account.seats_total %></span>
+      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Currently, <%= account.seats_total - account.seats_available %> users are already using this account."><span class="seats_available_colorized"><%= account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
       <%= link_to "Join", platform_account_path(account), class: "main-button" %>
     </div>
 <% end %>
