@@ -1,8 +1,8 @@
-const postMessage = (chatroom, user, message) => {
+const postMessage = (chatroom, message) => {
   fetch(`/api/v1/messages`, {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(message)
+    body: JSON.stringify({message: {content: message, chatroom_id: chatroom}})
   }).then(response => response.json())
     .then((data) => {
     });
@@ -20,7 +20,15 @@ const submit = () => {
       const msgUserId = form.querySelector("#message_user_id").value;
       const msgContent = form.querySelector("#message_content").value;
       console.log(msgChatroomId, msgUserId, msgContent);
-      postMessage(msgChatroomId, msgUserId, msgContent)
+      postMessage(msgChatroomId, msgContent)
+      $(".messages").append(`
+              <div class="message message-from-user newmessage">
+                <p class = "btn-primary px-0">${msgContent}</p>
+              </div>
+            `)
+      const messages = document.querySelector(".messages")
+      messages.scrollTop = messages.scrollHeight;
+      console.log(messages)
     })
   }
 }

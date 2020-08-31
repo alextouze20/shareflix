@@ -1,4 +1,4 @@
-class ChatroomPolicy < ApplicationPolicy
+class MessagePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
@@ -8,4 +8,9 @@ class ChatroomPolicy < ApplicationPolicy
   def show?
     true
   end
+
+  def create?
+    true
+  end
+
 end
