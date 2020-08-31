@@ -1,0 +1,22 @@
+p{
+  color: black;
+  opacity: 0.5;
+  width: auto;
+}
+.message-not-user{
+  text-align: left;
+  width: auto;
+}
+.message-from-user{
+  text-align: right;
+  width: auto;
+}
+.form-message{
+    width: 377px;
+    position: absolute;
+    right: 204px;
+}
+.messages{
+  overflow: scroll;
+  max-height: 390px;
+}
