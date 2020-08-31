@@ -3,12 +3,23 @@ class PlatformAccount < ApplicationRecord
     %w(subscription seats)
   end
 
+  # SUBSCRIPTION_TYPES = [
+  #   "Family",
+  #   "Personal"
+  # ]
+
+  # PAYMENT_FREQUENCIES = [
+  #   "Monthly",
+  #   "Annually"
+  # ]
+
   attr_accessor :form_step
 
   belongs_to :user
   belongs_to :platform
   has_many :account_seats
   has_one :chatroom
+  # has_one :subscription_type
 
   validates :account_type, presence: true,
         if: -> { required_for_step?(:subscription) }

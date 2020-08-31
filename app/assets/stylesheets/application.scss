@@ -11,9 +11,19 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+@import "pages/construct";
+@import "pages/signup";
+@import "pages/build_subscription";
+@import "pages/build_seats";
 
-// General ruyles
+// General rules
 
 h1, h2, h3, h4, h5, p {
   font-family: Poppins, sans-serif;
+  color: #2C2626;
+}
+
+body {
+  font-family: Poppins, sans-serif;
+  color: #2C2626;
 }

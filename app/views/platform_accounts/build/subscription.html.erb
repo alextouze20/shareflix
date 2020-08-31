@@ -1,6 +1,106 @@
-<h1><%= @step %></h1>
-<%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
-      <%= f.input :account_type %>
 
-      <%= f.submit  %>
+
+<div class="title-header need-smaller-subscription" id="header-smaller">
+</div>
+
+<div class="platforms-container" id="container-smaller-subscription">
+  <div class="platform-cards additonal-box-shadow smaller-border-radius" id="card-smaller">
+  <%= cl_image_tag @platform_account.platform.logo.key, width: 150, crop: :fill if @platform_account.platform.logo.attached? %>
+  </div>
+</div>
+
+<h1 id="header1-smaller-subscription" class="header-red-for-sub"> What kind of account is it ?</h1>
+
+<%  @platform_account.platform.subscription_types.each do |subscription_type| %>
+  <%= simple_form_for(@platform_account, html: { class: "form-subscription", data: {type_id: subscription_type.id} }, method: :put, url: wizard_path) do |f|%>
+    <%= f.input_field :account_type, value: subscription_type.id, class: 'd-none' %>
+    <%= f.submit value: subscription_type.name, class: "d-none form-subscription-submit-#{subscription_type.id}" %>
+
+  <% end %>
 <% end %>
+
+<div class="container-standard-subscription">
+  <%  @platform_account.platform.subscription_types.each do |subscription_type| %>
+
+    <div class="card-product" id='<%= subscription_type.id %>' data-type-id=<%= subscription_type.id %>>
+      <div class="card-product-infos">
+
+        <h1><%= subscription_type.name %></h1>
+        <p><%= subscription_type.description %></p>
+        <h2><%= subscription_type.price %> € / <%= subscription_type.payment_frequency %></h2>
+
+      </div>
+     </div>
+
+  <% end %>
+
+<style>
+
+body {
+  background-color: white;
+}
+
+.custom-container {
+  min-height: 90vh;
+}
+
+.platforms-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: -10%;
+}
+
+.platform-cards {
+    flex: 1 0 21%;
+    border: solid 1px #FF4949;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border-radius: 25px;
+    margin: 1%;
+
+}
+
+.platform-cards {
+  background-color: white;
+}
+
+.platform-cards:hover {
+    transform: scale(1.1);
+    transition-duration: 0.8s;
+}
+
+.title-header {
+  background-color: #FF4949;
+  padding-top: 10%;
+  border-radius: 0 0 40% 40%;
+  padding-bottom: 15%;
+  padding-left: 20%;
+  padding-right: 20%;
+  margin-left: -5%;
+  margin-right: -5%;
+  text-align: center;
+}
+
+h1 {
+  color: black !important;
+}
+
+/* Navbar color */
+
+a.nav-link {
+    color: white !important;
+}
+
+#logo-text {
+  color: white;
+}
+
+.navbar.navbar-expand-sm.navbar-light {
+    background-color: #FF4949;
+}
+</style>
