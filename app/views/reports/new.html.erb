@@ -1,0 +1,5 @@
+<%= simple_form_for([@user, @report], url: profile_reports_path(@user)) do |f| %>
+    <%= f.input :reason %>
+    <%= f.input :content %>
+    <%= f.submit %>
+<% end %>
