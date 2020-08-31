@@ -27,10 +27,10 @@
               <% review_avrg.round.times do  %>
                 <span>⭐️</span>
               <% end %>
-          <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span>
+          <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : "" %></span>
         </span>
       </span>
-      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Currently, <%= account.seats_total - account.seats_available %> <%= (account.seats_total - account.seats_available) == 1 ? "user is" : "users are" %> using this account."><span class="seats_available_colorized"><%= account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
+      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
       <%= link_to "Join", platform_account_path(account), class: "main-button" %>
     </div>
 <% end %>
