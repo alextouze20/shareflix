@@ -1,15 +1,15 @@
 <div class="title-header">
-<h1>Netflix, HBO, Spotify, Disney+, get them all.</h1>
-</div>
-
-<div class="platforms-container">
-<% @platforms.each do |platform|%>
-  <div class="platform-cards">
-  <%= link_to platform_path(platform.id) do %>
-  <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
+  <h1>Netflix, HBO, Spotify, Disney+, get them all.</h1>
   </div>
+
+  <div class="platforms-container">
+  <% @platforms.each do |platform|%>
+    <div class="platform-cards">
+    <%= link_to platform_path(platform.id) do %>
+    <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
+    </div>
+    <% end %>
   <% end %>
-<% end %>
 </div>
 
 
@@ -34,7 +34,7 @@ h1, p {
     padding-left: 10%;
     padding-right: 10%;
     margin-top: -10%;
-    margin-bottom: 10%;
+    margin-bottom: 10% !important;
 }
 
 .platform-cards {
