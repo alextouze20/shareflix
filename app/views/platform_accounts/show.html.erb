@@ -3,8 +3,8 @@
 
 <div class="full-box">
     <div class="about-request">
-      <h1>Your request: <%= @account.platform.name %> - <%= @account.account_type %></h1>
-      <span>You are about to request to use a Netflix account of the member of the Shareflix community. By clicking “Send request” you agree to respect the behavior guidelines of the community. Any member that disrespect those guidelines will be banned from the website.</span>
+      <h1>Request: <%= @account.platform.name %> <%= @account.account_type %> account</h1>
+      <span>You are about to request to use a <%= @account.platform.name %> account of the member of the Shareflix community. By clicking “Send request” you agree to respect the behavior guidelines of the community. Any member that disrespect those guidelines will be banned from the website.</span>
     </div>
     <div class="about-account-owner">
       <% if @account.user.photo.attached?  %>
@@ -26,7 +26,7 @@
                 <span>⭐️</span>
               <% end %>
               <% else %>
-               <span>No reviews.</span>
+               <span style="font-style: italic; font-weight: 400;">No reviews.</span>
             <% end %>
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span><br/>
           <span style="font-style: italic;">"<%= @account.user.bio[0..300] %>"</span><br/><br/>
