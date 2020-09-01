@@ -29,10 +29,11 @@
                <span style="font-style: italic; font-weight: 400;">No reviews.</span>
             <% end %>
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span><br/>
-          <span style="font-style: italic;">"<%= @account.user.bio[0..300] %>"</span><br/><br/>
-          <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
-        </div>
-      </div>
+
+      <span style="font-style: italic;">"<%= @account.user.bio[0..300] if @account.user.bio.present? %>"</span><br/><br/>
+      <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
+    </div>
+  </div>
 
   <div class="about-reviews">
     <div class="last-reviews">
