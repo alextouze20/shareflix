@@ -95,55 +95,66 @@
 
 
       <div class="own-account-card">
-
+        <%  value = 50  %>
+        <% value_margin_left = 0 %>
         <% @user.platform_accounts.each do |account| %>
 
-            <div class="individual-accounts-on-profile">
-                <div class="class-img-tag-account-platform">
-                <%= cl_image_tag account.platform.logo.key, width: 230, crop: :fill %>
+            <% if account.seats_total.present? %>
+              <div class="individual-accounts-on-profile">
+                  <div class="class-img-tag-account-platform">
+                  <%= cl_image_tag account.platform.logo.key, width: 230, crop: :fill %>
+                  </div>
+
+                <div class="account-card-stuff" >
+
+                  <h1 class="need-flex">
+                    <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %>
+                    <%= account.platform.name %>
+                    Account
+                   <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
+
+                  </h1>
+
+                  <h2 class='need-flex'>
+                    <div>
+                    Shared by
+                    <% full_name = @user.first_name + ' ' + @user.last_name %>
+                    <%= link_to profile_path(@user.id), title: full_name do %>
+                      <% if @user.photo.attached? %>
+                        <%= cl_image_tag @user.photo.key, height: 60, width: 60, crop: :fill , class: "pfp remove-margin" %>
+                      <% else %>
+                        <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
+                      <% end %>
+                    <% end %>
+
+                    <% unless account.account_seats.where(status: 'accepted') == [] %>
+                      <%= 'with' %>
+                    <% end %>
+
+                    <% account.account_seats.where(status: 'accepted').each do |account_seat| %>
+                      <% value -= 1 %>
+
+                      <% full_name = account_seat.user.first_name + ' ' + account_seat.user.last_name %>
+                       <%= link_to profile_path(account_seat.user.id), title: full_name do %>
+
+                        <% if account_seat.user.photo.attached? %>
+                          <%= cl_image_tag account_seat.user.photo.key, height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
+                        <% else %>
+                          <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
+                        <% end %>
+
+                      <% end %>
+                      <% value_margin_left = -28 %>
+                    <% end %>
+                    </div>
+                    <%= link_to "More info", platform_account_path(account), class: "main-button" %>
+
+                  </h2>
+
                 </div>
 
-              <div class="account-card-stuff" >
-
-                <h2>
-                  <%= SubscriptionType.find_by(:id == account.account_type).name %>
-                  <%= account.platform.name %>
-                  Account
-                </h2>
-
-                <h2>
-                  Shared by
-                  <% full_name = @user.first_name + ' ' + @user.last_name %>
-                  <%= link_to profile_path(@user.id), title: full_name do %>
-                    <% if @user.photo.attached? %>
-                      <%= cl_image_tag @user.photo.key, height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
-                    <% else %>
-                      <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp" %>
-                    <% end %>
-                  <% end %>
-
-                  <% unless account.account_seats.where(status: 'accepted') == [] %>
-                    <%= 'with' %>
-                  <% end %>
-
-                  <% account.account_seats.where(status: 'accepted').each do |account_seat| %>
-
-                    <% full_name = account_seat.user.first_name + ' ' + account_seat.user.last_name %>
-                     <%= link_to profile_path(account_seat.user.id), title: full_name do %>
-
-                      <% if account_seat.user.photo.attached? %>
-                        <%= cl_image_tag account_seat.user.photo.key, height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
-                      <% else %>
-                        <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp" %>
-                      <% end %>
-
-                    <% end %>
-                  <% end %>
-                </h2>
-
               </div>
-
-            </div>
+          <% end %>
         <% end %>
       </div>
 
@@ -422,8 +433,16 @@ margin: auto 40px auto 40px;
 
 }
 
+.own-account-card h1 {
+/*  font-size: 24px;
+*/  font-weight: bold;
+  color: black !important;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+
 .own-account-card h2 {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
   margin-top: 15px;
 }
@@ -463,8 +482,48 @@ margin: auto 40px auto 40px;
 }
 
 .remove-margin {
-margin: 0px 0px 0px 0px !important;
+/*margin: 0px 0px 0px 0px !important;
+*/margin-top: 0px !important;
+margin-bottom: 0px !important;
+margin-right: 0px !important;
+
 }
+
+.settings-for-surperposition {
+  position: sticky;
+  border: 2px white solid;
+
+}
+
+.seats {
+    font-size: 56px;
+
+margin: -10px;
+}
+
+span.seats_available_colorized {
+    color: #FF4949;
+}
+
+.need-flex {
+ display: flex;
+ justify-content: space-between;
+ width: 800px;
+}
+
+a.main-button {
+    text-align: cemter;
+    text-align: center;
+    background-color: #FF4949;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-radius: 60px;
+    color: white;
+    font-weight: 600;
+}
+
 
 /*.remove-margin:hover {
     img {

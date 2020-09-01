@@ -29,7 +29,7 @@
                <span>No reviews.</span>
             <% end %>
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span><br/>
-      <span style="font-style: italic;">"<%= @account.user.bio[0..300] %>"</span><br/><br/>
+      <span style="font-style: italic;">"<%= @account.user.bio[0..300] if @account.user.bio.present? %>"</span><br/><br/>
       <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
     </div>
   </div>
@@ -50,7 +50,7 @@
     <div id="platform-img">
       <%= cl_image_tag @account.platform.logo.key, width: 150, crop: :fill %>
     </div>
-    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= @account.seats_total %></span>
+    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_total == nil || @account.seats_available == nil ? "error" : @account.seats_total - @account.seats_available %></span>/<%= @account.seats_total %></span>
   </div>
   <!-- Button trigger modal -->
   <button type="button" class="btn request-button" data-toggle="modal" data-target="#exampleModalCenter">
