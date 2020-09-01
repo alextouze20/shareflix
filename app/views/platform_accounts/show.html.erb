@@ -2,20 +2,20 @@
 </div>
 
 <div class="full-box">
-  <div class="about-request">
-    <h1>Your request: <%= @account.platform.name %> - <%= @account.account_type %></h1>
-    <span>You are about to request to use a Netflix account of the member of the Shareflix community. By clicking “Send request” you agree to respect the behavior guidelines of the community. Any member that disrespect those guidelines will be banned from the website.</span>
-  </div>
-  <div class="about-account-owner">
-    <% if @account.user.photo.attached?  %>
+    <div class="about-request">
+      <h1>Request: <%= @account.platform.name %> <%= @account.account_type %> account</h1>
+      <span>You are about to request to use a <%= @account.platform.name %> account of the member of the Shareflix community. By clicking “Send request” you agree to respect the behavior guidelines of the community. Any member that disrespect those guidelines will be banned from the website.</span>
+    </div>
+    <div class="about-account-owner">
+      <% if @account.user.photo.attached?  %>
         <%= cl_image_tag  @account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
       <% else %>
         <%= image_tag "https://image.flaticon.com/icons/svg/1946/1946429.svg", class: "default-profile", width: 100, height: 100, crop: :fill  %>
       <% end %>
     <div class="user-name-rating"><span class="user-name"><%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %>.</span><br/>
-    <% review_sum = 0 %>
-      <% review_num = 0 %>
-      <% stars = "" %>
+      <% review_sum = 0 %>
+        <% review_num = 0 %>
+        <% stars = "" %>
           <% if @account.user.review_tenants != [] %>
             <% @account.user.review_tenants.each do |review| %>
             <% review_sum += review.rating.to_i %>
@@ -26,9 +26,10 @@
                 <span>⭐️</span>
               <% end %>
               <% else %>
-               <span>No reviews.</span>
+               <span style="font-style: italic; font-weight: 400;">No reviews.</span>
             <% end %>
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span><br/>
+
       <span style="font-style: italic;">"<%= @account.user.bio[0..300] if @account.user.bio.present? %>"</span><br/><br/>
       <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
     </div>
@@ -53,9 +54,11 @@
     <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_total == nil || @account.seats_available == nil ? "error" : @account.seats_total - @account.seats_available %></span>/<%= @account.seats_total %></span>
   </div>
   <!-- Button trigger modal -->
+  <% if @account.user != current_user %>
   <button type="button" class="btn request-button" data-toggle="modal" data-target="#exampleModalCenter">
     Request to use this account
   </button>
+  <% end %>
   </div>
 
 <!-- Modal -->
@@ -63,36 +66,66 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <% unless current_user.platform_accounts.where(seats_total: nil) == [] %>
         <h5 class="modal-title" id="exampleModalLongTitle">Community guidelines</h5>
+        <% else %>
+        <h5 class="modal-title" id="exampleModalLongTitle" style="color: #FF4949;">You need to share an account first!</h5>
+        <% end %>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+        <% unless current_user.platform_accounts.where(seats_total: nil) == [] %>
         <p>Before sending a request to use <%= @account.user.first_name.capitalize %>'s <%= @account.platform.name %> account, please read the guidelines of the community. The respect of those guidelines is essential to the sake of the Shareflix community.</p>
         <ul>
           <li>I will not share this account with others</li>
           <li>I will not share this account with others</li>
           <li>I will not share this account with others</li>
         </ul>
+        <% else %>
+          <p>Shareflix is a community, in order to start joining the accounts of the community members. You need to share <strong>at least one of your account</strong> with the community.</p>
+        <% end %>
       </div>
       <div class="modal-footer">
+        <% unless current_user.platform_accounts.where(seats_total: nil) == [] %>
           <%=  simple_form_for @account_seat do |f|%>
           <%= f.input_field :platform_account_id, value: @account.id, class: 'd-none' %>
           <%= f.input_field :user_id, value: current_user.id, class: 'd-none' %>
           <%= f.submit value: "Accept and send request" %>
           <% end %>
+        <% else %>
+          <%= link_to "Share an account", construct_path, class: "button-create" %>
+        <% end %>
       </div>
     </div>
   </div>
+  </div>
 </div>
-
 
 <style>
 
 .modal-content {
   border-radius: 5px;
   border: none;
+}
+
+.button-create {
+  background-color: #FF4949;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 10%;
+  padding-right: 10%;
+  position: relative;
+  left: -40px;
+}
+
+.button-create:hover {
+  color: white;
+  text-decoration: none;
 }
 
 input[type="submit"] {
@@ -154,15 +187,13 @@ span.seats_available_colorized {
 }
 
 .title-header {
-  padding-top: 10%;
-  background-image: url("https://i.ibb.co/mHxNmYj/wave-white.png");
-  padding-bottom: 5%;
+  padding-top: 5%;
+  background-color: white;
+  border-radius: 0% 0% 40% 40%;
+  padding-bottom: 15%;
   padding-left: 20%;
   padding-right: 20%;
   text-align: center;
-  background-position: bottom;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 .about-account-owner {
