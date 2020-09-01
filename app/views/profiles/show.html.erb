@@ -52,6 +52,7 @@
           <div class="review-card">
 
 
+
           <% @reviews.each do |review| %>
             <%= link_to profile_path(review.account_owner.id) do %>
               <div class="individual-reviews-on-profile">
@@ -91,8 +92,70 @@
         <% end %>
     </div>
 
+      <!----- OTHER USER PROFILE ------>
 
-  <div class="tab-pane fade need-some-margin-left" id="nav-own-accounts" role="tabpanel" aria-labelledby="nav-own-accounts-tab">
+      <style>
+        div#nav-tab {
+          display: none;
+        }
+      </style>
+
+        <div class="space-between-div" >
+          <p><%= @user.first_name.capitalize %>'s' Profile Picture</p>
+          <% if @user.photo.attached? %>
+            <%= cl_image_tag @user.photo.key, height: 100, width: 100, crop: :fill, class: "pfp" %>
+          <% else %>
+            <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 100, width: 100, crop: :fill, class: "pfp" %>
+          <% end %>
+        </div>
+
+        <div class="space-between-div">
+          <p>Name</p>
+          <p><%= @user.first_name %> <%= @user.last_name %></p>
+        </div>
+
+        <div class="space-between-div" style="border-bottom: none;">
+          <p>Email</p>
+          <p><%= @user.email %></p>
+        </div>
+      </div>
+      <div class="review-form">
+      <p>Leave a review for <%= @user.first_name %></p>
+        <%= simple_form_for([@user, @review], url: profile_reviews_path(@user)) do |f| %>
+          <%= f.input :content, require: true %>
+          <%= f.input :rating, as: :select, collection: 1..5, require: true %>
+        <%= f.submit%>
+        <% end %>
+      </div>
+
+      <h2><%= @user.first_name.capitalize %>'s reviews <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= Review.count %> reviews) </h2>
+        <div class="review-card">
+
+
+        <% @reviews.each do |review| %>
+          <%= link_to profile_path(review.account_owner.id) do %>
+            <div class="individual-reviews-on-profile">
+
+              <% if review.account_owner.photo.attached? %>
+                <%= cl_image_tag review.account_owner.photo.key, height: 80, width: 80, crop: :fill, class: "pfp" %>
+              <% else %>
+                <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 80, width: 80, crop: :fill, class: "pfp" %>
+              <% end %>
+
+              <div class="review-card-text" >
+
+                <h2><%= review.account_owner.first_name %> <%= review.account_owner.last_name %> gave <%= @user.first_name.capitalize %> a rating of <%= review.rating %>/5⭐️</h2>
+
+                <p>"<%= review.content %>"</p>
+
+              </div>
+
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="tab-pane fade need-some-margin-left" id="nav-own-accounts" role="tabpanel" aria-labelledby="nav-own-accounts-tab">
 
         <div class="own-account-card">
           <%  value = 50  %>
@@ -145,6 +208,7 @@
 
                         <% end %>
                         <% value_margin_left = -28 %>
+
                       <% end %>
                       </div>
                       <%= link_to "More info", platform_account_path(account), class: "main-button" %>
@@ -226,7 +290,9 @@
                       </div>
                       <%= link_to "More info", platform_account_path(account_seat.platform_account), class: "main-button" %>
 
+
                     </h2>
+
 
                   </div>
 
@@ -312,11 +378,55 @@
 </div>
 <style>
 
+textarea#review_content {
+    border-radius: 11px;
+    border-color: #D7D1D1;
+}
+
+select#review_rating {
+    width: 30%;
+    border-radius: 11px;
+}
+
+input[type="submit"] {
+    margin: 10px;
+    color: white;
+    padding: 11px 65px;
+    font-weight: bold;
+    border-radius: 25px;
+    background: #FF4949;
+    border: none;
+}
+
+.review-form {
+    padding: 5%;
+    width: 80%;
+    margin-top: 5%;
+    border-radius: 25px;
+    margin-bottom: 5%;
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+span.title-account {
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+img.logo-account {
+  width: auto;
+  height: 50px;
+}
+
+
+div#nav-tabContent {
+    width: 60%;
+}
+
 body {
   background-color: white;
 }
 h1, p {
-  color: black;
+  color: #2C2626;
 }
 .custom-container {
   min-height: 90vh;
@@ -351,14 +461,12 @@ h1, p {
     transition-duration: 0.8s;
 }
 .title-header {
-  background-color: black;
+  background-color: #2C2626;
   padding-top: 10%;
   border-radius: 0 0 20% 20%;
   padding-bottom: 8%;
   padding-left: 20%;
   padding-right: 20%;
-  margin-left: -5%;
-  margin-right: -5%;
   text-align: center;
 }
 h1 {
@@ -372,7 +480,7 @@ a.nav-link {
   color: white;
 }
 .navbar.navbar-expand-sm.navbar-light {
-    background-color: black;
+    background-color: #2C2626;
 }
 
 
@@ -382,8 +490,11 @@ margin-top: -50px;
 background-color: black;
 border-radius: 15px;
 overflow: hidden;
-border: 1px #FF4949 solid;
 margin-left: 60px;
+}
+
+a#nav-own-accounts-tab:hover {
+    text-decoration: none;
 }
 
 .user-everything {
@@ -404,7 +515,7 @@ margin-left: 60px;
 }
 
 .profile-info {
-width: 1150px !important;
+width: 80% !important;
 margin-top: -50px;
 background-color: white;
 border-radius: 30px;
@@ -455,7 +566,6 @@ margin: auto 40px auto 40px;
   height: 150px;
 }
 .edit-delete-div {
-  display: flex;
   justify-content: flex-end;
   padding-bottom: 125px;
   padding-top: 20px;
@@ -466,7 +576,7 @@ margin: auto 40px auto 40px;
 
 
 .review-card {
-  width: 1150px !important;
+  width: 100% !important;
   overflow: hidden;
   /*height: 120px;*/
   border-radius: 30px;
@@ -497,7 +607,7 @@ margin: auto 40px auto 40px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  width: 1150px;
+  width: 100%;
   height: 150px;
   border-bottom: lightgray 1px solid;
 }
@@ -514,8 +624,7 @@ margin: auto 40px auto 40px;
 
 
 .own-account-card {
-  width: 1150px !important;
-  overflow: hidden;
+  width: 100% !important;
   /*height: 120px;*/
   border-radius: 30px;
   background: white;
@@ -553,7 +662,7 @@ margin: auto 40px auto 40px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  width: 1150px;
+  width: 100%
   height: 200px;
   border-bottom: lightgray 1px solid;
 }
@@ -561,6 +670,8 @@ margin: auto 40px auto 40px;
 
 .account-card-stuff {
   padding: 16px;
+  padding-top: 10%;
+  padding-bottom: 10%;
 }
 
 
@@ -601,7 +712,6 @@ span.seats_available_colorized {
 .need-flex {
  display: flex;
  justify-content: space-between;
- width: 800px;
 }
 
 a.main-button {
