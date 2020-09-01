@@ -31,7 +31,7 @@
           <p><%= @user.first_name %> <%= @user.last_name %></p>
         </div>
 
-        <div class="space-between-div">
+        <div class="space-between-div" style="border-bottom: none;">
           <p>Email:</p>
           <p><%= @user.email %></p>
         </div>
@@ -75,16 +75,68 @@
 
       <% else %>
 
-      <p>The profile of someone else</p>
-      <%= @user.first_name %>
-      <%= @user.last_name %>
+      <!----- OTHER USER PROFILE ------>
 
-      <h3>Leave a review for <%= @user.first_name %></h3>
+      <style>
+        div#nav-tab {
+          display: none;
+        }
+      </style>
+
+        <div class="space-between-div" >
+          <p><%= @user.first_name.capitalize %>'s' Profile Picture</p>
+          <% if @user.photo.attached? %>
+            <%= cl_image_tag @user.photo.key, height: 100, width: 100, crop: :fill, class: "pfp" %>
+          <% else %>
+            <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 100, width: 100, crop: :fill, class: "pfp" %>
+          <% end %>
+        </div>
+
+        <div class="space-between-div">
+          <p>Name</p>
+          <p><%= @user.first_name %> <%= @user.last_name %></p>
+        </div>
+
+        <div class="space-between-div" style="border-bottom: none;">
+          <p>Email</p>
+          <p><%= @user.email %></p>
+        </div>
+      </div>
+      <div class="review-form">
+      <p>Leave a review for <%= @user.first_name %></p>
         <%= simple_form_for([@user, @review], url: profile_reviews_path(@user)) do |f| %>
           <%= f.input :content, require: true %>
           <%= f.input :rating, as: :select, collection: 1..5, require: true %>
         <%= f.submit%>
         <% end %>
+      </div>
+
+      <h2><%= @user.first_name.capitalize %>'s reviews <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= Review.count %> reviews) </h2>
+        <div class="review-card">
+
+
+        <% @reviews.each do |review| %>
+          <%= link_to profile_path(review.account_owner.id) do %>
+            <div class="individual-reviews-on-profile">
+
+              <% if review.account_owner.photo.attached? %>
+                <%= cl_image_tag review.account_owner.photo.key, height: 80, width: 80, crop: :fill, class: "pfp" %>
+              <% else %>
+                <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 80, width: 80, crop: :fill, class: "pfp" %>
+              <% end %>
+
+              <div class="review-card-text" >
+
+                <h2><%= review.account_owner.first_name %> <%= review.account_owner.last_name %> gave <%= @user.first_name.capitalize %> a rating of <%= review.rating %>/5⭐️</h2>
+
+                <p>"<%= review.content %>"</p>
+
+              </div>
+
+            </div>
+          <% end %>
+        <% end %>
+      </div>
 
       <% end %>
   </div>
@@ -107,15 +159,15 @@
 
                 <div class="account-card-stuff" >
 
-                  <h1 class="need-flex">
+                  <span class="need-flex">
                     <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %>
                     <%= account.platform.name %>
                     Account
                    <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
 
-                  </h1>
+                  </span>
 
-                  <h2 class='need-flex'>
+                  <span class='need-flex'>
                     <div>
                     Shared by
                     <% full_name = @user.first_name + ' ' + @user.last_name %>
@@ -149,7 +201,7 @@
                     </div>
                     <%= link_to "More info", platform_account_path(account), class: "main-button" %>
 
-                  </h2>
+                  </span>
 
                 </div>
 
@@ -217,6 +269,35 @@
 </div>
 
 <style>
+
+textarea#review_content {
+    border-radius: 11px;
+    border-color: #D7D1D1;
+}
+
+select#review_rating {
+    width: 30%;
+    border-radius: 11px;
+}
+
+input[type="submit"] {
+    margin: 10px;
+    color: white;
+    padding: 11px 65px;
+    font-weight: bold;
+    border-radius: 25px;
+    background: #FF4949;
+    border: none;
+}
+
+.review-form {
+    padding: 5%;
+    width: 80%;
+    margin-top: 5%;
+    border-radius: 25px;
+    margin-bottom: 5%;
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
+}
 
 span.title-account {
     font-weight: 600;
@@ -436,7 +517,6 @@ margin: auto 40px auto 40px;
 
 .own-account-card {
   width: 100% !important;
-  overflow: hidden;
   /*height: 120px;*/
   border-radius: 30px;
   background: white;
@@ -525,7 +605,6 @@ span.seats_available_colorized {
 .need-flex {
  display: flex;
  justify-content: space-between;
- width: 800px;
 }
 
 a.main-button {
