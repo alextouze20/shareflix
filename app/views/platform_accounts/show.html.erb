@@ -14,26 +14,43 @@
       <% end %>
     <div class="user-name-rating"><span class="user-name"><%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %>.</span><br/>
     <% review_sum = 0 %>
-      <% review_num = 1 %>
+      <% review_num = 0 %>
       <% stars = "" %>
-          <% @account.user.review_tenants.each do |review| %>
+          <% if @account.user.review_tenants != [] %>
+            <% @account.user.review_tenants.each do |review| %>
             <% review_sum += review.rating.to_i %>
             <% review_num += 1 %>
-          <% end %>
+            <% end %>
             <% review_avrg = review_sum / review_num %>
               <% review_avrg.round.times do  %>
                 <span>⭐️</span>
               <% end %>
+              <% else %>
+               <span>No reviews.</span>
+            <% end %>
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span><br/>
+      <span style="font-style: italic;">"<%= @account.user.bio[0..300] %>"</span><br/><br/>
       <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
     </div>
   </div>
+
+  <div class="about-reviews">
+    <div class="last-reviews">
+    <p id="title-review">
+      <%= @account.user.review_tenants == [] ? "#{@account.user.first_name.capitalize} doesn't have any reviews." : "#{@account.user.first_name.capitalize}'s last reviews:" %>
+    <% @account.user.review_tenants.first(3).each do |review| %>
+      <div class="review">
+        <p><% review.rating.times do %><span>⭐️</span><% end %> <span class="review-content">"<%= review.content[0, 30] %>" - <strong><%= review.account_owner.first_name.capitalize %> <%= review.account_owner.last_name.first %></strong></span></p>
+      </div>
+    <% end %>
+  </div>
+
   <div class="about-account">
     <div class="img-seats">
     <div id="platform-img">
       <%= cl_image_tag @account.platform.logo.key, width: 150, crop: :fill %>
     </div>
-    <span class="seats"><span class="seats_available_colorized"><%= @account.seats_available %></span>/<%= @account.seats_total %></span>
+    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= @account.seats_total %></span>
   </div>
   <!-- Button trigger modal -->
   <button type="button" class="btn request-button" data-toggle="modal" data-target="#exampleModalCenter">
@@ -100,6 +117,7 @@ input[type="submit"] {
   padding-bottom: 2%;
   color: white;
   font-weight: 500;
+  width: 40%;
 }
 
 .request-button:hover {
@@ -136,15 +154,15 @@ span.seats_available_colorized {
 }
 
 .title-header {
-  background-color: white;
-  border-radius: 0 0 40% 40%;
   padding-top: 10%;
+  background-image: url("https://i.ibb.co/mHxNmYj/wave-white.png");
   padding-bottom: 5%;
   padding-left: 20%;
   padding-right: 20%;
-  margin-left: -5%;
-  margin-right: -5%;
   text-align: center;
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .about-account-owner {
@@ -196,10 +214,19 @@ a.nav-link {
 .navbar.navbar-expand-sm.navbar-light {
     background-color: white;
 }
-</style>
 
-<script>
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-})
-</script>
+p#title-review {
+    margin-bottom: 2%;
+    font-weight: 600;
+}
+
+.last-reviews {
+    border-top: 2px solid #f3f3f3;
+    margin-top: 5%;
+    padding-top: 5%;
+}
+
+span.review-content {
+    font-style: italic;
+}
+</style>

@@ -10,6 +10,7 @@
 
 // Your CSS partials
 @import "components/index";
+@import "components/footer";
 @import "pages/index";
 @import "pages/construct";
 @import "pages/signup";
@@ -27,4 +28,8 @@ h1, h2, h3, h4, h5, p {
 body {
   font-family: Poppins, sans-serif;
   color: #2C2626;
+}
+
+.custom-container {
+  min-height: calc(100vh - 272px);
 }

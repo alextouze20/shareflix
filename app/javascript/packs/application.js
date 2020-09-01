@@ -24,6 +24,7 @@ require("channels")
 
 // External imports
 import "bootstrap";
+import { initPopover } from '../components/popover'
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 
@@ -43,6 +44,8 @@ document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   conditions();
   request_profile_display_accept_or_deny();
+  assign_subscription_type_to_account();
+  initPopover();
   submit();
   assign_subscription_type_to_account();
   refresh();
