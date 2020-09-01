@@ -78,21 +78,7 @@
 
         <% else %>
 
-        <p>The profile of someone else</p>
-        <%= @user.first_name %>
-        <%= @user.last_name %>
-
-        <h3>Leave a review for <%= @user.first_name %></h3>
-          <%= simple_form_for([@user, @review], url: profile_reviews_path(@user)) do |f| %>
-            <%= f.input :content, require: true %>
-            <%= f.input :rating, as: :select, collection: 1..5, require: true %>
-          <%= f.submit%>
-          <% end %>
-
-        <% end %>
-    </div>
-
-      <!----- OTHER USER PROFILE ------>
+     <!----- OTHER USER PROFILE ------>
 
       <style>
         div#nav-tab {
@@ -154,6 +140,11 @@
           <% end %>
         <% end %>
       </div>
+
+        <% end %>
+    </div>
+
+
 
       <div class="tab-pane fade need-some-margin-left" id="nav-own-accounts" role="tabpanel" aria-labelledby="nav-own-accounts-tab">
 
