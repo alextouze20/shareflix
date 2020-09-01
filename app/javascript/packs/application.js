@@ -37,7 +37,7 @@ import { conditions } from '../components/conditions';
 import { request_profile_display_accept_or_deny } from '../components/request_profile_display_accept_or_deny';
 import { assign_subscription_type_to_account } from '../components/assign_subscription_type_to_account';
 import {refresh} from '../components/refresh_messages'
-
+import{initChatroomCable} from '../channels/chatroom_channel'
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
@@ -46,4 +46,5 @@ document.addEventListener('turbolinks:load', () => {
   submit();
   assign_subscription_type_to_account();
   refresh();
+  initChatroomCable()
 });

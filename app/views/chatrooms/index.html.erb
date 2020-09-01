@@ -1,5 +1,6 @@
 <div class="row chats" data-controller="chatrooms">
   <div class="col-4 chatroom", id = "chatrooms">
+  <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <% @chatrooms.each do |chatroom| %>
       <span class = "chatroom<%= chatroom.id %> chatroom" data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#toto">
         <h3><%= chatroom.platform_account.user.first_name %></h3>
@@ -8,16 +9,29 @@
         <%= cl_image_tag chatroom.platform_account.user.photo.key, width: 150, crop: :fill if chatroom.platform_account.user.photo.attached? %>
       </span> <br>
         <% end %>
-    </div>
-  <div data-target = "chatrooms.messages" class="col-8 messages">
   </div>
-</div>
+    </div>
+<% @chatrooms.each do |chatroom| %>
+  <div id="messages-<%= chatroom.id%>" data-chatroom-id="<%= chatroom.id %>" class = "d-none messages">
+    <% chatroom.messages.each do |message| %>
+      <div class="message-container" id="message-<%= message.id %>">
+        <i class="author">
+          <span><%= message.user.first_name %></span>
+          <small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
+        </i>
+        <p><%= message.content %></p>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 <div class="d-none" data-user-id="<%= current_user.id %>"></div>
-<div class="form-message d-none">
-  <%= simple_form_for(@message) do |f| %>
-    <%= f.input_field :chatroom_id, value: 1, class: 'd-none chatroom-id' %>
-    <%= f.input_field :user_id, value: current_user.id, class: 'd-none' %>
-    <%= f.input :content %>
-    <%= f.submit data: { disable_with: false } %>
-  <% end %>
+
+<% message = Message.new %>
+<% @chatrooms.each do |chatroom| %>
+<div class="d-none form-chatroom form-<%= chatroom.id %>">
+  <%= simple_form_for [ chatroom, message ], remote: true do |f| %>
+  <%= f.input :content, label: false, placeholder: "Message" %>
+  <%= f.submit data: { disable_with: false } %>
+<% end %>
 </div>
+<% end %>
