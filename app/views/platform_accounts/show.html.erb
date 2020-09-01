@@ -2,20 +2,20 @@
 </div>
 
 <div class="full-box">
-  <div class="about-request">
-    <h1>Your request: <%= @account.platform.name %> - <%= @account.account_type %></h1>
-    <span>You are about to request to use a Netflix account of the member of the Shareflix community. By clicking “Send request” you agree to respect the behavior guidelines of the community. Any member that disrespect those guidelines will be banned from the website.</span>
-  </div>
-  <div class="about-account-owner">
-    <% if @account.user.photo.attached?  %>
+    <div class="about-request">
+      <h1>Your request: <%= @account.platform.name %> - <%= @account.account_type %></h1>
+      <span>You are about to request to use a Netflix account of the member of the Shareflix community. By clicking “Send request” you agree to respect the behavior guidelines of the community. Any member that disrespect those guidelines will be banned from the website.</span>
+    </div>
+    <div class="about-account-owner">
+      <% if @account.user.photo.attached?  %>
         <%= cl_image_tag  @account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
       <% else %>
         <%= image_tag "https://image.flaticon.com/icons/svg/1946/1946429.svg", class: "default-profile", width: 100, height: 100, crop: :fill  %>
       <% end %>
     <div class="user-name-rating"><span class="user-name"><%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %>.</span><br/>
-    <% review_sum = 0 %>
-      <% review_num = 0 %>
-      <% stars = "" %>
+      <% review_sum = 0 %>
+        <% review_num = 0 %>
+        <% stars = "" %>
           <% if @account.user.review_tenants != [] %>
             <% @account.user.review_tenants.each do |review| %>
             <% review_sum += review.rating.to_i %>
@@ -29,10 +29,10 @@
                <span>No reviews.</span>
             <% end %>
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span><br/>
-      <span style="font-style: italic;">"<%= @account.user.bio[0..300] %>"</span><br/><br/>
-      <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
-    </div>
-  </div>
+          <span style="font-style: italic;">"<%= @account.user.bio[0..300] %>"</span><br/><br/>
+          <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
+        </div>
+      </div>
 
   <div class="about-reviews">
     <div class="last-reviews">
@@ -50,7 +50,7 @@
     <div id="platform-img">
       <%= cl_image_tag @account.platform.logo.key, width: 150, crop: :fill %>
     </div>
-    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= @account.seats_total %></span>
+    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_total == nil || @account.seats_available == nil ? "error" : @account.seats_total - @account.seats_available %></span>/<%= @account.seats_total %></span>
   </div>
   <!-- Button trigger modal -->
   <button type="button" class="btn request-button" data-toggle="modal" data-target="#exampleModalCenter">
@@ -85,8 +85,8 @@
       </div>
     </div>
   </div>
+  </div>
 </div>
-
 
 <style>
 
@@ -154,15 +154,13 @@ span.seats_available_colorized {
 }
 
 .title-header {
-  padding-top: 10%;
-  background-image: url("https://i.ibb.co/mHxNmYj/wave-white.png");
-  padding-bottom: 5%;
+  padding-top: 5%;
+  background-color: white;
+  border-radius: 0% 0% 40% 40%;
+  padding-bottom: 15%;
   padding-left: 20%;
   padding-right: 20%;
   text-align: center;
-  background-position: bottom;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 .about-account-owner {

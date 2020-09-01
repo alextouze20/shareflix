@@ -1,14 +1,13 @@
 .footer {
-  color: #504646;
-  background-color: black;
-  padding-top: 10px;
-  padding-bottom: 1px ;
-  padding-left: 15px;
+  background-color: #2C2626 !important;
+  padding-top: 5%;
+  padding-bottom: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
 
   .paragraph a {
     opacity: 1;
     color: white;
-    margin-bottom: 5px;
   }
 
   .signature p {
@@ -20,3 +19,10 @@
   }
 }
 
+.paragraph {
+  margin-bottom: 5%;
+}
+
+.footer h4 {
+  color: #6d6363;
+}
