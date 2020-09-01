@@ -6,7 +6,7 @@
   </div>
   <p id="platform-desc"><%= @platform.description[0..300] %></p>
 </div>
-
+<div class="cards-box">
 <% @accounts.each do |account| %>
 <% if account.seats_total.present? %>
     <div class="card-account">
@@ -15,7 +15,7 @@
       <% else %>
         <%= image_tag "https://image.flaticon.com/icons/svg/1946/1946429.svg", class: "default-profile", width: 100, height: 100, crop: :fill  %>
       <% end %>
-      <span class="account-title"><span><%= @platform.name %> - <%= SubscriptionType.find_by(:id == account.account_type).name %></span><br/>
+      <span class="account-title"><span><%= @platform.name %> - <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %></span><br/>
       <span class="shared-by">Shared by <%= account.user.first_name.capitalize %> <%= account.user.last_name.first %>.<br/>
       <% review_sum = 0 %>
       <% review_num = 1 %>
@@ -36,8 +36,11 @@
       <% else %>
       <% end %>
     </div>
+    <% else %>
+  <% end %>
 <% end %>
 
+</div>
 <style>
 
 .platform-box {
@@ -72,6 +75,11 @@ div#platform-img {
   border-radius: 15px;
   justify-content: space-between;
   align-items: center;
+
+}
+
+.cards-box {
+  margin-bottom: 10%;
 }
 
 .shared-by {
@@ -100,6 +108,10 @@ a.main-button {
     font-weight: 600;
 }
 
+a.main-button:hover {
+   text-decoration: none;
+}
+
 .account-title {
   font-size: 1.5em;
   font-weight: 500;
@@ -111,16 +123,15 @@ img.user-profile {
 
 
 .title-header {
-  padding-top: 10%;
-  background-image: url("https://i.ibb.co/MSpvQNK/wave.png");
-  padding-bottom: 5%;
+  padding-top: 5%;
+  background-color: #FF4949;
+  border-radius: 0% 0% 40% 40%;
+  padding-bottom: 15%;
   padding-left: 20%;
   padding-right: 20%;
   text-align: center;
-  background-position: bottom;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
+
 
 .rating {
   color: black;
