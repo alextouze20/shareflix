@@ -8,6 +8,7 @@
 </div>
 <div class="cards-box">
 <% @accounts.each do |account| %>
+<% if account.seats_total.present? %>
     <div class="card-account">
       <% if account.user.photo.attached?  %>
         <%= cl_image_tag  account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
@@ -33,7 +34,10 @@
       <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
       <%= link_to "Join", platform_account_path(account), class: "main-button" %>
     </div>
+    <% else %>
+  <% end %>
 <% end %>
+
 </div>
 <style>
 
@@ -102,6 +106,10 @@ a.main-button {
     font-weight: 600;
 }
 
+a.main-button:hover {
+   text-decoration: none;
+}
+
 .account-title {
   font-size: 1.5em;
   font-weight: 500;
@@ -113,7 +121,7 @@ img.user-profile {
 
 
 .title-header {
-  padding-top: 10%;
+  padding-top: 5%;
   background-color: #FF4949;
   border-radius: 0% 0% 40% 40%;
   padding-bottom: 15%;
