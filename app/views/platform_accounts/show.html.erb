@@ -29,10 +29,11 @@
                <span style="font-style: italic; font-weight: 400;">No reviews.</span>
             <% end %>
           <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span><br/>
-          <span style="font-style: italic;">"<%= @account.user.bio[0..300] %>"</span><br/><br/>
-          <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
-        </div>
-      </div>
+
+      <span style="font-style: italic;">"<%= @account.user.bio[0..300] if @account.user.bio.present? %>"</span><br/><br/>
+      <%= link_to "Visit #{@account.user.first_name.capitalize}'s profile", profile_path(@account.user), class: "profile-link" %>
+    </div>
+  </div>
 
   <div class="about-reviews">
     <div class="last-reviews">
@@ -69,29 +70,29 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <% if current_user.platform_accounts.where(seats_total: nil) == [] %>
-        <h5 class="modal-title" id="exampleModalLongTitle">Community guidelines</h5>
+        <% if current_user.platform_accounts.any? { |account| account.seats_total != nil } %>
+          <h5 class="modal-title" id="exampleModalLongTitle">Community guidelines</h5>
         <% else %>
-        <h5 class="modal-title" id="exampleModalLongTitle" style="color: #FF4949;">You need to share an account first!</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle" style="color: #FF4949;">You need to share an account first!</h5>
         <% end %>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <% if current_user.platform_accounts.where(seats_total: nil) == [] %>
-        <p>Before sending a request to use <%= @account.user.first_name.capitalize %>'s <%= @account.platform.name %> account, please read the guidelines of the community. The respect of those guidelines is essential to the sake of the Shareflix community.</p>
-        <ul>
-          <li>I will not share this account with others</li>
-          <li>I will not share this account with others</li>
-          <li>I will not share this account with others</li>
-        </ul>
+        <% if current_user.platform_accounts.any? { |account| account.seats_total != nil } %>
+          <p>Before sending a request to use <%= @account.user.first_name.capitalize %>'s <%= @account.platform.name %> account, please read the guidelines of the community. The respect of those guidelines is essential to the sake of the Shareflix community.</p>
+          <ul>
+            <li>I will not share this account with others</li>
+            <li>I will not share this account with others</li>
+            <li>I will not share this account with others</li>
+          </ul>
         <% else %>
           <p>Shareflix is a community, in order to start joining the accounts of the community members. You need to share <strong>at least one of your account</strong> with the community.</p>
         <% end %>
       </div>
       <div class="modal-footer">
-        <% if current_user.platform_accounts.where(seats_total: nil) == [] %>
+        <% if current_user.platform_accounts.any? { |account| account.seats_total != nil } %>
           <%=  simple_form_for @account_seat do |f|%>
           <%= f.input_field :platform_account_id, value: @account.id, class: 'd-none' %>
           <%= f.input_field :user_id, value: current_user.id, class: 'd-none' %>
@@ -99,6 +100,7 @@
           <% end %>
         <% else %>
           <%= link_to "Share an account", construct_path, class: "button-create" %>
+
         <% end %>
       </div>
     </div>
