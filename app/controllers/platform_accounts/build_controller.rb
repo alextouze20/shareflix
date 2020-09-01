@@ -27,6 +27,10 @@ class PlatformAccounts::BuildController < ApplicationController
     redirect_to platform_account_build_path(@platform_account, PlatformAccount.form_steps.first)
   end
 
+  def finish_wizard_path
+    profile_path(current_user, tab: "accounts")
+  end
+
   private
 
   def strong_account(step)
