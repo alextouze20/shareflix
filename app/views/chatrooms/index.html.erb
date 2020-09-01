@@ -1,8 +1,11 @@
 <div class="row chats" data-controller="chatrooms">
   <div class="col-4 chatroom", id = "chatrooms">
     <% @chatrooms.each do |chatroom| %>
-      <span class = "chatroom<%= chatroom.id %>" data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#toto">
-        <%=  chatroom.platform_account.platform.name %>
+      <span class = "chatroom<%= chatroom.id %> chatroom" data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#toto">
+        <h3><%= chatroom.platform_account.user.first_name %></h3>
+        <% platform = Platform.find(chatroom.platform_account.platform_id) %>
+        <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
+        <%= cl_image_tag chatroom.platform_account.user.photo.key, width: 150, crop: :fill if chatroom.platform_account.user.photo.attached? %>
       </span> <br>
         <% end %>
     </div>
@@ -12,7 +15,7 @@
 <div class="d-none" data-user-id="<%= current_user.id %>"></div>
 <div class="form-message d-none">
   <%= simple_form_for(@message) do |f| %>
-    <%= f.input_field :chatroom_id, value: @chatrooms.first.id, class: 'd-none chatroom-id' %>
+    <%= f.input_field :chatroom_id, value: 1, class: 'd-none chatroom-id' %>
     <%= f.input_field :user_id, value: current_user.id, class: 'd-none' %>
     <%= f.input :content %>
     <%= f.submit data: { disable_with: false } %>

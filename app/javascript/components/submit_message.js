@@ -29,6 +29,7 @@ const submit = () => {
       const messages = document.querySelector(".messages")
       messages.scrollTop = messages.scrollHeight;
       console.log(messages)
+      form.querySelector("#message_content").value = ""
     })
   }
 }

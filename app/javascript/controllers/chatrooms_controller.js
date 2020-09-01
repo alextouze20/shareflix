@@ -2,19 +2,27 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = [ 'chatroom', 'messages' ];
-
   toto() {
+    document.querySelectorAll(".chatroom").forEach((chatroom) => {
+      chatroom.classList.remove("clicked")
+      console.log("clickedRemooved")
+    })
+    event.currentTarget.classList.add("clicked")
     event.preventDefault();
     const id = event.currentTarget.dataset.id;
     const formMessage = document.querySelector(".form-message")
     console.log(formMessage)
-    formMessage.classList.remove("d-none")
     const chatroomId = document.querySelector("#message_chatroom_id")
     chatroomId.value = id
     const messages = document.querySelector(".messages")
     const userId = parseInt(document.querySelector("[data-user-id]").dataset.userId, 10)
     console.log(chatroomId)
-    fetch(`http://localhost:3000/api/v1/chatrooms/${id}`)
+    const refreshMethod = () => {
+      const chatSpan = document.querySelector(".clicked")
+      chatSpan.click()
+      console.log(id)
+    }
+    fetch(`/api/v1/chatrooms/${id}`)
       .then(response => response.json())
       .then((data) => {
         messages.innerHTML = "";
@@ -38,7 +46,12 @@ export default class extends Controller {
           }
         countMsg += 1
       });
-    document.querySelector(".message0").scrollIntoView();
+    if(formMessage.classList.contains("d-none")){
+      document.querySelector(".message0").scrollIntoView();
+    }
+    formMessage.classList.remove("d-none")
+    var interval = setInterval(refreshMethod(), 3000);
     });
   }
 }
+
