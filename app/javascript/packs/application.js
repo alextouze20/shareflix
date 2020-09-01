@@ -25,7 +25,6 @@ require("channels")
 // External imports
 import "bootstrap";
 import { initPopover } from '../components/popover'
-
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 
@@ -38,6 +37,7 @@ import {submit} from '../components/submit_message'
 import { conditions } from '../components/conditions';
 import { request_profile_display_accept_or_deny } from '../components/request_profile_display_accept_or_deny';
 import { assign_subscription_type_to_account } from '../components/assign_subscription_type_to_account';
+import {refresh} from '../components/refresh_messages'
 
 
 document.addEventListener('turbolinks:load', () => {
@@ -47,5 +47,6 @@ document.addEventListener('turbolinks:load', () => {
   assign_subscription_type_to_account();
   initPopover();
   submit();
-  assign_subscription_type_to_account()
+  assign_subscription_type_to_account();
+  refresh();
 });

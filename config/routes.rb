@@ -20,9 +20,10 @@ Rails.application.routes.draw do
   resources :messages, only: [:new, :create]
   resources :profiles, only: [:edit, :update, :show, :destroy] do
     resources :reviews, only: [ :new, :create ]
+    resources :reports, only: [:new, :create]
   end
   resources :reviews, only: [ :destroy]
-
+  resources :reports, only: [:index, :destroy]
   # API
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
