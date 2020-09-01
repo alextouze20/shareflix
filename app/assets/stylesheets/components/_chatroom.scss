@@ -5,20 +5,27 @@ p{
 }
 .message-not-user{
   text-align: left;
-  width: auto;
+  background-color: grey;
+  color: black;
+  align-self: flex-start;
 }
 .message-from-user{
   text-align: right;
-  width: auto;
+  color: white;
+  background-color: red;
+  align-self: flex-end;
 }
 .form-message{
     width: 377px;
-    position: absolute;
-    right: 204px;
+    position: relative;
+    right: 50%;
+    top: 30px;
 }
 .messages{
   overflow: scroll;
-  max-height: 390px;
+  max-height: 75vh;
+  display: flex;
+  flex-direction: column;
 }
 .clicked{
   background-color: red;
@@ -26,4 +33,14 @@ p{
 }
 #chatrooms{
   background-color: grey;
+  height: 100vh;
+}
+.chatroom-container{
+  widows:100%;
+}
+.message{
+  padding: 10px;
+  margin-top: 10px;
+  width: fit-content;
+  border-radius: 30px;
 }

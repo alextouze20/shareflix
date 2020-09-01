@@ -45,6 +45,5 @@ document.addEventListener('turbolinks:load', () => {
   request_profile_display_accept_or_deny();
   submit();
   assign_subscription_type_to_account();
-  refresh();
   initChatroomCable()
 });

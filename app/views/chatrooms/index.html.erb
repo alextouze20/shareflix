@@ -1,37 +1,56 @@
-<div class="row chats" data-controller="chatrooms">
-  <div class="col-4 chatroom", id = "chatrooms">
-  <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-    <% @chatrooms.each do |chatroom| %>
-      <span class = "chatroom<%= chatroom.id %> chatroom" data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#toto">
-        <h3><%= chatroom.platform_account.user.first_name %></h3>
-        <% platform = Platform.find(chatroom.platform_account.platform_id) %>
-        <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
-        <%= cl_image_tag chatroom.platform_account.user.photo.key, width: 150, crop: :fill if chatroom.platform_account.user.photo.attached? %>
-      </span> <br>
-        <% end %>
-  </div>
+<div class="row chatroom-container">
+  <div class="col-6 col-md-4 chats" data-controller="chatrooms">
+    <div class=" chatroom", id = "chatrooms">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <% @chatrooms.each do |chatroom| %>
+        <span class = "chatroom<%= chatroom.id %> chatroom" data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#toto">
+          <h3><%= chatroom.platform_account.user.first_name %></h3>
+          <% platform = Platform.find(chatroom.platform_account.platform_id) %>
+          <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
+          <%= cl_image_tag chatroom.platform_account.user.photo.key, width: 150, crop: :fill if chatroom.platform_account.user.photo.attached? %>
+        </span> <br>
+          <% end %>
     </div>
-<% @chatrooms.each do |chatroom| %>
-  <div id="messages-<%= chatroom.id%>" data-chatroom-id="<%= chatroom.id %>" class = "d-none messages">
-    <% chatroom.messages.each do |message| %>
-      <div class="message-container" id="message-<%= message.id %>">
-        <i class="author">
-          <span><%= message.user.first_name %></span>
-          <small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
-        </i>
-        <p><%= message.content %></p>
+  </div>
+  </div>
+  <div class="col-7">
+    <% @chatrooms.each do |chatroom| %>
+      <div id="messages-<%= chatroom.id%>" data-chatroom-id="<%= chatroom.id %>" class = "d-none messages">
+        <% chatroom.messages.each do |message| %>
+        <% if current_user == message.user  %>
+            <div class="message-container message message-from-user" id="message-<%= message.id %>">
+                  <i class="author">
+                    <span><%= message.user.first_name %></span>
+                    <small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
+                  </i>
+                  <p><%= message.content %></p>
+              </div>
+          <% else %>
+            <div class="message-container message message-not-user" id="message-<%= message.id %>">
+              <i class="author">
+                <span><%= message.user.first_name %></span>
+                <small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
+              </i>
+              <p><%= message.content %></p>
+            </div>
+        <% end %>
+        <% end %>
       </div>
     <% end %>
-  </div>
-<% end %>
-<div class="d-none" data-user-id="<%= current_user.id %>"></div>
+    <div class = "d-none chatroom-selected"></div>
+    <div class="d-none" data-user-id="<%= current_user.id %>"></div>
 
-<% message = Message.new %>
-<% @chatrooms.each do |chatroom| %>
-<div class="d-none form-chatroom form-<%= chatroom.id %>">
-  <%= simple_form_for [ chatroom, message ], remote: true do |f| %>
-  <%= f.input :content, label: false, placeholder: "Message" %>
-  <%= f.submit data: { disable_with: false } %>
-<% end %>
+    <% message = Message.new %>
+    <% @chatrooms.each do |chatroom| %>
+    <div class="d-none form-chatroom form-<%= chatroom.id %>">
+      <%= simple_form_for [ chatroom, message ], remote: true do |f| %>
+      <%= f.input :content, label: false, placeholder: "Message" %>
+      <%= f.submit data: { disable_with: false } %>
+    <% end %>
+    </div>
+    <% end %>
 </div>
-<% end %>
+<%# reste à faire sur les chatrooms: -control du scroll (très rapide) ok pour la non création
+                                     -Ajax (presque fait)
+                                     -Front (améliorer les show des messages + chatrooms)
+                                     -Checker que tout fonctionne bien Surtout le Action c&ble %>
