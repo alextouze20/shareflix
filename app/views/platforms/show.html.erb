@@ -13,7 +13,7 @@
         <% if account.user.photo.attached?  %>
           <%= cl_image_tag  account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
         <% else %>
-          <%= image_tag "https://image.flaticon.com/icons/svg/1946/1946429.svg", class: "default-profile", width: 100, height: 100, crop: :fill  %>
+          <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", class: "default-profile", width: 100, height: 100, crop: :fill  %>
         <% end %>
         <span class="account-title"><span><%= @platform.name %> <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %></span><br/>
           <span class="shared-by">Shared by <%= account.user.first_name.capitalize %> <%= account.user.last_name.first %>.<br/>

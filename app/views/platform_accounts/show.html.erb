@@ -10,7 +10,7 @@
         <% if @account.user.photo.attached?  %>
           <%= cl_image_tag  @account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
         <% else %>
-          <%= image_tag "https://image.flaticon.com/icons/svg/1946/1946429.svg", class: "default-profile", width: 100, height: 100, crop: :fill  %>
+          <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", class: "default-profile", width: 100, height: 100, crop: :fill  %>
         <% end %>
       <div class="user-name-rating"><span class="user-name"><%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %>.</span><br/>
         <% review_sum = 0 %>
