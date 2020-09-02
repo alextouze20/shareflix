@@ -36,7 +36,7 @@
             <% end %>
           </span>
         </span>
-        <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
+        <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_available %></span>/<%= account.seats_total %></span>
         <%= link_to "Join", platform_account_path(account), class: "main-button" %>
       </div>
     <% end %>
