@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'platforms#index'
-  get '/chatrooms/', to: 'chatrooms#index'
+  resources :chatrooms, only: [:index] do
+    resources :messages, only: [:create]
+  end
   get '/construct/', to: 'platforms#construct'
 
   # get '/others_accounts/', to: 'profiles#others_accounts'
