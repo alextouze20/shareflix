@@ -53,7 +53,7 @@
     <div id="platform-img">
       <%= cl_image_tag @account.platform.logo.key, width: 150, crop: :fill %>
     </div>
-    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_total == nil || @account.seats_available == nil ? "error" : @account.seats_total - @account.seats_available %></span>/<%= @account.seats_total %></span>
+    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_total == nil || @account.seats_available == nil ? "error" : @account.seats_available %></span>/<%= @account.seats_total %></span>
   </div>
   <!-- Button trigger modal -->
   <% if @account.user != current_user %>
@@ -79,7 +79,7 @@
       </div>
       <div class="modal-body">
         <% if current_user.platform_accounts.any? { |account| account.seats_total != nil } %>
-        <p>Please read and notice that anyone that break these rules will be <em>instantly banned</em> from the website.</p>         
+        <p>Please read and notice that anyone that break these rules will be <em>instantly banned</em> from the website.</p>
         <ul>
           <li>You will not share <%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %>'s credentials with others from somewhere else</li>
           <li>You will not share your own account with other people</li>
