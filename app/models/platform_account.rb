@@ -17,7 +17,6 @@ class PlatformAccount < ApplicationRecord
 
   belongs_to :user
   belongs_to :platform
-  has_one :platform
   has_many :account_seats
   has_one :chatroom
   # has_one :subscription_type
