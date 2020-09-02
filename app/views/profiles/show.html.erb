@@ -165,7 +165,7 @@
                       <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %>
                       <%= account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_available %></span>/<%= account.seats_total %></span>
 
                     </h1>
 
@@ -244,7 +244,7 @@
                       <%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
                       <%= account_seat.platform_account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_total - account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
 
                     </h1>
 
@@ -338,11 +338,11 @@
                       <%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
                       <%= account_seat.platform_account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_total - account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
 
                     </h1>
 
-                    <h2 class='need-flex'>
+                    <h2 class='need-flex width-for-users-pfp'>
                       <div>
                       Shared by
                       <% full_name = account_seat.platform_account.user.first_name + ' ' + account_seat.platform_account.user.last_name %>
@@ -796,6 +796,10 @@ span.seats_available_colorized {
  justify-content: space-between;
 }
 
+.width-for-users-pfp {
+  width: 60%;
+}
+
 a.main-button {
     text-align: cemter;
     text-align: center;
@@ -813,7 +817,7 @@ a.main-button {
 }
 
 .request-card  {
-  width: 1150px !important;
+  width: 100% !important;
   overflow: hidden;
   /*height: 120px;*/
   border-radius: 30px;
