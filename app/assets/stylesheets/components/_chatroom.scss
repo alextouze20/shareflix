@@ -31,10 +31,11 @@
     top: 30px;
 }
 .messages{
-  overflow: scroll;
+  overflow-y: scroll;
   max-height: 75vh;
   display: flex;
   flex-direction: column;
+  width: 94%;
 }
 .clicked{
   background-color: red;
@@ -44,11 +45,16 @@
   height: 100vh;
 }
 .chatroom-container{
-  widows:100%;
 }
 .message{
+  width: 50%;
   padding: 10px;
   margin-top: 10px;
   width: fit-content;
   border-radius: 30px;
+}
+.submit-btn-chat{
+  border: none;
+  font-size: 50px;
+  background: transparent;
 }

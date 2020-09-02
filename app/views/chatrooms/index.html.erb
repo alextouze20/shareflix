@@ -1,5 +1,5 @@
-<div class="row chatroom-container" data-current-user-id="<%= current_user.id %>">
-  <div class="col-6 col-md-4 chats" data-controller="chatrooms">
+<div class="row chatroom-container" data-current-user-id="<%= current_user.id %>" id = "main-container" >
+  <div class="col-12 col-md-4 chats" data-controller="chatrooms">
     <div class=" chatroom", id = "chatrooms">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
       <% @chatrooms.each do |chatroom| %>
@@ -13,7 +13,7 @@
     </div>
   </div>
   </div>
-  <div class="col-7">
+  <div class="col-12 col-md-8 px-0">
     <% @chatrooms.each do |chatroom| %>
       <div id="messages-<%= chatroom.id%>" data-chatroom-id="<%= chatroom.id %>" class = "d-none messages">
         <% chatroom.messages.each do |message| %>
@@ -29,9 +29,15 @@
     <% @chatrooms.each do |chatroom| %>
     <div class="d-none form-chatroom form-<%= chatroom.id %>">
       <%= simple_form_for [ chatroom, message ], remote: true do |f| %>
-      <%= f.input :content, label: false, input_html: { class: "content-#{chatroom.id}" }, placeholder: "Message" %>
-      <%= f.submit data: { disable_with: false } %>
-    <% end %>
+      <div  class = "row justify-content-center">
+        <div class="col-8">
+          <%= f.input :content, label: false, input_html: { class: " content-#{chatroom.id}" }, placeholder: "Message" %>
+        </div>
+        <div class="col-4">
+          <%= f.submit '📮', class: " submit-btn-chat"%>
+        </div>
+      </div>
+      <% end %>
     </div>
     <% end %>
 </div>
