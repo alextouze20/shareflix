@@ -9,7 +9,7 @@
 
 <div class="cards-box">
   <% @accounts.each do |account| %>
-    <% if account.seats_total.present? %>
+    <% if account.seats_available.present? %>
       <div class="card-account">
         <% if account.user.photo.attached?  %>
           <%= cl_image_tag  account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
@@ -36,7 +36,7 @@
             <% end %>
           </span>
         </span>
-        <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_available %></span>/<%= account.seats_total %></span>
+        <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available %></span></span>
         <%= link_to "Join", platform_account_path(account), class: "main-button" %>
       </div>
     <% end %>

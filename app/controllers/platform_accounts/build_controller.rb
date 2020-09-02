@@ -42,7 +42,7 @@ class PlatformAccounts::BuildController < ApplicationController
                            when "subscription"
                              [:account_type]
                            when "seats"
-                             [:seats_total, :seats_available]
+                             [:seats_available]
                            end
 
     params.require(:platform_account).permit(permitted_attributes).merge(form_step: step)

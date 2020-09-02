@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_31_133736) do
+ActiveRecord::Schema.define(version: 2020_09_02_154137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,7 +75,6 @@ ActiveRecord::Schema.define(version: 2020_08_31_133736) do
 
   create_table "platform_accounts", force: :cascade do |t|
     t.integer "seats_available"
-    t.integer "seats_total"
     t.bigint "user_id", null: false
     t.bigint "platform_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -124,6 +123,7 @@ ActiveRecord::Schema.define(version: 2020_08_31_133736) do
     t.bigint "platform_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "seats_total"
     t.index ["platform_id"], name: "index_subscription_types_on_platform_id"
   end
 

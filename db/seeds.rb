@@ -40,8 +40,8 @@ hbo.logo.attach(io: File.open(file), filename: 'hbo-logo.png', content_type: 'im
 hbo.save!
 
 puts "Creating 2 subscription types netflix "
-normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
-premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
+normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly', seats_total: 4} )
+premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly', seats_total: 6} )
 
 puts "Merging tables netflix"
 normal.platform = netflix
@@ -50,8 +50,8 @@ normal.save!
 premium.save!
 
 puts "Creating 2 subscription types hbo "
-normalhbo = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 15.99, payment_frequency: 'monthly'} )
-premiumhbo = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 11.99, payment_frequency: 'monthly'} )
+normalhbo = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 15.99, payment_frequency: 'monthly', seats_total: 4} )
+premiumhbo = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 16.99, payment_frequency: 'monthly', seats_total: 6} )
 
 puts "Merging tables netflix hbo "
 normalhbo.platform = hbo
@@ -60,7 +60,7 @@ normalhbo.save!
 premiumhbo.save!
 
 puts "Creating 1 platform_account - fred"
-fred_account_hbo = PlatformAccount.new( { seats_available: 4, seats_total: 5, account_type: normal.id } )
+fred_account_hbo = PlatformAccount.new( { seats_available: 4, account_type: normalhbo.id } )
 
 fred_account_hbo.platform = hbo
 fred_account_hbo.user = fred
@@ -81,8 +81,8 @@ spotify.logo.attach(io: File.open(file), filename: 'spotify-logo.jpg', content_t
 spotify.save!
 
 puts "Creating 2 subscription_types"
-normal1 = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
-premium1 = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 11.99, payment_frequency: 'monthly'} )
+normal1 = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly', seats_total: 4} )
+premium1 = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 11.99, payment_frequency: 'monthly', seats_total: 6} )
 
 
 puts "Merging tables"
@@ -92,7 +92,7 @@ normal1.save!
 premium1.save!
 
 puts "Creating 1 platform_account"
-fred_account_spotify = PlatformAccount.new( { seats_available: 3, seats_total: 4, account_type: premium1.id } )
+fred_account_spotify = PlatformAccount.new( { seats_available: 3, account_type: premium1.id } )
 
 fred_account_spotify.platform = spotify
 fred_account_spotify.user = fred
