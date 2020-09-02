@@ -127,12 +127,9 @@ deezer.save!
 
 puts "Seed for chat"
 require "faker"
-netflix_chat = Chatroom.new(platform_account: fred_account_netflix)
 spotify_chat = Chatroom.new(platform_account: fred_account_spotify)
-ChatroomUser.create(chatroom: netflix_chat, user: fred, admin: true)
 ChatroomUser.create(chatroom: spotify_chat, user: fred, admin: true)
 10.times do
-  Message.create!(user: fred, content: Faker::Quote.famous_last_words, chatroom: netflix_chat)
   Message.create!(user: fred, content: Faker::Quote.famous_last_words, chatroom: spotify_chat)
 end
 puts "Finished."
