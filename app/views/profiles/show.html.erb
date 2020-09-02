@@ -330,17 +330,17 @@
           <% value_margin_left = 0 %>
           <% request.platform_account.account_seats.where(status: 'pending').each do |account_seat| %>
 
-                    <%= cl_image_tag account_seat.platform_account.platform.logo.key, width: 230, crop: :fill %>
 
 
-                    <h1 class="need-flex">
 
-                      <%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
-                      <%= account_seat.platform_account.platform.name %>
-                      Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+                    <div class="need-flex width-for-subsciption-type">
+                    <div class="class-img-tag-request">
+                    <%= cl_image_tag account_seat.platform_account.platform.logo.key, width: 230, crop: :fill, class: "logo-img-request" %>
+                    </div>
+                      <h1 id="adjust-subsciption-type"><%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
+                      Account</h1>
 
-                    </h1>
+                    </div>
 
                     <h2 class='need-flex width-for-users-pfp'>
                       <div>
@@ -354,7 +354,9 @@
                         <% end %>
                       <% end %>
 
+                        <% unless request.platform_account.account_seats.where(status: 'accepted') == [] %>
                         <%= 'with' %>
+                      <% end %>
 
                       <% account_seat.platform_account.account_seats.where(status: 'accepted').each do |seat| %>
                         <% value -= 1 %>
@@ -373,11 +375,15 @@
                       <% end %>
                       <% value_margin_left = 0 %>
                       </div>
-                      <%= link_to "More info", platform_account_path(account_seat.platform_account), class: "main-button" %>
+                      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+
 
 
                     </h2>
-
+                    <div class="need-flex">
+                    <%= link_to "More info on Account", platform_account_path(account_seat.platform_account), class: "main-button" %>
+                    <%= link_to "More info on User", profile_path(account_seat.platform_account.user), class: "main-button" %>
+                    </div>
           <% end %>
 
 
@@ -441,6 +447,11 @@
 img.logo-img {
   height: auto;
   width: 150px;
+}
+
+img.logo-img-request {
+  height: auto;
+  width: 230px;
 }
 
 textarea#review_content {
@@ -772,6 +783,15 @@ margin: auto 40px auto 40px;
   padding-right: 30px;
 }
 
+.class-img-tag-request {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-height: 15px;
+  margin: 18px 0px 15px 30px;
+  padding-right: 30px;
+}
+
 .remove-margin {
 /*margin: 0px 0px 0px 0px !important;
 */margin-top: 0px !important;
@@ -802,6 +822,8 @@ span.seats_available_colorized {
 
 .width-for-users-pfp {
   width: 60%;
+  justify-content: center !important;
+
 }
 
 a.main-button {
@@ -865,6 +887,7 @@ a.main-button {
   border: solid 1px grey;
   border-radius: 5px;
   margin-left: 10px;
+  font-size: 40px !important;
 }
 .red {
 background-color: #FE0000;
@@ -881,30 +904,18 @@ background-color: #1EB41F;
   flex-direction: row;
   margin-top: 10px;
 }
-/*.remove-margin:hover {
-    img {
-        opacity: 0.5;
-    }
-    span.text {
-        visibility: visible;
-        opacity: 1;
-    }
+
+#adjust-subsciption-type {
+  padding: 0px 0px 0px 0px !important;
+/*  line-height: -0.5px;
+*/  /*font-size: 30px;*/
 }
 
-span.text {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    top:82%;
-    left: 30%;
-    font-weight: 700;
-    font-family:"Source Sans", sans-serif;
-    font-size: 18px;
-    color:#FFF !important;
-    text-transform: uppercase;
-     -webkit-transition: .8s ease-in-out;
-    transition: .8s ease-in-out;
-}*/
-
+.width-for-subsciption-type {
+  display: flex;
+justify-content: center;
+width: 80%;
+padding-left: 123px;
+}
 
 </style>

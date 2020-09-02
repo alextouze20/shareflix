@@ -9,7 +9,13 @@ export default class extends Controller {
       const accountTab = this.element.dataset.tab;
       if (accountTab === "accounts") {
         document.getElementById('nav-own-accounts-tab').click();
+      } else if (accountTab === "borrowed_accounts") {
+        document.getElementById('nav-others-accounts-tab').click();
       }
+      else if (accountTab === "requests") {
+        document.getElementById('nav-requests-tab').click();
+      }
+
     // });
   }
 }

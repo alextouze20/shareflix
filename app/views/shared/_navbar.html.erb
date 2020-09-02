@@ -25,8 +25,9 @@
           <% end %>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <%= link_to "My profile", profile_path(current_user), class: "dropdown-item" %>
-            <%= link_to "My subscriptions", profile_path(current_user), class: "dropdown-item" %>
-            <%= link_to "My accounts", profile_path(current_user), class: "dropdown-item" %>
+            <%= link_to "My personal accounts", profile_path(current_user, tab: "accounts"), class: "dropdown-item" %>
+            <%= link_to "Borrowed accounts", profile_path(current_user, tab: "borrowed_accounts"), class: "dropdown-item" %>
+            <%= link_to "My requests", profile_path(current_user, tab: "requests"), class: "dropdown-item" %>
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
           </div>
         </li>
