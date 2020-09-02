@@ -2,10 +2,11 @@
 
 <div class="platform-box">
   <div id="platform-img">
-  <%= cl_image_tag @platform.logo.key, width: 150, crop: :fill %>
+    <%= cl_image_tag @platform.logo.key, width: 150, crop: :fill %>
   </div>
   <p id="platform-desc"><%= @platform.description[0..300] %></p>
 </div>
+
 <div class="cards-box">
   <% @accounts.each do |account| %>
     <% if account.seats_total.present? %>
@@ -41,6 +42,8 @@
     <% end %>
   <% end %>
 </div>
+
+
 <style>
 
 .platform-box {

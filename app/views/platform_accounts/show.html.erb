@@ -3,8 +3,8 @@
 
 <div class="full-box">
     <div class="about-request">
-      <h1>Request: <%= @account.platform.name %> <%= @account.account_type %> account</h1>
-      <span>You are about to request to use a <%= @account.platform.name %> account of the member of the Shareflix community. By clicking “Send request” you agree to respect the behavior guidelines of the community. Any member that disrespect those guidelines will be banned from the website.</span>
+      <h1>Your request : <%= @account.platform.name %>, <%= @account.account_type %> account</h1>
+      <span>You're about to ask <%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %> for using a <%= @account.platform.name %> account.<br> Make sure you agree with Shareflix' behavior guidelines, before validating your demand. The respect of those instructions is very essential to the sake of the community.</span>
     </div>
     <div class="about-account-owner">
         <% if @account.user.photo.attached?  %>
@@ -79,12 +79,12 @@
       </div>
       <div class="modal-body">
         <% if current_user.platform_accounts.any? { |account| account.seats_total != nil } %>
-          <p>Before sending a request to use <%= @account.user.first_name.capitalize %>'s <%= @account.platform.name %> account, please read the guidelines of the community. The respect of those guidelines is essential to the sake of the Shareflix community.</p>
-          <ul>
-            <li>I will not share this account with others</li>
-            <li>I will not share this account with others</li>
-            <li>I will not share this account with others</li>
-          </ul>
+        <p>Please read and notice that anyone that break these rules will be <em>instantly banned</em> from the website.</p>         
+        <ul>
+          <li>You will not share <%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %>'s credentials with others from somewhere else</li>
+          <li>You will not share your own account with other people</li>
+          <li>You will be very kind and respectful towards Shareflix' members ❤️ (no insults, no threats...)</li>
+        </ul>
         <% else %>
           <p>Shareflix is a community, in order to start joining the accounts of the community members. You need to share <strong>at least one of your account</strong> with the community.</p>
         <% end %>
