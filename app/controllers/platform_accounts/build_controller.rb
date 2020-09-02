@@ -28,6 +28,10 @@ class PlatformAccounts::BuildController < ApplicationController
   end
 
   def finish_wizard_path
+    @platform_account = PlatformAccount.find(params[:platform_account_id])
+    chatroom = Chatroom.new(platform_account: @platform_account)
+    chatroom.save
+    ChatroomUser.create(chatroom: chatroom, admin: true, user: current_user)
     profile_path(current_user, tab: "accounts")
   end
 
