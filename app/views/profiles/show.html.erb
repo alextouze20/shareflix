@@ -1,24 +1,92 @@
-<div class="title-header need-smaller-subscription" id="header-smaller">
-</div>
+<div data-controller="profile" data-tab="<%= params[:tab] %>">
 
-<div class="user-everything">
-<nav>
-  <div class="nav nav-tabs flex-column nav-user-page" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link nav-height active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true"><p>Your profile <i class="fas fa-chevron-right"></i></p></a>
-    <a class="nav-item nav-link nav-height" id="nav-own-accounts-tab" data-toggle="tab" href="#nav-own-accounts" role="tab" aria-controls="nav-own-accounts" aria-selected="false"><p>Your owned accounts <i class="fas fa-chevron-right"></i></p></a>
-    <a class="nav-item nav-link nav-height" id="nav-others-accounts-tab" data-toggle="tab" href="#nav-others-accounts" role="tab" aria-controls="nav-others-accounts" aria-selected="false"><p>Other's accounts <i class="fas fa-chevron-right"></i></p></a>
-    <a class="nav-item nav-link nav-height" id="nav-requests-tab" data-toggle="tab" href="#nav-requests" role="tab" aria-controls="nav-requests" aria-selected="false"><p>Requests <i class="fas fa-chevron-right"></i></p></a>
+  <div class="title-header need-smaller-subscription" id="header-smaller">
   </div>
-</nav>
 
-<div class="tab-content" id="nav-tabContent">
+  <div class="user-everything">
+  <nav>
+    <div class="nav nav-tabs flex-column nav-user-page" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link nav-height active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true"><p>Your profile <i class="fas fa-chevron-right"></i></p></a>
+      <a class="nav-item nav-link nav-height" id="nav-own-accounts-tab" data-toggle="tab" href="#nav-own-accounts" role="tab" aria-controls="nav-own-accounts" aria-selected="false"><p>Your owned accounts <i class="fas fa-chevron-right"></i></p></a>
+      <a class="nav-item nav-link nav-height" id="nav-others-accounts-tab" data-toggle="tab" href="#nav-others-accounts" role="tab" aria-controls="nav-others-accounts" aria-selected="false"><p>Other's accounts <i class="fas fa-chevron-right"></i></p></a>
+      <a class="nav-item nav-link nav-height" id="nav-requests-tab" data-toggle="tab" href="#nav-requests" role="tab" aria-controls="nav-requests" aria-selected="false"><p>Requests <i class="fas fa-chevron-right"></i></p></a>
+    </div>
+  </nav>
 
-    <div class="tab-pane fade show need-some-margin-left active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-      <div class="profile-info">
-        <% if @user == current_user %>
+  <div class="tab-content" id="nav-tabContent">
+
+      <div class="tab-pane fade show need-some-margin-left active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="profile-info">
+          <% if @user == current_user %>
+
+          <div class="space-between-div" >
+            <p>Your Profile Picture</p>
+            <% if @user.photo.attached? %>
+              <%= cl_image_tag @user.photo.key, height: 100, width: 100, crop: :fill, class: "pfp" %>
+            <% else %>
+              <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 100, width: 100, crop: :fill, class: "pfp" %>
+            <% end %>
+          </div>
+
+          <div class="space-between-div">
+            <p>Name</p>
+            <p><%= @user.first_name %> <%= @user.last_name %></p>
+          </div>
+
+          <div class="space-between-div" style="border-bottom: none;">
+            <p>Email</p>
+            <p><%= @user.email %></p>
+          </div>
+        </div>
+        <div class="edit-delete-div" >
+          <p><%= link_to "Edit my profile", edit_profile_path(current_user) %>
+          |
+          <%= link_to "Delete my profile",
+            profile_path(current_user),
+            method: :delete,
+            data: { confirm: "Delete your account?" } %></p>
+        </div>
+
+          <!-- List of MY reviews -->
+          <h2>Your Reviews <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= @reviews.count %> reviews) </h2>
+          <div class="review-card">
+
+
+
+          <% @reviews.each do |review| %>
+            <%= link_to profile_path(review.account_owner.id) do %>
+              <div class="individual-reviews-on-profile">
+
+                <% if review.account_owner.photo.attached? %>
+                  <%= cl_image_tag review.account_owner.photo.key, height: 80, width: 80, crop: :fill, class: "pfp" %>
+                <% else %>
+                  <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 80, width: 80, crop: :fill, class: "pfp" %>
+                <% end %>
+            <% end %>
+                <div class="review-card-text" >
+
+                  <span class="review-title" style="font-weight: 600;"><%= review.account_owner.first_name %> <%= review.account_owner.last_name %> gave you a rating of <%= review.rating %>/5⭐️</span><br/><br/>
+
+                  <span style="font-style: italic"><%= review.content %></span>
+
+                </div>
+
+              </div>
+          <% end %>
+        </div>
+
+        <% else %>
+
+     <!----- OTHER USER PROFILE ------>
+
+      <style>
+        div#nav-tab {
+          display: none;
+        }
+      </style>
 
         <div class="space-between-div" >
-          <p>Your Profile Picture:</p>
+          <p><%= @user.first_name.capitalize %>'s' Profile Picture</p>
           <% if @user.photo.attached? %>
             <%= cl_image_tag @user.photo.key, height: 100, width: 100, crop: :fill, class: "pfp" %>
           <% else %>
@@ -27,28 +95,28 @@
         </div>
 
         <div class="space-between-div">
-          <p>Name:</p>
+          <p>Name</p>
           <p><%= @user.first_name %> <%= @user.last_name %></p>
         </div>
 
-        <div class="space-between-div">
-          <p>Email:</p>
+        <div class="space-between-div" style="border-bottom: none;">
+          <p>Email</p>
           <p><%= @user.email %></p>
         </div>
       </div>
-      <div class="edit-delete-div" >
-        <p><%= link_to "Edit my profile", edit_profile_path(current_user) %>
-        |
-        <%= link_to "Delete my profile",
-          profile_path(current_user),
-          method: :delete,
-          data: { confirm: "Delete your account?" } %></p>
+      <!----- OTHER USER PROFILE - REVIEW FORM  ------>
+      <div class="review-form">
+      <p style="font-weight: 600;">Leave a review for <%= @user.first_name %></p>
+        <%= simple_form_for([@user, @review], url: profile_reviews_path(@user)) do |f| %>
+          <%= f.input :content, require: true %>
+          <%= f.input :rating, as: :select, collection: 1..5, require: true %>
+        <%= f.submit%>
+        <% end %>
       </div>
-
-        <!-- List of reviews -->
-        <h2>Your Reviews: <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= Review.count %> reviews total) </h2>
+      <h2><%= @user.first_name.capitalize %>'s reviews <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= @reviews.count %> reviews) </h2>
         <div class="review-card">
 
+        <!-- List of reviews OTHER USER -->
 
         <% @reviews.each do |review| %>
           <%= link_to profile_path(review.account_owner.id) do %>
@@ -58,160 +126,298 @@
                 <%= cl_image_tag review.account_owner.photo.key, height: 80, width: 80, crop: :fill, class: "pfp" %>
               <% else %>
                 <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 80, width: 80, crop: :fill, class: "pfp" %>
-              <% end %>
+                <% end %>
+          <% end %>
 
               <div class="review-card-text" >
 
-                <h2><%= review.account_owner.first_name %> <%= review.account_owner.last_name %> gave you a rating of <%= review.rating %>/5⭐️</h2>
+                <span class="review-title" style="font-weight: 600;"><%= review.account_owner.first_name %> <%= review.account_owner.last_name %> gave <%= @user.first_name.capitalize %> a rating of <%= review.rating %>/5⭐️</span><br/><br/>
 
-                <p><%= review.content %></p>
+                <span style="font-style: italic">"<%= review.content %>"</span>
 
               </div>
 
             </div>
-          <% end %>
         <% end %>
       </div>
 
-      <% else %>
-
-      <p>The profile of someone else</p>
-      <%= @user.first_name %>
-      <%= @user.last_name %>
-
-      <h3>Leave a review for <%= @user.first_name %></h3>
-        <%= simple_form_for([@user, @review], url: profile_reviews_path(@user)) do |f| %>
-          <%= f.input :content, require: true %>
-          <%= f.input :rating, as: :select, collection: 1..5, require: true %>
-        <%= f.submit%>
         <% end %>
+    </div>
 
-      <% end %>
+
+
+      <div class="tab-pane fade need-some-margin-left" id="nav-own-accounts" role="tabpanel" aria-labelledby="nav-own-accounts-tab">
+
+        <div class="own-account-card">
+          <%  value = 50  %>
+          <% value_margin_left = 0 %>
+          <% @user.platform_accounts.each do |account| %>
+
+              <% if account.seats_total.present? %>
+                <div class="individual-accounts-on-profile">
+                    <div class="class-img-tag-account-platform">
+                    <%= cl_image_tag account.platform.logo.key, width: 230, crop: :fill %>
+                    </div>
+
+                  <div class="account-card-stuff" >
+
+                    <h1 class="need-flex">
+                      <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %>
+                      <%= account.platform.name %>
+                      Account
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
+
+                    </h1>
+
+                    <h2 class='need-flex'>
+                      <div>
+                      Shared by
+                      <% full_name = @user.first_name + ' ' + @user.last_name %>
+                      <%= link_to profile_path(@user.id), title: full_name do %>
+                        <% if @user.photo.attached? %>
+                          <%= cl_image_tag @user.photo.key, height: 60, width: 60, crop: :fill , class: "pfp remove-margin" %>
+                        <% else %>
+                          <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
+                        <% end %>
+                      <% end %>
+
+                      <% unless account.account_seats.where(status: 'accepted') == [] %>
+                        <%= 'with' %>
+                      <% end %>
+
+                      <% account.account_seats.where(status: 'accepted').each do |account_seat| %>
+                        <% value -= 1 %>
+
+                        <% full_name = account_seat.user.first_name + ' ' + account_seat.user.last_name %>
+                         <%= link_to profile_path(account_seat.user.id), title: full_name do %>
+
+                          <% if account_seat.user.photo.attached? %>
+                            <%= cl_image_tag account_seat.user.photo.key, height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
+                          <% else %>
+                            <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
+                          <% end %>
+
+                        <% end %>
+                        <% value_margin_left = -28 %>
+
+                      <% end %>
+                      </div>
+                      <%= link_to "More info", platform_account_path(account), class: "main-button" %>
+
+                    </h2>
+
+                  </div>
+
+                </div>
+            <% end %>
+          <% end %>
+        </div>
+
   </div>
 
 
-<div class="tab-pane fade need-some-margin-left" id="nav-own-accounts" role="tabpanel" aria-labelledby="nav-own-accounts-tab">
 
 
 
-      <div class="own-account-card">
 
-        <% @user.platform_accounts.each do |account| %>
 
-            <div class="individual-accounts-on-profile">
-                <div class="class-img-tag-account-platform">
-                <%= cl_image_tag account.platform.logo.key, width: 230, crop: :fill %>
-                </div>
 
-              <div class="account-card-stuff" >
 
-                <h2>
-                  <%= SubscriptionType.find_by(:id == account.account_type).name %>
-                  <%= account.platform.name %>
-                  Account
-                </h2>
 
-                <h2>
-                  Shared by
-                  <% full_name = @user.first_name + ' ' + @user.last_name %>
-                  <%= link_to profile_path(@user.id), title: full_name do %>
-                    <% if @user.photo.attached? %>
-                      <%= cl_image_tag @user.photo.key, height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
-                    <% else %>
-                      <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp" %>
-                    <% end %>
-                  <% end %>
+  <div class="tab-pane fade need-some-margin-left" id="nav-others-accounts" role="tabpanel" aria-labelledby="nav-others-accounts-tab">
 
-                  <% unless account.account_seats.where(status: 'accepted') == [] %>
-                    <%= 'with' %>
-                  <% end %>
 
-                  <% account.account_seats.where(status: 'accepted').each do |account_seat| %>
 
-                    <% full_name = account_seat.user.first_name + ' ' + account_seat.user.last_name %>
-                     <%= link_to profile_path(account_seat.user.id), title: full_name do %>
+          <div class="own-account-card">
+          <%  value = 50  %>
+          <% value_margin_left = 0 %>
+          <% current_user.account_seats.where(status: 'accepted').each do |account_seat| %>
 
-                      <% if account_seat.user.photo.attached? %>
-                        <%= cl_image_tag account_seat.user.photo.key, height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
-                      <% else %>
-                        <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp" %>
+                <div class="individual-accounts-on-profile">
+                    <div class="class-img-tag-account-platform">
+                    <%= cl_image_tag account_seat.platform_account.platform.logo.key, width: 230, crop: :fill %>
+                    </div>
+
+                  <div class="account-card-stuff" >
+
+                    <h1 class="need-flex">
+                      <%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
+                      <%= account_seat.platform_account.platform.name %>
+                      Account
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_total - account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+
+                    </h1>
+
+                    <h2 class='need-flex'>
+                      <div>
+                      Shared by
+                      <% full_name = account_seat.platform_account.user.first_name + ' ' + account_seat.platform_account.user.last_name %>
+                      <%= link_to profile_path(account_seat.platform_account.user.id), title: full_name do %>
+                        <% if account_seat.platform_account.user.photo.attached? %>
+                          <%= cl_image_tag account_seat.platform_account.user.photo.key, height: 60, width: 60, crop: :fill , class: "pfp remove-margin" %>
+                        <% else %>
+                          <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
+                        <% end %>
                       <% end %>
 
-                    <% end %>
-                  <% end %>
-                </h2>
+                        <%= 'with' %>
 
-              </div>
+                      <% account_seat.platform_account.account_seats.where(status: 'accepted').each do |seat| %>
+                        <% value -= 1 %>
 
-            </div>
-        <% end %>
+                        <% full_name = seat.user.first_name + ' ' + seat.user.last_name %>
+                         <%= link_to profile_path(seat.user.id), title: full_name do %>
+
+                          <% if seat.user.photo.attached? %>
+                            <%= cl_image_tag seat.user.photo.key, height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
+                          <% else %>
+                            <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
+                          <% end %>
+
+                        <% end %>
+                        <% value_margin_left = -28 %>
+                      <% end %>
+                      <% value_margin_left = 0 %>
+                      </div>
+                      <%= link_to "More info", platform_account_path(account_seat.platform_account), class: "main-button" %>
+
+
+                    </h2>
+
+
+                  </div>
+
+                </div>
+          <% end %>
+        </div>
+
+
+  </div>
+
+
+
+
+
+  <div class="tab-pane fade need-some-margin-left" id="nav-requests" role="tabpanel" aria-labelledby="nav-requests-tab">
+
+
+
+    <% requests = @user.account_seats.where(user: current_user) %>
+    <% requests.each do |request|%>
+    <div class="request-card">
+      <h1>Request made to <%= request.platform_account.user.first_name %> <%= request.platform_account.user.last_name %></h1>
+
+
+        <% if request.status == 'pending' %>
+          <% color = 'yellow' %>
+         <% elsif request.status == 'accepted' %>
+          <% color = 'green' %>
+         <% elsif request.status == 'refused' %>
+          <% color = 'red' %>
+         <% end %>
+
+       <div class="request-status-div-containing"> <h2>  <%= 'Status:' %></h2> <h2   class="request-status <%= color %>" ><%=   request.status %></h2>
       </div>
 
-</div>
-
-<div class="tab-pane fade need-some-margin-left" id="nav-others-accounts" role="tabpanel" aria-labelledby="nav-others-accounts-tab">
-
-
-  <% @user.account_seats.each do |account_seat| %>
-    <p> <%= account_seat.platform_account.user.first_name %> <%= account_seat.platform_account.user.last_name %> </p>
-    <p> <%= account_seat.platform_account.seats_available %> / <%= account_seat.platform_account.seats_total %> </p>
-
-    <% account_seat.platform_account.account_seats.where(status: 'accepted').each do |seat| %>
-      <p> <%= seat.user.first_name %> <%= seat.user.last_name %> </p>
-    <% end %>
-  <% end %>
-
-
-</div>
-
-<div class="tab-pane fade need-some-margin-left" id="nav-requests" role="tabpanel" aria-labelledby="nav-requests-tab">
-  <h2>Your Requests to access other people's Accounts:</h2>
-  <% requests = @user.account_seats.where(user: current_user) %>
-  <% requests.each do |request|%>
-    <%= 'status: ' + request.status %>
-    <p>Platform: <%= request.platform_account.platform.name %></p>
-    <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
-    <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
-  <% end %>
-
-  <h2>The Request people have made to access your Accounts:</h2>
-
-  <% if @requests.where(status: 'pending') != [] %>
-    <% @requests.each do |request|%>
-
-      <%= 'status: ' + request.status %>
-      <p>Platform: <%= request.platform_account.platform.name %></p>
-      <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
+      <%= cl_image_tag request.platform_account.platform.logo.key, width: 230, crop: :fill %>
       <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
-
-      <div class="change-request-button-into-text">
-        <%=  simple_form_for(request, html: { class: 'change_request_button_into_accept' }) do |f|%>
-          <%= f.input_field :status, value: 'accepted', class: 'd-none' %>
-          <%= f.submit 'accept' %>
-        <% end %>
-
-        <%=  simple_form_for(request, html: { class: 'change_request_button_into_deny' }) do |f|%>
-          <%= f.input_field :status, value: 'denied', class: 'd-none' %>
-          <%= f.submit 'deny access' %>
-        <% end %>
-      </div>
-
+  </div>
     <% end %>
-    <% else %>
-      <h2>No requests for now</h2>
-  <% end %>
-</div>
+
+
+    <h2>The Request people have made to access your Accounts:</h2>
+
+    <% if @requests.where(status: 'pending') != [] %>
+      <% @requests.each do |request|%>
+
+         <% if request.status == 'pending' %>
+          <% color = 'yellow' %>
+         <% elsif request.status == 'accepted' %>
+          <% color = 'green' %>
+         <% elsif request.status == 'refused' %>
+          <% color = 'red' %>
+         <% end %>
+
+        <div> <h2>  <%= 'Status: ' %></h2><h2 class="request-status <%= color %>"><%=   request.status %></h2>
+
+        </div>
+        <p>Platform: <%= request.platform_account.platform.name %></p>
+        <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
+        <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
+
+        <div class="change-request-button-into-text">
+          <%=  simple_form_for(request, html: { class: 'change_request_button_into_accept' }) do |f|%>
+            <%= f.input_field :status, value: 'accepted', class: 'd-none' %>
+            <%= f.submit 'accept' %>
+          <% end %>
+
+          <%=  simple_form_for(request, html: { class: 'change_request_button_into_deny' }) do |f|%>
+            <%= f.input_field :status, value: 'denied', class: 'd-none' %>
+            <%= f.submit 'deny access' %>
+          <% end %>
+        </div>
+
+      <% end %>
+      <% else %>
+        <h2>No requests for now</h2>
+    <% end %>
+  </div>
+
+  </div>
+  </div>
 
 </div>
-</div>
-
 <style>
+
+textarea#review_content {
+    border-radius: 11px;
+    border-color: #D7D1D1;
+}
+
+select#review_rating {
+    width: 30%;
+    border-radius: 11px;
+}
+
+input[type="submit"] {
+    margin: 10px;
+    color: white;
+    padding: 11px 65px;
+    font-weight: bold;
+    border-radius: 25px;
+    background: #FF4949;
+    border: none;
+}
+
+.review-form {
+    padding: 5%;
+    width: 100%;
+    margin-top: 5%;
+    border-radius: 25px;
+    margin-bottom: 5%;
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+span.title-account {
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+img.logo-account {
+  width: auto;
+  height: 50px;
+}
+
+
+div#nav-tabContent {
+    width: 60%;
+}
 
 body {
   background-color: white;
 }
 h1, p {
-  color: black;
+  color: #2C2626;
 }
 .custom-container {
   min-height: 90vh;
@@ -246,14 +452,12 @@ h1, p {
     transition-duration: 0.8s;
 }
 .title-header {
-  background-color: black;
+  background-color: #2C2626;
   padding-top: 10%;
-  border-radius: 0 0 20% 20%;
+  border-radius: 0 0 40% 40%;
   padding-bottom: 8%;
   padding-left: 20%;
   padding-right: 20%;
-  margin-left: -5%;
-  margin-right: -5%;
   text-align: center;
 }
 h1 {
@@ -267,9 +471,20 @@ a.nav-link {
   color: white;
 }
 .navbar.navbar-expand-sm.navbar-light {
-    background-color: black;
+    background-color: #2C2626;
 }
 
+a#nav-profile-tab:hover {
+    text-decoration: none !important;
+}
+
+a#nav-others-accounts-tab:hover {
+    text-decoration: none !important;;
+}
+
+a#nav-requests-tab:hover {
+    text-decoration: none !important;;
+}
 
 .nav-user-page {
 width: 500px !important;
@@ -277,8 +492,11 @@ margin-top: -50px;
 background-color: black;
 border-radius: 15px;
 overflow: hidden;
-border: 1px #FF4949 solid;
 margin-left: 60px;
+}
+
+a#nav-own-accounts-tab:hover {
+    text-decoration: none;
 }
 
 .user-everything {
@@ -299,7 +517,7 @@ margin-left: 60px;
 }
 
 .profile-info {
-width: 1150px !important;
+width: 100% !important;
 margin-top: -50px;
 background-color: white;
 border-radius: 30px;
@@ -320,6 +538,10 @@ box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
   font-size: 18px;
 
   font-weight: bold;
+}
+
+.edit-delete-div > p > a:hover {
+  color: #FF4949;
 }
 
 .need-some-margin-left {
@@ -350,7 +572,6 @@ margin: auto 40px auto 40px;
   height: 150px;
 }
 .edit-delete-div {
-  display: flex;
   justify-content: flex-end;
   padding-bottom: 125px;
   padding-top: 20px;
@@ -361,7 +582,7 @@ margin: auto 40px auto 40px;
 
 
 .review-card {
-  width: 1150px !important;
+  width: 80% !important;
   overflow: hidden;
   /*height: 120px;*/
   border-radius: 30px;
@@ -392,8 +613,9 @@ margin: auto 40px auto 40px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  width: 1150px;
   height: 150px;
+  width: 100%;
+  align-items: center;
   border-bottom: lightgray 1px solid;
 }
 .individual-reviews-on-profile .pfp {
@@ -409,8 +631,7 @@ margin: auto 40px auto 40px;
 
 
 .own-account-card {
-  width: 1150px !important;
-  overflow: hidden;
+  width: 100% !important;
   /*height: 120px;*/
   border-radius: 30px;
   background: white;
@@ -422,10 +643,18 @@ margin: auto 40px auto 40px;
 
 }
 
-.own-account-card h2 {
+.own-account-card h1 {
   font-size: 24px;
   font-weight: bold;
-  margin-top: 15px;
+  color: black !important;
+  margin-bottom: 0px;
+  margin-top: 40px;
+}
+
+.own-account-card h2 {
+  font-size: 21px;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .own-account-card p {
@@ -440,7 +669,7 @@ margin: auto 40px auto 40px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  width: 1150px;
+  width: 100%
   height: 200px;
   border-bottom: lightgray 1px solid;
 }
@@ -448,6 +677,8 @@ margin: auto 40px auto 40px;
 
 .account-card-stuff {
   padding: 16px;
+  padding-top: 10%;
+  padding-bottom: 10%;
 }
 
 
@@ -463,9 +694,110 @@ margin: auto 40px auto 40px;
 }
 
 .remove-margin {
-margin: 0px 0px 0px 0px !important;
+/*margin: 0px 0px 0px 0px !important;
+*/margin-top: 0px !important;
+margin-bottom: 0px !important;
+margin-right: 0px !important;
+
 }
 
+.settings-for-surperposition {
+  position: sticky;
+  border: 2px white solid;
+
+}
+
+.seats {
+  font-size: 40px;
+  margin: -8px 30px;
+}
+
+span.seats_available_colorized {
+    color: #FF4949;
+}
+
+.need-flex {
+ display: flex;
+ justify-content: space-between;
+}
+
+a.main-button {
+    text-align: cemter;
+    text-align: center;
+    background-color: #FF4949;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 60px;
+    color: white;
+    font-weight: 600;
+    font-size: 18px !important;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.request-card  {
+  width: 1150px !important;
+  overflow: hidden;
+  /*height: 120px;*/
+  border-radius: 30px;
+  background: white;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: -50px;
+  margin-bottom: 80px;
+}
+
+.request-card h1 {
+/*  font-size: 24px;
+*/  font-weight: bold;
+  color: black !important;
+/*  margin-bottom: 30px;
+*/  margin-top: 30px;
+}
+
+.request-card h2 {
+  font-size: 32px;
+  font-weight: bold;
+/*  margin-top: 15px;
+*/}
+
+.request-card p {
+  font-size: 16px;
+  line-height: 1.4;
+  opacity: .7;
+/*  margin-bottom: 0;
+  margin-top: -60px;
+*/}
+
+.individual-requests-on-profile {
+
+}
+.request-status {
+
+  padding: 2px 5px 2px 5px;
+  border: solid 1px grey;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+.red {
+background-color: red;
+}
+.green {
+background-color: green;
+}
+.yellow {
+  background-color: #FFC107;
+}
+.request-status-div-containing {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 10px;
+}
 /*.remove-margin:hover {
     img {
         opacity: 0.5;
