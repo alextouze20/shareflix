@@ -18,46 +18,53 @@ Review.destroy_all
 
 
 puts "Creating 2 user"
-alex = User.new( { first_name: "Alex", last_name: "Touze", password: "azertyuiop", email: "alex@shareflix.com", country: 'France', bio: "Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Proin eget tortor risus. Nulla quis lorem ut libero malesuada feugiat."  } )
+alex = User.new( { first_name: "Alex", last_name: "Touze", password: "azertyuiop", email: "alex@shareflix.com", country: 'France', bio: "My name is Alex and I'm a big fan of cinema. My favorite TV show is The Wire by David Simon."  } )
 alexpfp = URI.open("https://ca.slack-edge.com/T02NE0241-U016C4UCDMY-d679a8ccd566-512")
 alex.photo.attach(io: File.open(alexpfp), filename: 'admin-pfp.jpg', content_type: 'image/jpg')
 alex.save!
 
-fred = User.new( { first_name: "Fred", last_name: "Gégé", password: "azertyuiop", email: "fred@shareflix.com", country: 'France', bio: "Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Proin eget tortor risus. Nulla quis lorem ut libero malesuada feugiat." } )
-fredpfp = URI.open("https://a1cf74336522e87f135f-2f21ace9a6cf0052456644b80fa06d4f.ssl.cf2.rackcdn.com/images/characters_opt/scooby-fred.jpg")
+fred = User.new( { first_name: "Fred", last_name: "Gégé", password: "azertyuiop", email: "fred@shareflix.com", country: 'France', bio: "My name is Frederic and I'm a big fan of old 70's movie like Marathon Man etc." } )
+fredpfp = URI.open("https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=550&w=550")
 fred.photo.attach(io: File.open(fredpfp), filename: 'admin-pfp.jpg', content_type: 'image/jpg')
 fred.save!
 
-puts "Creating 1 platform"
+puts "Creating 2 platform netflix + hbo"
 netflix = Platform.new( { category: "vod_streaming", name: "Netflix", max_seats_available: 6, description: "Watch Netflix movies & TV shows online or stream right to your smart TV, game console, PC, Mac, mobile, tablet and more."  } )
 file = URI.open('https://upload.wikimedia.org/wikipedia/commons/0/0f/Logo_Netflix.png')
 netflix.logo.attach(io: File.open(file), filename: 'netflix-logo.jpg', content_type: 'image/jpg')
 netflix.save!
 
-puts "Creating 2 subscription types"
-normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 15.99, payment_frequency: 'monthly'} )
-premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 11.99, payment_frequency: 'monthly'} )
+hbo = Platform.new( { category: "vod_streaming", name: "HBO", max_seats_available: 6, description: "Discover full episodes of original series, movies, schedule information, exclusive video content, episode guides and more. With HBO GO®, enjoy instant and unlimited access to every episode of every season of the best HBO shows, movies, comedy, sports, and documentaries."  } )
+file = URI.open('https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/844px-HBO_logo.svg.png')
+hbo.logo.attach(io: File.open(file), filename: 'hbo-logo.png', content_type: 'image/png')
+hbo.save!
 
-puts "Merging tables"
+puts "Creating 2 subscription types netflix "
+normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
+premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
+
+puts "Merging tables netflix"
 normal.platform = netflix
 premium.platform = netflix
 normal.save!
 premium.save!
 
-puts "Creating 2 platform_account"
-alex_account_netflix = PlatformAccount.new( { seats_available: 2, seats_total: 5, account_type: normal.id } )
-fred_account_netflix = PlatformAccount.new( { seats_available: 4, seats_total: 5, account_type: normal.id } )
+puts "Creating 2 subscription types hbo "
+normalhbo = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 15.99, payment_frequency: 'monthly'} )
+premiumhbo = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 11.99, payment_frequency: 'monthly'} )
 
+puts "Merging tables netflix hbo "
+normalhbo.platform = hbo
+premiumhbo.platform = hbo
+normalhbo.save!
+premiumhbo.save!
 
+puts "Creating 1 platform_account - fred"
+fred_account_hbo = PlatformAccount.new( { seats_available: 4, seats_total: 5, account_type: normal.id } )
 
-
-alex_account_netflix.platform = netflix
-alex_account_netflix.user = alex
-alex_account_netflix.save!
-
-fred_account_netflix.platform = netflix
-fred_account_netflix.user = fred
-fred_account_netflix.save!
+fred_account_hbo.platform = hbo
+fred_account_hbo.user = fred
+fred_account_hbo.save!
 
 # puts "Attempting to create an account seat for fred on alex's netflix account"
 # account_seat = AccountSeat.new( { status: 'pending' } )
@@ -74,7 +81,7 @@ spotify.logo.attach(io: File.open(file), filename: 'spotify-logo.jpg', content_t
 spotify.save!
 
 puts "Creating 2 subscription_types"
-normal1 = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 15.99, payment_frequency: 'monthly'} )
+normal1 = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
 premium1 = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 11.99, payment_frequency: 'monthly'} )
 
 
@@ -87,26 +94,11 @@ premium1.save!
 puts "Creating 1 platform_account"
 fred_account_spotify = PlatformAccount.new( { seats_available: 3, seats_total: 4, account_type: premium1.id } )
 
-
 fred_account_spotify.platform = spotify
 fred_account_spotify.user = fred
 fred_account_spotify.save!
 
 puts "Agaaaaiiinnnnnn"
-
-puts "Creating 6 platforms"
-hbo = Platform.new( { category: "vod_streaming", name: "HBO", max_seats_available: 6, description: "Discover full episodes of original series, movies, schedule information, exclusive video content, episode guides and more. With HBO GO®, enjoy instant and unlimited access to every episode of every season of the best HBO shows, movies, comedy, sports, and documentaries."  } )
-file = URI.open('https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/844px-HBO_logo.svg.png')
-hbo.logo.attach(io: File.open(file), filename: 'hbo-logo.png', content_type: 'image/png')
-hbo.save!
-
-puts "Creating 2 subscription types"
-normalhbo = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 15.99, payment_frequency: 'monthly'} )
-premiumhbo = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 11.99, payment_frequency: 'monthly'} )
-normalhbo.platform = hbo
-premiumhbo.platform = hbo
-normalhbo.save!
-premiumhbo.save!
 
 yt_music = Platform.new( { category: "music_streaming", name: "Youtube Music", max_seats_available: 6, description: "Visit the YouTube Music Channel to find today's top talent, featured artists, and playlists. Subscribe to see the latest in the music world."  } )
 file = URI.open("https://www.ladn.eu/wp-content/uploads/2018/06/youtube.jpg")
