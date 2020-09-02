@@ -10,12 +10,19 @@
 
 const submit = () => {
   if(document.querySelector("#chatrooms")){
-    const id = document.querySelector(".chatroom-selected")
     const forms = document.querySelectorAll(".form-chatroom")
     forms.forEach((form) =>{
       console.log(form)
       form.addEventListener("submit", (event) => {
-        console.log(form.value())
+        const id = document.querySelector(".chatroom-selected").innerText
+        console.log(id)
+        const content = document.querySelector(`.content-${id}`);
+        document.querySelector(`#messages-${id}`).insertAdjacentHTML("beforeend",
+                                                                                  `<div class="message-container message message-from-user" id="message-<%= message.id %>">
+                                                                                      <p>${content.value}</p>
+                                                                                  </div>`
+        );
+        content.value = "";
       })
     })
   }

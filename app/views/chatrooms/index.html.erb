@@ -44,7 +44,7 @@
     <% @chatrooms.each do |chatroom| %>
     <div class="d-none form-chatroom form-<%= chatroom.id %>">
       <%= simple_form_for [ chatroom, message ], remote: true do |f| %>
-      <%= f.input :content, label: false, placeholder: "Message" %>
+      <%= f.input :content, label: false, input_html: { class: "content-#{chatroom.id}" }, placeholder: "Message" %>
       <%= f.submit data: { disable_with: false } %>
     <% end %>
     </div>
