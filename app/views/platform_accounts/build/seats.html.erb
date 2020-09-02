@@ -26,10 +26,21 @@
       <% end %>
   </div>
 </div>
-<%= link_to 'Previous', previous_wizard_path %>
 
+<div class="back-button-box">
+  <%= link_to 'Previous', previous_wizard_path, class: "back-button" %>
+</div>
 
 <style>
+
+.back-button-box {
+    text-align: center;
+}
+
+.back-button-box > a:hover {
+    color: #FF4949;
+}
+
 body {
   background-color: #FFEAEA;
 }

@@ -3,7 +3,7 @@
 
 <div class="full-box">
     <div class="about-request">
-      <h1>Your request : <%= @account.platform.name %>, <%= @account.account_type %> account</h1>
+      <h1><%= @account.user.first_name.capitalize %>'s <%= @account.platform.name %> account</h1>
       <span>You're about to ask <%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %> for using a <%= @account.platform.name %> account.<br> Make sure you agree with Shareflix' behavior guidelines, before validating your demand. The respect of those instructions is very essential to the sake of the community.</span>
     </div>
     <div class="about-account-owner">
