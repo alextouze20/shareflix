@@ -16,8 +16,7 @@
       <%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
         <div class="login-container">
           <div class="form-inputs login-form">
-          <%= f.input :seats_total, label: "How many people can use your account in total?" %>
-          <%= f.input :seats_available, label: "How many of those slots do you want to share on shareflix?" %>
+          <%= f.input :seats_available, label: "How many people can use this account?" %>
           </div>
           <div class="form-actions btn-login">
             <%= f.submit value: "Finalize Account"  %>

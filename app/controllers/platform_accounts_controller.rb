@@ -27,6 +27,6 @@ class PlatformAccountsController < ApplicationController
   end
 
   def strong_account
-    params.require(:platform_account).permit(:user, :seats_available, :seats_total, :family_account?, :platform)
+    params.require(:platform_account).permit(:user, :seats_available, :family_account?, :platform)
   end
 end
