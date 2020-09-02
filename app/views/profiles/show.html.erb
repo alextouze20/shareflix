@@ -103,7 +103,7 @@
         </div>
       </div>
       <div class="review-form">
-      <p>Leave a review for <%= @user.first_name %></p>
+      <p style="font-weight: 600;">Leave a review for <%= @user.first_name %></p>
         <%= simple_form_for([@user, @review], url: profile_reviews_path(@user)) do |f| %>
           <%= f.input :content, require: true %>
           <%= f.input :rating, as: :select, collection: 1..5, require: true %>
@@ -114,6 +114,7 @@
       <h2><%= @user.first_name.capitalize %>'s reviews <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= Review.count %> reviews) </h2>
         <div class="review-card">
 
+        <!-- List of reviews OTHER USER -->
 
         <% @reviews.each do |review| %>
           <%= link_to profile_path(review.account_owner.id) do %>
@@ -123,18 +124,18 @@
                 <%= cl_image_tag review.account_owner.photo.key, height: 80, width: 80, crop: :fill, class: "pfp" %>
               <% else %>
                 <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 80, width: 80, crop: :fill, class: "pfp" %>
-              <% end %>
+                <% end %>
+          <% end %>
 
               <div class="review-card-text" >
 
-                <h2><%= review.account_owner.first_name %> <%= review.account_owner.last_name %> gave <%= @user.first_name.capitalize %> a rating of <%= review.rating %>/5⭐️</h2>
+                <span class="review-title" style="font-weight: 600;"><%= review.account_owner.first_name %> <%= review.account_owner.last_name %> gave <%= @user.first_name.capitalize %> a rating of <%= review.rating %>/5⭐️</span><br/><br/>
 
-                <p>"<%= review.content %>"</p>
+                <span style="font-style: italic">"<%= review.content %>"</span>
 
               </div>
 
             </div>
-          <% end %>
         <% end %>
       </div>
 
@@ -468,7 +469,7 @@ margin: auto 40px auto 40px;
 
 
 .review-card {
-  width: 100% !important;
+  width: 80% !important;
   overflow: hidden;
   /*height: 120px;*/
   border-radius: 30px;
@@ -499,8 +500,9 @@ margin: auto 40px auto 40px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  width: 100%;
   height: 150px;
+  width: 100%;
+  align-items: center;
   border-bottom: lightgray 1px solid;
 }
 .individual-reviews-on-profile .pfp {
