@@ -4,12 +4,26 @@
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
       <% @chatrooms.each do |chatroom| %>
         <span class = "chatroom<%= chatroom.id %> chatroom" data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#toto">
-          <h3><%= chatroom.platform_account.user.first_name %></h3>
-          <% platform = Platform.find(chatroom.platform_account.platform_id) %>
-          <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
-          <%= cl_image_tag chatroom.platform_account.user.photo.key, width: 150, crop: :fill if chatroom.platform_account.user.photo.attached? %>
+          <div class="elements-chatroom row">
+            <div class="col-4">
+              <h3><%= chatroom.platform_account.user.first_name %></h3>
+              <% platform = Platform.find(chatroom.platform_account.platform_id) %>
+              <%= cl_image_tag platform.logo.key, width: 100, crop: :fill if platform.logo.attached? %>
+            </div>
+            <div class="photos row col-8 align-items-center">
+              <% chatroom.users.each do |user|  %>
+                <div class="col-3">
+                  <% if user.photo.attached? %>
+                    <%= cl_image_tag user.photo.key,class: "user-avatar", crop: :fill %>
+                  <% else %>
+                    <img class = "user-avatar" src="https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png" alt="">
+                  <% end %>
+              </div>
+              <% end %>
+            </div>
+          </div>
         </span> <br>
-          <% end %>
+        <% end %>
     </div>
   </div>
   </div>
