@@ -5,6 +5,7 @@ class ProfilesController < ApplicationController
     @reviews = Review.where(account_tenant_id: @user)
     @requests = AccountSeat.where(platform_account: @user.platform_accounts)
     authorize @user
+    @user.platform_accounts.where(seats_total: nil).destroy_all
   end
 
   def edit

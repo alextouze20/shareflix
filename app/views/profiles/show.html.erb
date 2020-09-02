@@ -8,7 +8,7 @@
     <div class="nav nav-tabs flex-column nav-user-page" id="nav-tab" role="tablist">
       <a class="nav-item nav-link nav-height active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true"><p>Your profile <i class="fas fa-chevron-right"></i></p></a>
       <a class="nav-item nav-link nav-height" id="nav-own-accounts-tab" data-toggle="tab" href="#nav-own-accounts" role="tab" aria-controls="nav-own-accounts" aria-selected="false"><p>Your owned accounts <i class="fas fa-chevron-right"></i></p></a>
-      <a class="nav-item nav-link nav-height" id="nav-others-accounts-tab" data-toggle="tab" href="#nav-others-accounts" role="tab" aria-controls="nav-others-accounts" aria-selected="false"><p>Other's accounts <i class="fas fa-chevron-right"></i></p></a>
+      <a class="nav-item nav-link nav-height" id="nav-others-accounts-tab" data-toggle="tab" href="#nav-others-accounts" role="tab" aria-controls="nav-others-accounts" aria-selected="false"><p>Borrowed accounts <i class="fas fa-chevron-right"></i></p></a>
       <a class="nav-item nav-link nav-height" id="nav-requests-tab" data-toggle="tab" href="#nav-requests" role="tab" aria-controls="nav-requests" aria-selected="false"><p>Requests <i class="fas fa-chevron-right"></i></p></a>
     </div>
   </nav>
@@ -316,19 +316,88 @@
           <% color = 'red' %>
          <% end %>
 
-       <div class="request-status-div-containing"> <h2>  <%= 'Status:' %></h2> <h2   class="request-status <%= color %>" ><%=   request.status %></h2>
+       <div class="request-status-div-containing"> <h2></h2> <h2   class="request-status <%= color %>" ><%=   request.status.capitalize %></h2>
       </div>
 
-      <%= cl_image_tag request.platform_account.platform.logo.key, width: 230, crop: :fill %>
-      <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
-  </div>
+
+
+
+
+
+
+
+          <%  value = 50  %>
+          <% value_margin_left = 0 %>
+          <% request.platform_account.account_seats.where(status: 'pending').each do |account_seat| %>
+
+                    <%= cl_image_tag account_seat.platform_account.platform.logo.key, width: 230, crop: :fill %>
+
+
+                    <h1 class="need-flex">
+
+                      <%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
+                      <%= account_seat.platform_account.platform.name %>
+                      Account
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_total - account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+
+                    </h1>
+
+                    <h2 class='need-flex'>
+                      <div>
+                      Shared by
+                      <% full_name = account_seat.platform_account.user.first_name + ' ' + account_seat.platform_account.user.last_name %>
+                      <%= link_to profile_path(account_seat.platform_account.user.id), title: full_name do %>
+                        <% if account_seat.platform_account.user.photo.attached? %>
+                          <%= cl_image_tag account_seat.platform_account.user.photo.key, height: 60, width: 60, crop: :fill , class: "pfp remove-margin" %>
+                        <% else %>
+                          <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
+                        <% end %>
+                      <% end %>
+
+                        <%= 'with' %>
+
+                      <% account_seat.platform_account.account_seats.where(status: 'accepted').each do |seat| %>
+                        <% value -= 1 %>
+
+                        <% full_name = seat.user.first_name + ' ' + seat.user.last_name %>
+                         <%= link_to profile_path(seat.user.id), title: full_name do %>
+
+                          <% if seat.user.photo.attached? %>
+                            <%= cl_image_tag seat.user.photo.key, height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
+                          <% else %>
+                            <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
+                          <% end %>
+
+                        <% end %>
+                        <% value_margin_left = -28 %>
+                      <% end %>
+                      <% value_margin_left = 0 %>
+                      </div>
+                      <%= link_to "More info", platform_account_path(account_seat.platform_account), class: "main-button" %>
+
+
+                    </h2>
+
+          <% end %>
+
+
+
+
+
+
+
+
+
+
+    </div>
     <% end %>
 
 
     <h2>The Request people have made to access your Accounts:</h2>
 
+    <% pending_requests = @requests.where(status: 'pending') %>
     <% if @requests.where(status: 'pending') != [] %>
-      <% @requests.each do |request|%>
+      <% pending_requests.each do |request|%>
 
          <% if request.status == 'pending' %>
           <% color = 'yellow' %>
@@ -410,7 +479,7 @@ img.logo-account {
 
 
 div#nav-tabContent {
-    width: 60%;
+    width: 66%;
 }
 
 body {
@@ -655,6 +724,7 @@ margin: auto 40px auto 40px;
   font-size: 21px;
   font-weight: bold;
   margin-top: 10px;
+  margin-bottom: 14px !important;
 }
 
 .own-account-card p {
@@ -672,13 +742,18 @@ margin: auto 40px auto 40px;
   width: 100%
   height: 200px;
   border-bottom: lightgray 1px solid;
+  width: 100%;
 }
 
 
 .account-card-stuff {
-  padding: 16px;
-  padding-top: 10%;
-  padding-bottom: 10%;
+  padding: 1% 2% 1% 2%;
+/*  padding-top: 10%;
+  padding-bottom: 10%;*/
+/*  display-flex;
+  flex-grow: 3;*/
+  width: 100%;
+
 }
 
 
@@ -784,10 +859,10 @@ a.main-button {
   margin-left: 10px;
 }
 .red {
-background-color: red;
+background-color: #FE0000;
 }
 .green {
-background-color: green;
+background-color: #1EB41F;
 }
 .yellow {
   background-color: #FFC107;

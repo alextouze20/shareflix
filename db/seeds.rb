@@ -38,16 +38,18 @@ puts "Creating 2 subscription types"
 normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 15.99, payment_frequency: 'monthly'} )
 premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 11.99, payment_frequency: 'monthly'} )
 
-puts "Creating 2 platform_account"
-alex_account_netflix = PlatformAccount.new( { seats_available: 2, seats_total: 5, account_type: 'family' } )
-fred_account_netflix = PlatformAccount.new( { seats_available: 4, seats_total: 5, account_type: 'premium' } )
-
-
 puts "Merging tables"
 normal.platform = netflix
 premium.platform = netflix
 normal.save!
 premium.save!
+
+puts "Creating 2 platform_account"
+alex_account_netflix = PlatformAccount.new( { seats_available: 2, seats_total: 5, account_type: normal.id } )
+fred_account_netflix = PlatformAccount.new( { seats_available: 4, seats_total: 5, account_type: normal.id } )
+
+
+
 
 alex_account_netflix.platform = netflix
 alex_account_netflix.user = alex
@@ -71,9 +73,6 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Spoti
 spotify.logo.attach(io: File.open(file), filename: 'spotify-logo.jpg', content_type: 'image/jpg')
 spotify.save!
 
-puts "Creating 1 platform_account"
-fred_account_spotify = PlatformAccount.new( { seats_available: 3, seats_total: 4, account_type: 'premium' } )
-
 puts "Creating 2 subscription_types"
 normal1 = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 15.99, payment_frequency: 'monthly'} )
 premium1 = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 11.99, payment_frequency: 'monthly'} )
@@ -84,6 +83,10 @@ normal1.platform = spotify
 premium1.platform = spotify
 normal1.save!
 premium1.save!
+
+puts "Creating 1 platform_account"
+fred_account_spotify = PlatformAccount.new( { seats_available: 3, seats_total: 4, account_type: premium1.id } )
+
 
 fred_account_spotify.platform = spotify
 fred_account_spotify.user = fred
