@@ -1,18 +1,34 @@
 <div class="title-header">
-<h1>Netflix, HBO, Spotify, Disney+, get them all.</h1>
+<h1>Netflix, HBO, Spotify, Disney+... get them all.</h1>
 </div>
 
-<div class="platforms-container">
-<% @platforms.each do |platform|%>
-  <div class="platform-cards">
-  <%= link_to platform_path(platform.id) do %>
-  <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
-  </div>
+<div class="platforms-container mb-5">
+  <% @platforms.each do |platform|%>
+    <div class="platform-cards">
+      <%= link_to platform_path(platform.id) do %>
+      <%= cl_image_tag platform.logo.key, width: 150, crop: :fill if platform.logo.attached? %>
+    </div>
+   <% end %>
   <% end %>
-<% end %>
+
 </div>
 
-<%= link_to 'Add an account', construct_path %>
+<div class="d-flex justify-content-center m-2">
+  <h3>How does Shareflix works ?</h3>
+</div>
+
+<br>
+
+<div class="d-flex bou justify-content-center">
+  <div class="list-paragraph mb-4">
+    <p>1. <span class="toto">Join</span> the community</p><br/>
+    <p>2. <span class="toto">Share</span> at least one account</p><br/>
+    <p>3. Get <span class="toto">unlimlited access</span> to community's account</p>
+  </div>
+  <div class="artboard">
+     <%= image_tag "Artboard.png" %>
+  </div>
+</div>
 
 
 <style>
@@ -36,6 +52,7 @@ h1, p {
     padding-left: 10%;
     padding-right: 10%;
     margin-top: -10%;
+    margin-bottom: 10%;
 }
 
 .platform-cards {
@@ -60,14 +77,12 @@ h1, p {
 }
 
 .title-header {
-  background-color: #FF4949;
   padding-top: 10%;
-  border-radius: 0 0 40% 40%;
+  background-color: #FF4949;
+  border-radius: 0% 0% 40% 40%;
   padding-bottom: 15%;
   padding-left: 20%;
   padding-right: 20%;
-  margin-left: -5%;
-  margin-right: -5%;
   text-align: center;
 }
 
@@ -88,4 +103,37 @@ a.nav-link {
 .navbar.navbar-expand-sm.navbar-light {
     background-color: #FF4949;
 }
+
+.list-paragraph {
+  width: 459px;
+}
+
+.list-paragraph p {
+  color: black;
+  margin-bottom: 2px;
+}
+
+.artboard {
+  width: 320px;
+}
+
+.artboard img {
+  object-fit: cover;
+  width: 100%;
+}
+
+.toto {
+  background-color: #FF4949;
+  color: white;
+}
+
+.bou {
+  margin-bottom: 32px;
+  /*display: flex !important;*/
+  /*justify-content: flex-around;*/
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+
 </style>

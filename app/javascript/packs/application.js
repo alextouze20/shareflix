@@ -24,6 +24,7 @@ require("channels")
 
 // External imports
 import "bootstrap";
+import { initPopover } from '../components/popover'
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 
@@ -44,4 +45,5 @@ document.addEventListener('turbolinks:load', () => {
   request_profile_display_accept_or_deny();
   assign_subscription_type_to_account();
   initChatroomCable();
+  initPopover();
 });

@@ -2,38 +2,47 @@
 
 <div class="platform-box">
   <div id="platform-img">
-  <%= cl_image_tag @platform.logo.key, width: 150, crop: :fill %>
+    <%= cl_image_tag @platform.logo.key, width: 150, crop: :fill %>
   </div>
-  <p id="platform-desc">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Obcaecati reprehenderit hic dignissimos, possimus molestias facere natus pariatur ipsum neque autem laborum sit eos necessitatibus, quae. Aspernatur, veritatis, adipisci. Delectus, adipisci.</p>
+  <p id="platform-desc"><%= @platform.description[0..300] %></p>
 </div>
 
-<% @accounts.each do |account| %>
-    <div class="card-account">
-      <% if account.user.photo.attached?  %>
-        <%= cl_image_tag  account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
-      <% else %>
-        <%= image_tag "https://image.flaticon.com/icons/svg/1946/1946429.svg", class: "default-profile", width: 100, height: 100, crop: :fill  %>
-      <% end %>
-      <span class="account-title"><span><%= @platform.name %> - <%= account.account_type %></span><br/>
-      <span class="shared-by">Shared by <%= account.user.first_name.capitalize %> <%= account.user.last_name.first %>.<br/>
-      <% review_sum = 0 %>
-      <% review_num = 1 %>
-      <% stars = "" %>
-          <% account.user.review_tenants.each do |review| %>
-            <% review_sum += review.rating.to_i %>
-            <% review_num += 1 %>
-          <% end %>
+<div class="cards-box">
+  <% @accounts.each do |account| %>
+    <% if account.seats_total.present? %>
+      <div class="card-account">
+        <% if account.user.photo.attached?  %>
+          <%= cl_image_tag  account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
+        <% else %>
+          <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", class: "default-profile", width: 100, height: 100, crop: :fill  %>
+        <% end %>
+        <span class="account-title"><span><%= @platform.name %> <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %></span><br/>
+          <span class="shared-by">Shared by <%= account.user.first_name.capitalize %> <%= account.user.last_name.first %>.<br/>
+            <% review_sum = 0 %>
+            <% review_num = 0 %>
+            <% stars = "" %>
+            <% if account.user.review_tenants != [] %>
+            <% account.user.review_tenants.each do |review| %>
+              <% review_sum += review.rating.to_i %>
+              <% review_num += 1 %>
+            <% end %>
             <% review_avrg = review_sum / review_num %>
-              <% review_avrg.round.times do  %>
-                <span>⭐️</span>
-              <% end %>
-          <span class="rating"><%= review_num > 1 ? "- #{review_avrg.to_f}/5 (#{review_num})" : ""%></span>
+            <% review_avrg == nil ? "" : review_avrg.round.times do  %>
+              <span>⭐️</span>
+            <% end %>
+            <span class="rating">- <%= review_avrg.to_f %>/5 (<%= review_num %>)</span>
+            <% else %>
+            <span style="font-style: italic; font-weight: 400;">No reviews</span>
+            <% end %>
+          </span>
         </span>
-      </span>
-      <span class="seats"><span class="seats_available_colorized"><%= account.seats_available %></span>/<%= account.seats_total %></span>
-      <%= link_to "Join", platform_account_path(account), class: "main-button" %>
-    </div>
-<% end %>
+        <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_total - account.seats_available %></span>/<%= account.seats_total %></span>
+        <%= link_to "Join", platform_account_path(account), class: "main-button" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
 
 <style>
 
@@ -69,6 +78,11 @@ div#platform-img {
   border-radius: 15px;
   justify-content: space-between;
   align-items: center;
+
+}
+
+.cards-box {
+  margin-bottom: 10%;
 }
 
 .shared-by {
@@ -97,6 +111,10 @@ a.main-button {
     font-weight: 600;
 }
 
+a.main-button:hover {
+   text-decoration: none;
+}
+
 .account-title {
   font-size: 1.5em;
   font-weight: 500;
@@ -108,16 +126,15 @@ img.user-profile {
 
 
 .title-header {
+  padding-top: 5%;
   background-color: #FF4949;
-  border-radius: 0 0 40% 40%;
-  padding-top: 10%;
-  padding-bottom: 5%;
+  border-radius: 0% 0% 40% 40%;
+  padding-bottom: 15%;
   padding-left: 20%;
   padding-right: 20%;
-  margin-left: -5%;
-  margin-right: -5%;
   text-align: center;
 }
+
 
 .rating {
   color: black;
