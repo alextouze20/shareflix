@@ -20,7 +20,7 @@
           <% if @user == current_user %>
 
           <div class="space-between-div" >
-            <p>Your Profile Picture:</p>
+            <p>Your Profile Picture</p>
             <% if @user.photo.attached? %>
               <%= cl_image_tag @user.photo.key, height: 100, width: 100, crop: :fill, class: "pfp" %>
             <% else %>
@@ -29,12 +29,12 @@
           </div>
 
           <div class="space-between-div">
-            <p>Name:</p>
+            <p>Name</p>
             <p><%= @user.first_name %> <%= @user.last_name %></p>
           </div>
 
-          <div class="space-between-div">
-            <p>Email:</p>
+          <div class="space-between-div" style="border-bottom: none;">
+            <p>Email</p>
             <p><%= @user.email %></p>
           </div>
         </div>
@@ -47,8 +47,8 @@
             data: { confirm: "Delete your account?" } %></p>
         </div>
 
-          <!-- List of reviews -->
-          <h2>Your Reviews: <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= Review.count %> reviews total) </h2>
+          <!-- List of MY reviews -->
+          <h2>Your Reviews <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= @reviews.count %> reviews) </h2>
           <div class="review-card">
 
 
@@ -62,17 +62,16 @@
                 <% else %>
                   <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 80, width: 80, crop: :fill, class: "pfp" %>
                 <% end %>
-
+            <% end %>
                 <div class="review-card-text" >
 
-                  <h2><%= review.account_owner.first_name %> <%= review.account_owner.last_name %> gave you a rating of <%= review.rating %>/5⭐️</h2>
+                  <span class="review-title" style="font-weight: 600;"><%= review.account_owner.first_name %> <%= review.account_owner.last_name %> gave you a rating of <%= review.rating %>/5⭐️</span><br/><br/>
 
-                  <p><%= review.content %></p>
+                  <span style="font-style: italic"><%= review.content %></span>
 
                 </div>
 
               </div>
-            <% end %>
           <% end %>
         </div>
 
@@ -105,6 +104,7 @@
           <p><%= @user.email %></p>
         </div>
       </div>
+      <!----- OTHER USER PROFILE - REVIEW FORM  ------>
       <div class="review-form">
       <p style="font-weight: 600;">Leave a review for <%= @user.first_name %></p>
         <%= simple_form_for([@user, @review], url: profile_reviews_path(@user)) do |f| %>
@@ -113,8 +113,7 @@
         <%= f.submit%>
         <% end %>
       </div>
-
-      <h2><%= @user.first_name.capitalize %>'s reviews <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= Review.count %> reviews) </h2>
+      <h2><%= @user.first_name.capitalize %>'s reviews <%= @reviews.average(:rating).to_f.round(1) %>/5⭐️ (<%= @reviews.count %> reviews) </h2>
         <div class="review-card">
 
         <!-- List of reviews OTHER USER -->
@@ -392,7 +391,7 @@ input[type="submit"] {
 
 .review-form {
     padding: 5%;
-    width: 80%;
+    width: 100%;
     margin-top: 5%;
     border-radius: 25px;
     margin-bottom: 5%;
@@ -455,7 +454,7 @@ h1, p {
 .title-header {
   background-color: #2C2626;
   padding-top: 10%;
-  border-radius: 0 0 20% 20%;
+  border-radius: 0 0 40% 40%;
   padding-bottom: 8%;
   padding-left: 20%;
   padding-right: 20%;
@@ -475,6 +474,17 @@ a.nav-link {
     background-color: #2C2626;
 }
 
+a#nav-profile-tab:hover {
+    text-decoration: none !important;
+}
+
+a#nav-others-accounts-tab:hover {
+    text-decoration: none !important;;
+}
+
+a#nav-requests-tab:hover {
+    text-decoration: none !important;;
+}
 
 .nav-user-page {
 width: 500px !important;
@@ -507,7 +517,7 @@ a#nav-own-accounts-tab:hover {
 }
 
 .profile-info {
-width: 80% !important;
+width: 100% !important;
 margin-top: -50px;
 background-color: white;
 border-radius: 30px;
@@ -528,6 +538,10 @@ box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
   font-size: 18px;
 
   font-weight: bold;
+}
+
+.edit-delete-div > p > a:hover {
+  color: #FF4949;
 }
 
 .need-some-margin-left {
