@@ -29,6 +29,8 @@ class AccountSeatsController < ApplicationController
       @requests = AccountSeat.where(platform_account: @user.platform_accounts)
       render 'profiles/show'
     end
+    if @account_seat.accepted
+      ChatroomUser.create(user: @account_seat.user, chatroom: @account_seat.platform_account.chatroom, admin: false)
   end
 
   private
