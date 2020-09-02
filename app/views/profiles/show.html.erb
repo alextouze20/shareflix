@@ -171,18 +171,9 @@
 
                     <h2 class='need-flex'>
                       <div>
-                      Shared by
-                      <% full_name = @user.first_name + ' ' + @user.last_name %>
-                      <%= link_to profile_path(@user.id), title: full_name do %>
-                        <% if @user.photo.attached? %>
-                          <%= cl_image_tag @user.photo.key, height: 60, width: 60, crop: :fill , class: "pfp remove-margin" %>
-                        <% else %>
-                          <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
-                        <% end %>
-                      <% end %>
 
                       <% unless account.account_seats.where(status: 'accepted') == [] %>
-                        <%= 'with' %>
+                        <span style="font-weight: 400; font-size: 0.8em; font-size: 0.8em; margin-right: 2%;">Shared with</span>
                       <% end %>
 
                       <% account.account_seats.where(status: 'accepted').each do |account_seat| %>
@@ -235,7 +226,7 @@
 
                 <div class="individual-accounts-on-profile">
                     <div class="class-img-tag-account-platform">
-                    <%= cl_image_tag account_seat.platform_account.platform.logo.key, width: 230, crop: :fill %>
+                    <%= cl_image_tag account_seat.platform_account.platform.logo.key, width: 230, crop: :fill, class: "logo-img" %>
                     </div>
 
                   <div class="account-card-stuff" >
@@ -250,7 +241,7 @@
 
                     <h2 class='need-flex'>
                       <div>
-                      Shared by
+                      <span style="font-weight: 400; font-size: 0.8em; font-size: 0.8em;">Shared by</span>
                       <% full_name = account_seat.platform_account.user.first_name + ' ' + account_seat.platform_account.user.last_name %>
                       <%= link_to profile_path(account_seat.platform_account.user.id), title: full_name do %>
                         <% if account_seat.platform_account.user.photo.attached? %>
@@ -260,7 +251,7 @@
                         <% end %>
                       <% end %>
 
-                        <%= 'with' %>
+                        <span style="font-weight: 400;">with</span>
 
                       <% account_seat.platform_account.account_seats.where(status: 'accepted').each do |seat| %>
                         <% value -= 1 %>
@@ -818,6 +809,10 @@ a.main-button {
     font-size: 18px !important;
     margin-top: 15px;
     margin-bottom: 20px;
+}
+
+a.main-button:hover {
+    text-decoration: none;
 }
 
 .request-card  {

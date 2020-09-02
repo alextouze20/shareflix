@@ -30,7 +30,7 @@
             <% review_avrg == nil ? "" : review_avrg.round.times do  %>
               <span>⭐️</span>
             <% end %>
-            <span class="rating">- <%= review_avrg.to_f %>/5 (<%= review_num %>)</span>
+            <span class="rating"> <%= review_avrg.to_f %>/5 (<%= review_num %>)</span>
             <% else %>
             <span style="font-style: italic; font-weight: 400;">No reviews</span>
             <% end %>
