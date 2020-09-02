@@ -32,18 +32,16 @@ const context = require.context("controllers", true, /_controller\.js$/)
 application.load(definitionsFromContext(context))
 
 // Internal imports, e.g:
-import {submit} from '../components/submit_message'
 import { conditions } from '../components/conditions';
 import { request_profile_display_accept_or_deny } from '../components/request_profile_display_accept_or_deny';
 import { assign_subscription_type_to_account } from '../components/assign_subscription_type_to_account';
 import {refresh} from '../components/refresh_messages'
-import{initChatroomCable} from '../channels/chatroom_channel'
+import { initChatroomCable } from '../channels/chatroom_channel'
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   conditions();
   request_profile_display_accept_or_deny();
-  submit();
   assign_subscription_type_to_account();
-  initChatroomCable()
+  initChatroomCable();
 });

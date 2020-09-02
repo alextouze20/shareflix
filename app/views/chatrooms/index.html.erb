@@ -1,4 +1,4 @@
-<div class="row chatroom-container">
+<div class="row chatroom-container" data-current-user-id="<%= current_user.id %>">
   <div class="col-6 col-md-4 chats" data-controller="chatrooms">
     <div class=" chatroom", id = "chatrooms">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -17,26 +17,11 @@
     <% @chatrooms.each do |chatroom| %>
       <div id="messages-<%= chatroom.id%>" data-chatroom-id="<%= chatroom.id %>" class = "d-none messages">
         <% chatroom.messages.each do |message| %>
-        <% if current_user == message.user  %>
-            <div class="message-container message message-from-user" id="message-<%= message.id %>">
-                  <i class="author">
-                    <span><%= message.user.first_name %></span>
-                    <small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
-                  </i>
-                  <p><%= message.content %></p>
-              </div>
-          <% else %>
-            <div class="message-container message message-not-user" id="message-<%= message.id %>">
-              <i class="author">
-                <span><%= message.user.first_name %></span>
-                <small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
-              </i>
-              <p><%= message.content %></p>
-            </div>
-        <% end %>
+          <%= render 'chatrooms/message', message: message %>
         <% end %>
       </div>
     <% end %>
+    <div class="d-none user-id"><%= current_user.id %></div>
     <div class = "d-none chatroom-selected"></div>
     <div class="d-none" data-user-id="<%= current_user.id %>"></div>
 

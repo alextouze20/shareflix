@@ -14,13 +14,23 @@ export default class extends Controller {
     document.querySelectorAll(".form-chatroom").forEach((form) =>{
       form.classList.add("d-none")
     })
+    document.querySelectorAll(".message-container").forEach((message) => {
+      const authorId = message.querySelector(".authorid").innerHTML
+      const userId = document.querySelector(".user-id").innerHTML
+      if(authorId === userId){
+        message.classList.add("message-from-user")
+      }
+      else{
+        message.classList.add("message-not-user")
+      }
+    })
+
     document.querySelector(`#messages-${id}`).classList.remove("d-none")
     document.querySelector(`.form-${id}`).classList.remove("d-none")
     event.currentTarget.classList.add("clicked")
     event.preventDefault();
     const chatroomId = document.querySelector("#message_chatroom_id")
     const messages = document.querySelector(".messages")
-    const userId = parseInt(document.querySelector("[data-user-id]").dataset.userId, 10)
     const messagesSelected = document.querySelector(`#messages-${id}`)
     messagesSelected.scrollTop =  messagesSelected.scrollHeight
   }

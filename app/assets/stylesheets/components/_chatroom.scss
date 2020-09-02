@@ -3,13 +3,22 @@ p{
   opacity: 0.5;
   width: auto;
 }
-.message-not-user{
+.message-avatar{
+  width: 50px;
+  height: 50px;
+}
+.message-not-user .message{
   text-align: left;
   background-color: grey;
   color: black;
-  align-self: flex-start;
 }
-.message-from-user{
+.message-container-from-user{
+  align-self: flex-end;
+}
+.message-container-not-user{
+ align-self: flex-start;
+}
+.message-from-user .message{
   text-align: right;
   color: white;
   background-color: red;
