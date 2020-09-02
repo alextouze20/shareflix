@@ -1,6 +1,6 @@
-<div class="row align-items-center justify-content-end message-container">
+<div class="row align-items-center justify-content-around message-container">
   <div class="d-none authorid"><%= message.user.id %></div>
-  <div class = "col-4">
+  <div class = "col-3">
     <% if message.user.photo.attached? %>
       <%= cl_image_tag message.photo.key,class: "message-avatar",  width: 50, crop: :fill if message.user.photo.attached? %>
     <% else %>
