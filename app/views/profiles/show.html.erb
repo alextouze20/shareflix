@@ -156,7 +156,7 @@
               <% if account.seats_total.present? %>
                 <div class="individual-accounts-on-profile">
                     <div class="class-img-tag-account-platform">
-                    <%= cl_image_tag account.platform.logo.key, width: 230, crop: :fill %>
+                    <%= cl_image_tag account.platform.logo.key, width: 230, crop: :fill, class: "logo-img" %>
                     </div>
 
                   <div class="account-card-stuff" >
@@ -437,6 +437,11 @@
 
 </div>
 <style>
+
+img.logo-img {
+  height: auto;
+  width: 150px;
+}
 
 textarea#review_content {
     border-radius: 11px;
@@ -761,7 +766,6 @@ margin: auto 40px auto 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   border-right: lightgray 1px solid;
   border-height: 15px;
   margin: 15px 0px 15px 30px;
