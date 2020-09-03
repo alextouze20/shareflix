@@ -33,17 +33,16 @@
 .messages{
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 80vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
-  width: 94%;
 }
 .clicked{
   background-color: #ff4949;
 }
 #chatrooms{
   background-color: #2C2626;
-  height: calc(100vh - 71px);
+  height: 100vh;
   overflow: scroll;
 }
 .chatroom-container{
@@ -63,6 +62,7 @@
   color: #ff4949;
   position: absolute;
   top: -48px;
+  margin-left: -85px;
 }
 .form-chatroom{
   height: 25vh
@@ -74,7 +74,7 @@
 }
 
 .elements-chatroom{
-  border-bottom:  solid #979797;
+  border-bottom:  solid 1px #979797;
   border-bottom-width: 80%;
   padding: 20px;
   padding-right: 0px;
@@ -85,6 +85,7 @@
 }
 .chat-description{
   color: white;
+  font-size: 1.3em;
 }
 .fa-angle-right{
   color: white;
@@ -114,11 +115,11 @@
 //     left: 165px;
 // }
 .fa-home{
-  font-size: 30px;
-  color: grey;
+  font-size: 25px;
+  color: #ff4949;
   border-radius: 50%;
-  padding: 20px;
-  border: solid  #ff4949;
+  padding: 10px;
+  border: solid 3px #ff4949;
   margin-top: 20px;
 }
 .photo{
@@ -126,4 +127,14 @@
 }
 .container-chat{
   height: calc(100vh - 71px);
+}
+
+textarea#message_content {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 50px;
+  padding-top: 2%;
+  font-weight: 300;
+  padding-top: 2%;
+  padding-left: 3%;
 }
