@@ -10,7 +10,7 @@ const request_profile_display_accept_or_deny = () => {
     const box = accept.parentNode
     accept.addEventListener('click', function() {
 
-      setTimeout(() => { box.innerHTML = '<h2>Accepted!</h2>'; }, 50);
+      setTimeout(() => { box.innerHTML = '<h2 class="request-status green">Accepted!</h2>'; }, 50);
 
     })
   });
@@ -20,7 +20,7 @@ const request_profile_display_accept_or_deny = () => {
     const box = deny.parentNode
     deny.addEventListener('click', function() {
 
-      setTimeout(() => { box.innerHTML = '<h2>Denied!</h2>'; }, 50);
+      setTimeout(() => { box.innerHTML = '<h2 class="request-status red">Denied!</h2>'; }, 50);
 
     })
   });
