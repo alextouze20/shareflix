@@ -14,7 +14,7 @@ User.destroy_all
 Review.destroy_all
 
 
-puts "Creating 6 users"
+puts "Creating 7 users"
 alex = User.new( { first_name: "Alex", last_name: "Touze", password: "azertyuiop", email: "alex@shareflix.com", country: 'France', bio: "My name is Alex and I'm a big fan of cinema. My favorite TV show is The Wire by David Simon."  } )
 alexpfp = URI.open("https://ca.slack-edge.com/T02NE0241-U016C4UCDMY-d679a8ccd566-512")
 alex.photo.attach(io: File.open(alexpfp), filename: 'admin-pfp.jpg', content_type: 'image/jpg')
@@ -50,7 +50,9 @@ corentinpfp = URI.open("https://res.cloudinary.com/wagon/image/upload/c_fill,g_f
 corentin.photo.attach(io: File.open(corentinpfp), filename: 'admin-pfp.jpg', content_type: 'image/jpg')
 corentin.save!
 
-var_iteration = [1, 2, 3]
+michel = User.new( { first_name: "Michel", last_name: "Smith", password: "azertyuiop", email: "michel@shareflix.com", country: 'France', bio: "" } )
+michel.save!
+
 var_rating = [4, 5]
 var_content = ["All good!", "Nothing to declare! All good!", "Everything went well! Thanks :)"]
 
@@ -266,5 +268,15 @@ corentin_account_disney_plus.save!
 
 corentin_account_disney_plus_chat = Chatroom.new(platform_account: corentin_account_disney_plus)
 ChatroomUser.create(chatroom: corentin_account_disney_plus_chat, user: corentin, admin: true)
+
+puts "Creating account HBO - michel"
+michel_account_hbo = PlatformAccount.new( { seats_available: 2, account_type: hbo_normal.id } )
+
+michel_account_hbo.platform = hbo
+michel_account_hbo.user = michel
+michel_account_hbo.save!
+
+michel_account_hbo_chat = Chatroom.new(platform_account: michel_account_hbo)
+ChatroomUser.create(chatroom: michel_account_hbo_chat, user: michel, admin: true)
 
 puts "Finished."

@@ -8,9 +8,13 @@
     </div>
     <div class="about-account-owner">
         <% if @account.user.photo.attached?  %>
+          <%= link_to profile_path(@account.user), class: "link-pp" do %>
           <%= cl_image_tag  @account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
+          <% end %>
         <% else %>
+          <%= link_to profile_path(@account.user), class: "link-pp" do %>
           <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", class: "default-profile", width: 100, height: 100, crop: :fill  %>
+          <% end %>
         <% end %>
       <div class="user-name-rating"><span class="user-name"><%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %>.</span><br/>
         <% review_sum = 0 %>
@@ -108,6 +112,10 @@
 </div>
 
 <style>
+
+a.link-pp {
+    margin-right: 3%;
+}
 
 .modal-content {
   border-radius: 5px;
