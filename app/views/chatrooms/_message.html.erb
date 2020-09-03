@@ -11,8 +11,7 @@
   </div>
   <div>
     <i class="author">
-      <span><%= message.user.first_name %></span>
-      <small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
+      <span><strong><%= message.user.first_name %></span></strong> - <span><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></span>
     </i>
     <div class=" message d-none media-other" id="message-<%= message.id %>">
       <div class="content-msg">
