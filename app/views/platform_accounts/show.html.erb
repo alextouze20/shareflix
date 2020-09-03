@@ -53,7 +53,7 @@
     <div id="platform-img">
       <%= cl_image_tag @account.platform.logo.key, width: 150, crop: :fill %>
     </div>
-    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_total == nil || @account.seats_available == nil ? "error" : @account.seats_available %></span>/<%= @account.seats_total %></span>
+    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_available == nil ? "error" : @account.seats_available %></span> Seats Left</span>
   </div>
   <!-- Button trigger modal -->
   <% if @account.user != current_user %>
@@ -68,7 +68,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <% if current_user.platform_accounts.any? { |account| account.seats_total != nil } %>
+        <% if current_user.platform_accounts.any? { |account| account.seats_available != nil } %>
           <h5 class="modal-title" id="exampleModalLongTitle">Community guidelines</h5>
         <% else %>
           <h5 class="modal-title" id="exampleModalLongTitle" style="color: #FF4949;">You need to share an account first!</h5>
@@ -78,7 +78,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <% if current_user.platform_accounts.any? { |account| account.seats_total != nil } %>
+        <% if current_user.platform_accounts.any? { |account| account.seats_available != nil } %>
         <p>Please read and notice that anyone that break these rules will be <em>instantly banned</em> from the website.</p>
         <ul>
           <li>You will not share <%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %>'s credentials with others from somewhere else</li>
@@ -91,7 +91,7 @@
       </div>
       <div class="modal-footer">
 
-        <% if current_user.platform_accounts.any? { |account| account.seats_total != nil } %>
+        <% if current_user.platform_accounts.any? { |account| account.seats_available != nil } %>
           <%=  simple_form_for @account_seat do |f|%>
           <%= f.input_field :platform_account_id, value: @account.id, class: 'd-none' %>
           <%= f.input_field :user_id, value: current_user.id, class: 'd-none' %>

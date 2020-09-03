@@ -153,7 +153,7 @@
           <% value_margin_left = 0 %>
           <% @user.platform_accounts.each do |account| %>
 
-              <% if account.seats_total.present? %>
+              <% if account.seats_available.present? %>
                 <div class="individual-accounts-on-profile">
                     <div class="class-img-tag-account-platform">
                     <%= cl_image_tag account.platform.logo.key, width: 230, crop: :fill, class: "logo-img" %>
@@ -165,12 +165,27 @@
                       <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %>
                       <%= account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_total == nil || account.seats_available == nil ? "error" : account.seats_available %></span>/<%= account.seats_total %></span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available %></span> Seats Left</span>
 
                     </h1>
 
                     <h2 class='need-flex'>
                       <div>
+
+
+
+
+
+                      <span style="font-weight: 400; font-size: 0.8em; font-size: 0.8em;">Shared by</span>
+                      <% full_name = account.user.first_name + ' ' + account.user.last_name %>
+                      <%= link_to profile_path(account.user.id), title: full_name do %>
+                        <% if account.user.photo.attached? %>
+                          <%= cl_image_tag account.user.photo.key, height: 60, width: 60, crop: :fill , class: "pfp remove-margin" %>
+                        <% else %>
+                          <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
+                        <% end %>
+                      <% end %>
+
 
                       <% unless account.account_seats.where(status: 'accepted') == [] %>
                         <span style="font-weight: 400; font-size: 0.8em; font-size: 0.8em; margin-right: 2%;">Shared with</span>
@@ -235,7 +250,7 @@
                       <%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
                       <%= account_seat.platform_account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span> Seats Left</span>
 
                     </h1>
 
@@ -366,7 +381,7 @@
                       <% end %>
                       <% value_margin_left = 0 %>
                       </div>
-                      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+                      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span> Seats Left</span>
 
 
 
@@ -409,7 +424,7 @@
         </div>
         <p>Platform: <%= request.platform_account.platform.name %></p>
         <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
-        <p><%= request.platform_account.seats_available %> / <%= request.platform_account.seats_total %> seats</p>
+        <p><%= request.platform_account.seats_available %> seats</p>
 
         <div class="change-request-button-into-text">
           <%=  simple_form_for(request, html: { class: 'change_request_button_into_accept' }) do |f|%>
@@ -799,7 +814,7 @@ margin-right: 0px !important;
 
 .seats {
   font-size: 40px;
-  margin: -8px 30px;
+  margin: -8px 0px;
 }
 
 span.seats_available_colorized {
