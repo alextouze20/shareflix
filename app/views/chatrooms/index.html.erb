@@ -31,7 +31,7 @@
           </div>
         </span>
         <% end %>
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex justify-content-left align-items-center" style="padding-left: 3%;">
           <%= link_to platforms_path do %>
             <i class="fa fa-home" aria-hidden="true"></i>
           <% end %>
@@ -57,10 +57,12 @@
       <%= simple_form_for [ chatroom, message ], remote: true do |f| %>
       <div  class = "row justify-content-center align-items-center">
         <div class="col-8">
-          <%= f.input :content, label: false, input_html: { class: " content-#{chatroom.id}" }, placeholder: "Message" %>
+          <%= f.input :content, label: false, input_html: { class: " content-#{chatroom.id}" }, placeholder: "Write your message..." %>
         </div>
-        <div class="col-4">
+        <div class="col-4 container-button-chat">
+          <div class="container-button-chat">
           <%= f.submit '⌲', class: " submit-btn-chat"%>
+          </div>
         </div>
       </div>
       <% end %>
@@ -68,13 +70,17 @@
     <% end %>
 </div>
 <style>
-  body{
+  body {
     background-color: white;
     overflow: hidden;
   }
   .footer{
     display: none;
   }
+
+  .navbar.navbar-expand-sm.navbar-light {
+    display: none;
+}
 </style>
 <%# reste à faire sur les chatrooms: -control du scroll (très rapide) ok pour la non création
                                      -Ajax (presque fait)
