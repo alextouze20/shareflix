@@ -10,13 +10,13 @@
 </div>
 
 
-<div class="d-flex justify-content-center align-items-center flex-column h-100" style="min-height: 90vh;">
+<div class="d-flex justify-content-center align-items-center flex-column h-100" style="min-height: 20vh;">
   <div class="w-100 negative-margin">
-    <h2 class="text-center">How many people should use your account?</h2>
+    <h2 class="text-center">How many shareflix users should have access to your account?</h2>
       <%= simple_form_for(@platform_account, method: :put, url: wizard_path) do |f|%>
         <div class="login-container">
           <div class="form-inputs login-form">
-          <%= f.input :seats_available, label: "How many people can use this account?" %>
+            <%= f.input :seats_available, as: :select, collection: 1..SubscriptionType.find_by(id: @platform_account.account_type).seats_total, label: "Select the maximum number of users that should have access to your account at the same time" %>
           </div>
           <div class="form-actions btn-login">
             <%= f.submit value: "Finalize Account"  %>
@@ -105,7 +105,7 @@ input[type="submit"] {
 }
 
 h2.text-center {
-    margin-top: 10%;
+    margin-top: 17%;
 }
 /* Navbar color */
 a.nav-link {

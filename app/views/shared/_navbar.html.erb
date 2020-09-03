@@ -11,6 +11,12 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav">
       <% if user_signed_in? %>
+        <% pending_request = AccountSeat.where(platform_account: current_user.platform_accounts).where(status: 'pending') %>
+        <% if pending_request != [] %>
+        <li class="nav-item">
+          <%= link_to "Pending requests: #{pending_request.count}", profile_path(current_user, tab: "requests"), class: "nav-link" %>
+        </li>
+        <% end %>
         <li class="nav-item">
           <%= link_to 'Add an account', construct_path, class: "nav-link" %>
         </li>
