@@ -20,9 +20,11 @@ const initChatroomCable = () => {
               input.value = ""
             })
             messages[messages.length - 1].querySelector(".photo-user").classList.remove("d-none");
+            messages[messages.length - 1].querySelector(".media-user").classList.remove("d-none");
           } else {
             messages[messages.length - 1].classList.add('message-not-user');
             messages[messages.length - 1].querySelector(".photo-other").classList.remove("d-none");
+            messages[messages.length - 1].querySelector(".media-other").classList.remove("d-none");
           }
         },
       });

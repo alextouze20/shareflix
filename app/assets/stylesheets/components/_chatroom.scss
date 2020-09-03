@@ -9,7 +9,7 @@
 }
 .message-not-user .message{
   text-align: left;
-  background-color: grey;
+  background-color: #F2F2F2;
   color: #35363A;
 }
 .message-container-from-user{
@@ -42,7 +42,7 @@
   background-color: #ff4949;
 }
 #chatrooms{
-  background-color: #35363A;
+  background-color: #2C2626;
   height: calc(100vh - 71px);
   overflow: scroll;
 }
@@ -74,7 +74,7 @@
 }
 
 .elements-chatroom{
-  border-bottom:  solid grey;
+  border-bottom:  solid #979797;
   border-bottom-width: 80%;
   padding: 20px;
   padding-right: 0px;
