@@ -25,4 +25,10 @@ include Pundit
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :country, :photo])
     devise_parameter_sanitizer.permit(:edit_account, keys: [:first_name, :last_name, :country, :photo])
   end
+
+  def default_url_options
+  { host: ENV["www.shareflix.club"] || "localhost:3000" }
+  end
 end
+
+
