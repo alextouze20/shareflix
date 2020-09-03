@@ -279,4 +279,14 @@ michel_account_hbo.save!
 michel_account_hbo_chat = Chatroom.new(platform_account: michel_account_hbo)
 ChatroomUser.create(chatroom: michel_account_hbo_chat, user: michel, admin: true)
 
+puts "Creating account netflix - alex"
+alex_account_netflix = PlatformAccount.new( { seats_available: 3, account_type: netflix_normal.id } )
+
+alex_account_netflix.platform = netflix
+alex_account_netflix.user = alex
+alex_account_netflix.save!
+
+alex_account_netflix_chat = Chatroom.new(platform_account: alex_account_netflix)
+ChatroomUser.create(chatroom: alex_account_netflix_chat, user: alex, admin: true)
+
 puts "Finished."
