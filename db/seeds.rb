@@ -82,7 +82,7 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/0/0f/Logo_Netfli
 netflix.logo.attach(io: File.open(file), filename: 'netflix-logo.jpg', content_type: 'image/jpg')
 netflix.save!
 
-netflix_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
+netflix_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly' } )
 netflix_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
 
 netflix_normal.platform = netflix
@@ -97,8 +97,8 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_l
 hbo.logo.attach(io: File.open(file), filename: 'hbo-logo.png', content_type: 'image/png')
 hbo.save!
 
-hbo_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
-hbo_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
+hbo_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly', seats_total: 5} )
+hbo_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly', seats_total: 9} )
 
 hbo_normal.platform = hbo
 hbo_premium.platform = hbo
@@ -112,9 +112,8 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Spoti
 spotify.logo.attach(io: File.open(file), filename: 'spotify-logo.jpg', content_type: 'image/jpg')
 spotify.save!
 
-spotify_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
-spotify_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
-
+spotify_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly', seats_total: 4} )
+spotify_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly', seats_total: 6} )
 spotify_normal.platform = spotify
 spotify_premium.platform = spotify
 spotify_normal.save!
@@ -127,8 +126,8 @@ file = URI.open("https://www.ladn.eu/wp-content/uploads/2018/06/youtube.jpg")
 yt_music.logo.attach(io: file, filename: 'yt-music.jpg', content_type: 'image/jpg')
 yt_music.save!
 
-yt_music_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
-yt_music_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
+yt_music_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly', seats_total: 6} )
+yt_music_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly', seats_total: 8} )
 
 yt_music_normal.platform = yt_music
 yt_music_premium.platform = yt_music
@@ -141,8 +140,8 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Amazo
 prime_video.logo.attach(io: File.open(file), filename: 'prime-video.png', content_type: 'image/png')
 prime_video.save!
 
-prime_video_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
-prime_video_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
+prime_video_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly', seats_total: 5} )
+prime_video_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly', seats_total: 7} )
 
 prime_video_normal.platform = prime_video
 prime_video_premium.platform = prime_video
@@ -155,8 +154,8 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Disne
 disney_plus.logo.attach(io: File.open(file), filename: 'disney-plus.png', content_type: 'image/png')
 disney_plus.save!
 
-disney_plus_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
-disney_plus_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
+disney_plus_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly', seats_total: 4} )
+disney_plus_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly', seats_total: 8} )
 
 disney_plus_normal.platform = disney_plus
 disney_plus_premium.platform = disney_plus
@@ -169,7 +168,7 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Le_Mo
 le_monde.logo.attach(io: File.open(file), filename: 'le-monde-logo.png', content_type: 'image/png')
 le_monde.save!
 
-le_monde_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 4.99, payment_frequency: 'monthly'} )
+le_monde_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 4.99, payment_frequency: 'monthly', seats_total: 11} )
 
 le_monde_normal.platform = le_monde
 le_monde_normal.save!
@@ -181,15 +180,15 @@ file = URI.open('https://uploads-eu-west-1.insided.com/deezer-fr/attachment/eb56
 deezer.logo.attach(io: file, filename: 'deezer.png', content_type: 'image/png')
 deezer.save!
 
-deezer_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly'} )
-deezer_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
+deezer_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly', seats_total: 5} )
+deezer_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly', seats_total: 9} )
 
 deezer_normal.platform = deezer
 deezer_premium.platform = deezer
 deezer_normal.save!
 
 puts "Creating account HBO - fred"
-fred_account_hbo = PlatformAccount.new( { seats_available: 4, seats_total: 5, account_type: hbo_premium.id } )
+fred_account_hbo = PlatformAccount.new( { seats_available: 4, account_type: hbo_premium.id } )
 
 fred_account_hbo.platform = hbo
 fred_account_hbo.user = fred
@@ -199,7 +198,7 @@ fred_account_hbo_chat = Chatroom.new(platform_account: fred_account_hbo)
 ChatroomUser.create(chatroom: fred_account_hbo_chat, user: fred, admin: true)
 
 puts "Creating account spotify - fred"
-fred_account_spotify = PlatformAccount.new( { seats_available: 2, seats_total: 5, account_type: spotify_normal.id } )
+fred_account_spotify = PlatformAccount.new( { seats_available: 2, account_type: spotify_normal.id } )
 
 fred_account_spotify.platform = spotify
 fred_account_spotify.user = fred
@@ -209,7 +208,7 @@ fred_account_spotify_chat = Chatroom.new(platform_account: fred_account_spotify)
 ChatroomUser.create(chatroom: fred_account_spotify_chat, user: fred, admin: true)
 
 puts "Creating account disney plus - patricia"
-patricia_account_disney_plus = PlatformAccount.new( { seats_available: 2, seats_total: 4, account_type: disney_plus_normal.id } )
+patricia_account_disney_plus = PlatformAccount.new( { seats_available: 2, account_type: disney_plus_normal.id } )
 
 patricia_account_disney_plus.platform = disney_plus
 patricia_account_disney_plus.user = patricia
@@ -219,7 +218,7 @@ patricia_account_disney_plus_chat = Chatroom.new(platform_account: patricia_acco
 ChatroomUser.create(chatroom: patricia_account_disney_plus_chat, user: patricia, admin: true)
 
 puts "Creating account prime video - octave"
-octave_account_prime_video = PlatformAccount.new( { seats_available: 1, seats_total: 3, account_type: prime_video_normal.id } )
+octave_account_prime_video = PlatformAccount.new( { seats_available: 1, account_type: prime_video_normal.id } )
 
 octave_account_prime_video.platform = prime_video
 octave_account_prime_video.user = octave
@@ -229,7 +228,7 @@ octave_account_prime_video_chat = Chatroom.new(platform_account: octave_account_
 ChatroomUser.create(chatroom: octave_account_prime_video_chat, user: octave, admin: true)
 
 puts "Creating account le monde - corentin"
-corentin_account_le_monde = PlatformAccount.new( { seats_available: 2, seats_total: 6, account_type: le_monde_normal.id } )
+corentin_account_le_monde = PlatformAccount.new( { seats_available: 2, account_type: le_monde_normal.id } )
 
 corentin_account_le_monde.platform = le_monde
 corentin_account_le_monde.user = corentin
@@ -239,7 +238,7 @@ corentin_account_le_monde_chat = Chatroom.new(platform_account: corentin_account
 ChatroomUser.create(chatroom: corentin_account_le_monde_chat, user: corentin, admin: true)
 
 puts "Creating account HBO - amina"
-amina_account_hbo = PlatformAccount.new( { seats_available: 2, seats_total: 3, account_type: hbo_normal.id } )
+amina_account_hbo = PlatformAccount.new( { seats_available: 2, account_type: hbo_normal.id } )
 
 amina_account_hbo.platform = hbo
 amina_account_hbo.user = amina
@@ -249,7 +248,7 @@ amina_account_hbo_chat = Chatroom.new(platform_account: amina_account_hbo)
 ChatroomUser.create(chatroom: amina_account_hbo_chat, user: amina, admin: true)
 
 puts "Creating account HBO - octave"
-octave_account_hbo = PlatformAccount.new( { seats_available: 1, seats_total: 5, account_type: hbo_premium.id } )
+octave_account_hbo = PlatformAccount.new( { seats_available: 1, account_type: hbo_premium.id } )
 
 octave_account_hbo.platform = hbo
 octave_account_hbo.user = octave
@@ -259,7 +258,7 @@ octave_account_hbo_chat = Chatroom.new(platform_account: octave_account_hbo)
 ChatroomUser.create(chatroom: octave_account_hbo_chat, user: octave, admin: true)
 
 puts "Creating account disney plus - corentin"
-corentin_account_disney_plus = PlatformAccount.new( { seats_available: 1, seats_total: 4, account_type: disney_plus_normal.id } )
+corentin_account_disney_plus = PlatformAccount.new( { seats_available: 1, account_type: disney_plus_normal.id } )
 
 corentin_account_disney_plus.platform = disney_plus
 corentin_account_disney_plus.user = corentin
