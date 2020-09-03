@@ -84,8 +84,8 @@ file = URI.open('https://upload.wikimedia.org/wikipedia/commons/0/0f/Logo_Netfli
 netflix.logo.attach(io: File.open(file), filename: 'netflix-logo.jpg', content_type: 'image/jpg')
 netflix.save!
 
-netflix_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly' } )
-netflix_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly'} )
+netflix_normal = SubscriptionType.new( { name: "Standard", description: "Standard account", price: 9.99, payment_frequency: 'monthly', seats_total: 5} )
+netflix_premium = SubscriptionType.new( { name: "Premium", description: "Premium account", price: 15.99, payment_frequency: 'monthly', seats_total: 9} )
 
 netflix_normal.platform = netflix
 netflix_premium.platform = netflix
