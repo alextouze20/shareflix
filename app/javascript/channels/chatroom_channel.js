@@ -15,9 +15,14 @@ const initChatroomCable = () => {
           const messages = chatroom.querySelectorAll('.message-container');
           if (currentUserId == data.author_id) {
             messages[messages.length - 1].classList.add('message-from-user');
-            chatroom.scrollTop = chatroom.scrollHeight
+            chatroom.scrollTop = chatroom.scrollHeight;
+            document.querySelectorAll("#message_content").forEach((input)=>{
+              input.value = ""
+            })
+            messages[messages.length - 1].querySelector(".photo-user").classList.remove("d-none");
           } else {
             messages[messages.length - 1].classList.add('message-not-user');
+            messages[messages.length - 1].querySelector(".photo-other").classList.remove("d-none");
           }
         },
       });

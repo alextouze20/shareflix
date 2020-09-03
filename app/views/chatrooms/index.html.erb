@@ -5,32 +5,42 @@
       <% @chatrooms.each do |chatroom| %>
         <span class = "chatroom<%= chatroom.id %> chatroom" data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#toto">
           <div class="elements-chatroom row">
-            <div class="col-4">
-              <h3><%= chatroom.platform_account.user.first_name %></h3>
+            <div class="col-12">
+              <h3 class = "chat-description"><%= chatroom.platform_account.platform.name + " de " + chatroom.platform_account.user.first_name %></h3>
               <% platform = Platform.find(chatroom.platform_account.platform_id) %>
-              <%= cl_image_tag platform.logo.key, width: 100, crop: :fill if platform.logo.attached? %>
             </div>
-            <div class="photos row col-8 align-items-center">
-              <% chatroom.users.each do |user|  %>
-                <div class="col-3">
-                  <% if user.photo.attached? %>
-                    <%= cl_image_tag user.photo.key,class: "user-avatar", crop: :fill %>
-                  <% else %>
-                    <img class = "user-avatar" src="https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png" alt="">
-                  <% end %>
+            <br>
+            <div class="row col-12 justify-content-between">
+              <div class="photos row col-10 align-items-center">
+                <% chatroom.users.each do |user|  %>
+                  <div class="col-3">
+                    <% if user.photo.attached? %>
+                      <%= cl_image_tag user.photo.key,class: "user-avatar", crop: :fill %>
+                    <% else %>
+                      <img class = "user-avatar" src="https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png" alt="">
+                    <% end %>
+                </div>
+                <% end %>
               </div>
-              <% end %>
+              <div class="col-2">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </div>
             </div>
           </div>
-        </span> <br>
+        </span>
         <% end %>
+        <div class="d-flex justify-content-center align-items-center">
+          <%= link_to platforms_path do %>
+            <i class="fa fa-home" aria-hidden="true"></i>
+          <% end %>
+        </div>
     </div>
   </div>
   </div>
   <div class="col-12 col-md-8 px-0">
     <% @chatrooms.each do |chatroom| %>
       <div id="messages-<%= chatroom.id%>" data-chatroom-id="<%= chatroom.id %>" class = "d-none messages">
-        <% chatroom.messages.each do |message| %>
+        <% chatroom.messages.order(:created_at).each do |message| %>
           <%= render 'chatrooms/message', message: message %>
         <% end %>
       </div>
@@ -43,18 +53,30 @@
     <% @chatrooms.each do |chatroom| %>
     <div class="d-none form-chatroom form-<%= chatroom.id %>">
       <%= simple_form_for [ chatroom, message ], remote: true do |f| %>
-      <div  class = "row justify-content-center">
+      <div  class = "row justify-content-center align-items-center">
         <div class="col-8">
           <%= f.input :content, label: false, input_html: { class: " content-#{chatroom.id}" }, placeholder: "Message" %>
         </div>
         <div class="col-4">
-          <%= f.submit '📮', class: " submit-btn-chat"%>
+          <%= f.submit '⌲', class: " submit-btn-chat"%>
         </div>
       </div>
       <% end %>
     </div>
     <% end %>
 </div>
+<style>
+  body{
+    background-color: white;
+    overflow: hidden;
+  }
+  .navbar{
+    display: none;
+  }
+  .footer{
+    display: none;
+  }
+</style>
 <%# reste à faire sur les chatrooms: -control du scroll (très rapide) ok pour la non création
                                      -Ajax (presque fait)
                                      -Front (améliorer les show des messages + chatrooms)
