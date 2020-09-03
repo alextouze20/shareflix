@@ -14,10 +14,12 @@
               <div class="photos row col-10 align-items-center">
                 <% chatroom.users.each do |user|  %>
                   <div class="col-3">
-                    <% if user.photo.attached? %>
-                      <%= cl_image_tag user.photo.key,class: "user-avatar", crop: :fill %>
-                    <% else %>
-                      <img class = "user-avatar" src="https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png" alt="">
+                    <%= link_to profile_path(user) do  %>
+                      <% if user.photo.attached? %>
+                        <%= cl_image_tag user.photo.key,class: "user-avatar", crop: :fill %>
+                      <% else %>
+                        <img class = "user-avatar" src="https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png" alt="">
+                      <% end %>
                     <% end %>
                 </div>
                 <% end %>
