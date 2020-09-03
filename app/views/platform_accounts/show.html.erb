@@ -53,7 +53,7 @@
     <div id="platform-img">
       <%= cl_image_tag @account.platform.logo.key, width: 150, crop: :fill %>
     </div>
-    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_available == nil ? "error" : @account.seats_available %></span></span>
+    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_available == nil ? "error" : @account.seats_available %></span> Seats Left</span>
   </div>
   <!-- Button trigger modal -->
   <% if @account.user != current_user %>
