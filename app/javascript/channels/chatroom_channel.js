@@ -15,7 +15,6 @@ const initChatroomCable = () => {
           const messages = chatroom.querySelectorAll('.message-container');
           if (currentUserId == data.author_id) {
             messages[messages.length - 1].classList.add('message-from-user');
-            chatroom.scrollTop = chatroom.scrollHeight;
             document.querySelectorAll("#message_content").forEach((input)=>{
               input.value = ""
             })
@@ -26,6 +25,7 @@ const initChatroomCable = () => {
             messages[messages.length - 1].querySelector(".photo-other").classList.remove("d-none");
             messages[messages.length - 1].querySelector(".media-other").classList.remove("d-none");
           }
+          chatroom.scrollTop = chatroom.scrollHeight;
         },
       });
     });
