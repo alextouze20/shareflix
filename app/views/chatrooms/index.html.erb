@@ -39,7 +39,7 @@
     </div>
   </div>
   </div>
-  <div class="col-12 col-md-8 px-0">
+  <div class="col-12 col-md-8 px-0 container-chat">
     <% @chatrooms.each do |chatroom| %>
       <div id="messages-<%= chatroom.id%>" data-chatroom-id="<%= chatroom.id %>" class = "d-none messages">
         <% chatroom.messages.order(:created_at).each do |message| %>
@@ -71,9 +71,6 @@
   body{
     background-color: white;
     overflow: hidden;
-  }
-  .navbar{
-    display: none;
   }
   .footer{
     display: none;
