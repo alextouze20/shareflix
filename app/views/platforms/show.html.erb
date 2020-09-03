@@ -12,9 +12,13 @@
     <% if account.seats_available.present? %>
       <div class="card-account">
         <% if account.user.photo.attached?  %>
+          <%= link_to profile_path(account.user) do %>
           <%= cl_image_tag  account.user.photo.key, class: "user-profile", width: 100, height: 100, crop: :fill  %>
+          <% end %>
         <% else %>
+          <%= link_to profile_path(account.user) do %>
           <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", class: "default-profile", width: 100, height: 100, crop: :fill  %>
+          <% end %>
         <% end %>
         <span class="account-title"><span><%= @platform.name %> <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %></span><br/>
           <span class="shared-by">Shared by <%= account.user.first_name.capitalize %> <%= account.user.last_name.first %>.<br/>
@@ -78,7 +82,7 @@ div#platform-img {
   border-radius: 15px;
   justify-content: space-between;
   align-items: center;
-
+  background-color: white;
 }
 
 .cards-box {
