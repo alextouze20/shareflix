@@ -6,7 +6,7 @@
         <span class = "chatroom<%= chatroom.id %> chatroom" data-id="<%= chatroom.id %>" data-target="chatrooms.chatroom" data-action="click->chatrooms#toto">
           <div class="elements-chatroom row">
             <div class="col-12">
-              <h3 class = "chat-description"><%= chatroom.platform_account.platform.name + " de " + chatroom.platform_account.user.first_name %></h3>
+              <h3 class = "chat-description"><%= chatroom.platform_account.user.first_name + "'s " + chatroom.platform_account.platform.name + " account"%></h3>
               <% platform = Platform.find(chatroom.platform_account.platform_id) %>
             </div>
             <br>
@@ -56,10 +56,10 @@
     <div class="d-none form-chatroom form-<%= chatroom.id %>">
       <%= simple_form_for [ chatroom, message ], remote: true do |f| %>
       <div  class = "row justify-content-center align-items-center">
-        <div class="col-8">
+        <div class="col-11">
           <%= f.input :content, label: false, input_html: { class: " content-#{chatroom.id}" }, placeholder: "Write your message..." %>
         </div>
-        <div class="col-4 container-button-chat">
+        <div class="col-1 container-button-chat">
           <div class="container-button-chat">
           <%= f.submit '⌲', class: " submit-btn-chat"%>
           </div>
