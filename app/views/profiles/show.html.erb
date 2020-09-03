@@ -165,7 +165,7 @@
                       <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %>
                       <%= account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available %></span> Seats Left</span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
 
                     </h1>
 
@@ -188,7 +188,7 @@
 
 
                       <% unless account.account_seats.where(status: 'accepted') == [] %>
-                        <span style="font-weight: 400; font-size: 0.8em; font-size: 0.8em; margin-right: 2%;">Shared with</span>
+                        <span style="font-weight: 400; font-size: 0.8em; font-size: 0.8em; margin-right: 2%;">with</span>
                       <% end %>
 
                       <% account.account_seats.where(status: 'accepted').each do |account_seat| %>
@@ -250,13 +250,13 @@
                       <%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
                       <%= account_seat.platform_account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span> Seats Left</span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
 
                     </h1>
 
                     <h2 class='need-flex'>
                       <div>
-                      <span style="font-weight: 400; font-size: 0.8em; font-size: 0.8em;">Shared by</span>
+                      <span style="font-weight: 400; font-size: 0.8em;">Shared by</span>
                       <% full_name = account_seat.platform_account.user.first_name + ' ' + account_seat.platform_account.user.last_name %>
                       <%= link_to profile_path(account_seat.platform_account.user.id), title: full_name do %>
                         <% if account_seat.platform_account.user.photo.attached? %>
@@ -266,7 +266,7 @@
                         <% end %>
                       <% end %>
 
-                        <span style="font-weight: 400;">with</span>
+                        <span style="font-weight: 400; font-size: 0.8em;">with</span>
 
                       <% account_seat.platform_account.account_seats.where(status: 'accepted').each do |seat| %>
                         <% value -= 1 %>
@@ -309,10 +309,10 @@
 
 
     <% requests = @user.account_seats.where(user: current_user) %>
-    <% requests.each do |request|%>
+    <% requests.where(status: 'pending').each do |request|%>
     <div class="request-card">
-      <h1>Request made to <%= request.platform_account.user.first_name %> <%= request.platform_account.user.last_name %></h1>
-
+<!--       <h1>Request made to <%= request.platform_account.user.first_name %> <%= request.platform_account.user.last_name %></h1>
+  -->
 
         <% if request.status == 'pending' %>
           <% color = 'yellow' %>
@@ -322,56 +322,38 @@
           <% color = 'red' %>
          <% end %>
 
-       <div class="request-status-div-containing"> <h2></h2> <h2   class="request-status <%= color %>" ><%=   request.status.capitalize %></h2>
-      </div>
-
-
-
-
-
-
-
+<!--        <div class="request-status-div-containing"> <h2></h2> <h2   class="request-status <%= color %>" ><%=   request.status.capitalize %></h2>
+      </div> -->
 
           <%  value = 50  %>
           <% value_margin_left = 0 %>
-          <% request.platform_account.account_seats.where(status: 'pending').each do |account_seat| %>
 
-
-
-
-                    <div class="need-flex width-for-subsciption-type">
-                    <div class="class-img-tag-request">
-                    <%= cl_image_tag account_seat.platform_account.platform.logo.key, width: 230, crop: :fill, class: "logo-img-request" %>
-                    </div>
-                      <h1 id="adjust-subsciption-type"><%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
-                      Account</h1>
-
-                    </div>
 
                     <h2 class='need-flex width-for-users-pfp'>
-                      <div>
-                      Shared by
-                      <% full_name = account_seat.platform_account.user.first_name + ' ' + account_seat.platform_account.user.last_name %>
-                      <%= link_to profile_path(account_seat.platform_account.user.id), title: full_name do %>
-                        <% if account_seat.platform_account.user.photo.attached? %>
-                          <%= cl_image_tag account_seat.platform_account.user.photo.key, height: 60, width: 60, crop: :fill , class: "pfp remove-margin" %>
+
+                      <% full_name = request.platform_account.user.first_name + ' ' + request.platform_account.user.last_name %>
+
+                      <div >
+                      <%= link_to profile_path(request.platform_account.user.id), class: "need-some-display-flex-and-align", title: full_name do %>
+                      <p>Owner</p>
+                        <% if request.platform_account.user.photo.attached? %>
+                          <%= cl_image_tag request.platform_account.user.photo.key, height: 120, width: 120, crop: :fill , class: "pfp remove-margin" %>
                         <% else %>
                           <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, class: "pfp remove-margin" %>
                         <% end %>
-                      <% end %>
+                      <h2><%= full_name %></h2>
 
-                        <% unless request.platform_account.account_seats.where(status: 'accepted') == [] %>
-                        <%= 'with' %>
                       <% end %>
-
-                      <% account_seat.platform_account.account_seats.where(status: 'accepted').each do |seat| %>
+                      </div>
+                      <div>
+                      <% request.platform_account.account_seats.where(status: 'accepted').each do |seat| %>
                         <% value -= 1 %>
 
                         <% full_name = seat.user.first_name + ' ' + seat.user.last_name %>
                          <%= link_to profile_path(seat.user.id), title: full_name do %>
 
                           <% if seat.user.photo.attached? %>
-                            <%= cl_image_tag seat.user.photo.key, height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
+                            <%= cl_image_tag seat.user.photo.key, height: 50, width: 50, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
                           <% else %>
                             <%= image_tag "https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png", height: 60, width: 60, crop: :fill, :style => "z-index: #{value}; margin-left: #{value_margin_left}px;", class: "pfp remove-margin settings-for-surperposition" %>
                           <% end %>
@@ -381,16 +363,22 @@
                       <% end %>
                       <% value_margin_left = 0 %>
                       </div>
-                      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span> Seats Left</span>
-
-
-
                     </h2>
-                    <div class="need-flex">
-                    <%= link_to "More info on Account", platform_account_path(account_seat.platform_account), class: "main-button" %>
-                    <%= link_to "More info on User", profile_path(account_seat.platform_account.user), class: "main-button" %>
+
+                    <div class="need-flex width-for-subscription-type">
+                      <%= link_to platform_account_path(request.platform_account) do %>
+                      <p>Account</p>
+                    <div class="class-img-tag-request">
+                      <%= cl_image_tag request.platform_account.platform.logo.key, width: 230, crop: :fill, class: "logo-img-request" %>
                     </div>
-          <% end %>
+                      <h1 id="adjust-subsciption-type"><%= SubscriptionType.find_by(id: request.platform_account.account_type).name unless SubscriptionType.find_by(id: request.platform_account.account_type) == nil %></h1>
+                      <% end %>
+                    </div>
+
+                    <div class="need-flex">
+
+                    <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= request.platform_account.seats_available == nil ? "error" : request.platform_account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
+                    </div>
 
 
 
@@ -407,9 +395,8 @@
 
     <h2>The Request people have made to access your Accounts:</h2>
 
-    <% pending_requests = @requests.where(status: 'pending') %>
     <% if @requests.where(status: 'pending') != [] %>
-      <% pending_requests.each do |request|%>
+      <% @requests.where(status: 'pending').each do |request|%>
 
          <% if request.status == 'pending' %>
           <% color = 'yellow' %>
@@ -423,7 +410,7 @@
 
         </div>
         <p>Platform: <%= request.platform_account.platform.name %></p>
-        <p><%= request.platform_account.user.first_name %><%= request.platform_account.user.last_name %></p>
+        <p><%= request.user.first_name %><%= request.user.last_name %></p>
         <p><%= request.platform_account.seats_available %> seats</p>
 
         <div class="change-request-button-into-text">
@@ -827,9 +814,16 @@ span.seats_available_colorized {
 }
 
 .width-for-users-pfp {
-  width: 60%;
-  justify-content: center !important;
+  width: 27%;
+  align-items: center !important;
+  border-right: lightgray 1px solid;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0px !important;
+}
 
+.width-for-users-pfp p {
+  margin: 0px 0px 0px 0px;
 }
 
 a.main-button {
@@ -861,9 +855,10 @@ a.main-button:hover {
   box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   margin-top: -50px;
   margin-bottom: 80px;
+  padding: 50px 0px 50px 0px;
 }
 
 .request-card h1 {
@@ -921,11 +916,23 @@ background-color: #1EB41F;
 */  /*font-size: 30px;*/
 }
 
-.width-for-subsciption-type {
+.width-for-subscription-type {
   display: flex;
-justify-content: center;
-width: 80%;
+justify-content: left;
+flex-direction: column;
+width: 35%;
 padding-left: 123px;
+border-right: solid 1px lightgrey;
+
 }
 
+.need-some-display-flex-and-align {
+  display: flex;
+align-items: center;
+flex-direction: column;
+}
+
+.need-some-display-flex-and-align h2 {
+margin: 0px 0px 0px 0px;
+}
 </style>

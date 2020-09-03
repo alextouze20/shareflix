@@ -53,7 +53,7 @@
     <div id="platform-img">
       <%= cl_image_tag @account.platform.logo.key, width: 150, crop: :fill %>
     </div>
-    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_available == nil ? "error" : @account.seats_available %></span> Seats Left</span>
+    <span class="seats" data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= @account.seats_available == nil ? "error" : @account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
   </div>
   <!-- Button trigger modal -->
   <% if @account.user != current_user %>
@@ -83,7 +83,7 @@
         <ul>
           <li>You will not share <%= @account.user.first_name.capitalize %> <%= @account.user.last_name.first %>'s credentials with others from somewhere else</li>
           <li>You will not share your own account with other people</li>
-          <li>You will be very kind and respectful towards Shareflix' members ❤️ (no insults, no threats...)</li>
+          <li>You will be respectful towards Shareflix's members ❤️ (no insults, no threats...)</li>
         </ul>
         <% else %>
           <p>Shareflix is a community, in order to start joining the accounts of the community members. You need to share <strong>at least one of your account</strong> with the community.</p>
