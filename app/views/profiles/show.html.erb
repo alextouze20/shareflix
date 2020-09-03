@@ -165,7 +165,7 @@
                       <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %>
                       <%= account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available %></span></span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available %></span> Seats Left</span>
 
                     </h1>
 
@@ -235,7 +235,7 @@
                       <%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
                       <%= account_seat.platform_account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/ Seats Left</span>
 
                     </h1>
 
@@ -366,7 +366,7 @@
                       <% end %>
                       <% value_margin_left = 0 %>
                       </div>
-                      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_total == nil || account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/<%= account_seat.platform_account.seats_total %></span>
+                      <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span>/ Seats Left</span>
 
 
 
