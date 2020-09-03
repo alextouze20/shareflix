@@ -15,12 +15,20 @@ export default class extends Controller {
     })
     document.querySelectorAll(".message-container").forEach((message) => {
       const authorId = message.querySelector(".authorid").innerHTML
+      const photoUser = message.querySelector(".photo-user")
+      const photoOther = message.querySelector(".photo-other")
+      const mediaUser = message.querySelector(".media-user")
+      const mediaOther = message.querySelector(".media-other")
       const userId = document.querySelector(".user-id").innerHTML
       if(authorId === userId){
         message.classList.add("message-from-user")
+        photoUser.classList.remove("d-none")
+        mediaUser.classList.remove("d-none")
       }
       else{
         message.classList.add("message-not-user")
+        photoOther.classList.remove("d-none")
+        mediaOther.classList.remove("d-none")
       }
     })
 
