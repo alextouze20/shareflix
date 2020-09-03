@@ -1,22 +1,24 @@
-<div class="row align-items-center justify-content-around message-container">
+<div class="d-flex align-items-center justify-content-around message-container">
   <div class="d-none authorid"><%= message.user.id %></div>
-  <div class = "col-3 photo-other d-none">
+  <div class = " photo photo-other d-none">
     <% if message.user.photo.attached? %>
       <%= cl_image_tag message.user.photo.key,class: "user-avatar",  width: 50, crop: :fill if message.user.photo.attached? %>
     <% else %>
       <img class = "user-avatar" src="https://i0.wp.com/ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png" alt="">
     <% end %>
   </div>
-  <div class=" message col-8" id="message-<%= message.id %>">
+  <div>
+    <i class="author">
+      <span><%= message.user.first_name %></span>
+      <small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
+    </i>
+  <div class=" message " id="message-<%= message.id %>">
     <div class="content-msg">
-      <i class="author">
-        <span><%= message.user.first_name %></span>
-        <small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small>
-      </i>
       <p><%= message.content %></p>
     </div>
   </div>
-   <div class = "col-3 photo-user d-none">
+  </div>
+   <div class = " photo photo-user d-none">
     <% if message.user.photo.attached? %>
       <%= cl_image_tag message.user.photo.key,class: "user-avatar",  width: 50, crop: :fill if message.user.photo.attached? %>
     <% else %>

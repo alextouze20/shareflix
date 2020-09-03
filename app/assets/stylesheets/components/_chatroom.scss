@@ -90,22 +90,29 @@
   color: white;
   font-size: 20px;
 }
-.photo-user{
-  position: relative;
-  left: -44px;
-}
-.photo-other {
-    position: relative;
-    right: -175px;
+// .photo-user{
+//   position: relative;
+//   left: -44px;
+// }
+// .photo-other {
+//     position: relative;
+//     right: -175px;
+// }
+.message-from-user{
+  align-self: flex-end;
 }
 .message-not-user{
-  position: relative;
-  right: 192px;
+  align-self: flex-start;
 }
-.message-from-user{
-    position: relative;
-    left: 165px;
-}
+
+// .message-not-user{
+//   position: relative;
+//   right: 192px;
+// }
+// .message-from-user{
+//     position: relative;
+//     left: 165px;
+// }
 .fa-home{
   font-size: 30px;
   color: grey;
@@ -114,4 +121,6 @@
   border: solid  #ff4949;
   margin-top: 20px;
 }
-
+.photo{
+  margin: 0px 10px;
+}
