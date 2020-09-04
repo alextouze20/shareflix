@@ -26,6 +26,7 @@
   align-self: flex-end;
   height: 45px;
 }
+
 .form-message{
     width: 377px;
     position: relative;
@@ -56,6 +57,7 @@
   margin-top: 10px;
   width: fit-content;
   border-radius: 30px;
+  overflow: scroll;
 }
 .submit-btn-chat{
   border: none;
