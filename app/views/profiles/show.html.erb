@@ -166,7 +166,7 @@
                       <%= SubscriptionType.find_by(id: account.account_type).name unless SubscriptionType.find_by(id: account.account_type) == nil %>
                       <%= account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="How many seats are left before the account is full."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
 
                     </h1>
 
@@ -251,7 +251,7 @@
                       <%= SubscriptionType.find_by(id: account_seat.platform_account.account_type).name unless SubscriptionType.find_by(id: account_seat.platform_account.account_type) == nil %>
                       <%= account_seat.platform_account.platform.name %>
                       Account
-                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
+                     <span class="seats"  data-toggle="tooltip" data-placement="top" title="How many seats are left before the account is full."><span class="seats_available_colorized"><%= account_seat.platform_account.seats_available == nil ? "error" : account_seat.platform_account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
 
                     </h1>
 
@@ -388,7 +388,7 @@
                         <h2   class="request-status <%= color %>" ><%=   request.status.capitalize %></h2>
                       </div>
                       </div>
-                    <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= request.platform_account.seats_available == nil ? "error" : request.platform_account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
+                    <span class="seats"  data-toggle="tooltip" data-placement="top" title="How many seats are left before the account is full."><span class="seats_available_colorized"><%= request.platform_account.seats_available == nil ? "error" : request.platform_account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
                     </div>
 
 
@@ -476,7 +476,7 @@
               </div>
             </div>
           </div>
-          <span class="seats"  data-toggle="tooltip" data-placement="top" title="Number of users using this account."><span class="seats_available_colorized"><%= request.platform_account.seats_available == nil ? "error" : request.platform_account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
+          <span class="seats"  data-toggle="tooltip" data-placement="top" title="How many seats are left before the account is full."><span class="seats_available_colorized"><%= request.platform_account.seats_available == nil ? "error" : request.platform_account.seats_available %></span><span style="font-size: 32px;"> Seats Left</span></span>
         </div>
 
 
