@@ -40,7 +40,7 @@
             <% end %>
           </span>
         </span>
-        <span class="seats"  data-toggle="tooltip" data-placement="top" title="How many seats are left before the account is full."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available %></span><span style="font-size: 38px;"> Seats Left</span></span>
+        <span class="seats"  data-toggle="tooltip" data-placement="top" title="How many seats are left before the account is full."><span class="seats_available_colorized"><%= account.seats_available == nil ? "error" : account.seats_available - AccountSeat.where(platform_account: account).where(status: 'accepted').count %></span><span style="font-size: 38px;"> Seats Left</span></span>
         <%= link_to "Join", platform_account_path(account), class: "main-button" %>
       </div>
     <% end %>
