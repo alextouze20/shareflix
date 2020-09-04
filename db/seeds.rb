@@ -15,12 +15,12 @@ Review.destroy_all
 
 
 puts "Creating 7 users"
-alex = User.new( { first_name: "Alex", last_name: "Touze", password: "azertyuiop", email: "alex@shareflix.com", country: 'France', bio: "My name is Alex and I'm a big fan of cinema. My favorite TV show is The Wire by David Simon."  } )
+alex = User.new( { first_name: "Alex", last_name: "Touze", password: "azertyuiop", email: "alex@shareflix.com", country: 'France', bio: "My name is Alex and I'm a big fan of cinema. I love Game of Thrones!"  } )
 alexpfp = URI.open("https://ca.slack-edge.com/T02NE0241-U016C4UCDMY-d679a8ccd566-512")
 alex.photo.attach(io: File.open(alexpfp), filename: 'admin-pfp.jpg', content_type: 'image/jpg')
 alex.save!
 
-fred = User.new( { first_name: "Fred", last_name: "Smith", password: "azertyuiop", email: "fred@shareflix.com", country: 'France', bio: "My name is Frederic and I'm a big fan of old 70's movie like Marathon Man etc." } )
+fred = User.new( { first_name: "Fred", last_name: "Smith", password: "azertyuiop", email: "fred@shareflix.com", country: 'France', bio: "My name is Frederic and I'm a big fan of Game of Thrones!" } )
 fredpfp = URI.open("https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=550&w=550")
 fred.photo.attach(io: File.open(fredpfp), filename: 'admin-pfp.jpg', content_type: 'image/jpg')
 fred.save!
@@ -278,15 +278,5 @@ michel_account_hbo.save!
 
 michel_account_hbo_chat = Chatroom.new(platform_account: michel_account_hbo)
 ChatroomUser.create(chatroom: michel_account_hbo_chat, user: michel, admin: true)
-
-puts "Creating account netflix - alex"
-alex_account_netflix = PlatformAccount.new( { seats_available: 3, account_type: netflix_normal.id } )
-
-alex_account_netflix.platform = netflix
-alex_account_netflix.user = alex
-alex_account_netflix.save!
-
-alex_account_netflix_chat = Chatroom.new(platform_account: alex_account_netflix)
-ChatroomUser.create(chatroom: alex_account_netflix_chat, user: alex, admin: true)
 
 puts "Finished."
