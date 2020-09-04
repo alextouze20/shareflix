@@ -256,7 +256,7 @@
                     </h1>
 
                     <h2 class='need-flex'>
-                      <div style="width: 70%">
+                      <div style="width: 65%">
                       <span style="font-weight: 400; font-size: 0.8em;">Shared by</span>
                       <% full_name = account_seat.platform_account.user.first_name + ' ' + account_seat.platform_account.user.last_name %>
                       <%= link_to profile_path(account_seat.platform_account.user.id), title: full_name do %>
@@ -286,7 +286,8 @@
                       <% end %>
                       <% value_margin_left = 0 %>
                       </div>
-                      <%= link_to "More info", platform_account_path(account_seat.platform_account), class: "main-button" %>
+                      <%= link_to "Chatroom", chatrooms_path(), class: "main-button" %>
+                      <%= link_to "More Info", platform_account_path(account_seat.platform_account), class: "main-button" %>
 
 
                     </h2>
@@ -962,9 +963,7 @@ line-height: 1 !important;
 margin-bottom: 20px;*/
 }
 
-.request-status:hover {
-  color: white !important;
-}
+
 .red {
 background-color: #FF4949 !important;
 color: #b71616 !important;
@@ -978,6 +977,12 @@ color:  #388e19 !important;
 
 /*    background-color: #FADB9E;
 */  color: #dda90d !important;
+}
+.red:hover {
+  color: white !important;
+}
+.green:hover {
+  color: white !important;
 }
 .request-status-div-containing {
   display: flex;
