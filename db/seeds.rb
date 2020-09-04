@@ -199,6 +199,21 @@ fred_account_hbo.save!
 fred_account_hbo_chat = Chatroom.new(platform_account: fred_account_hbo)
 ChatroomUser.create(chatroom: fred_account_hbo_chat, user: fred, admin: true)
 
+puts "Creating account seats for account HBO - fred"
+patricia_account_seat = AccountSeat.new(status: 'accepted')
+patricia_account_seat.platform_account = fred_account_hbo
+patricia_account_seat.user = patricia
+patricia_account_seat.save!
+ChatroomUser.create(chatroom: fred_account_hbo_chat, user: patricia, admin: false)
+
+corentin_account_seat = AccountSeat.new(status: 'accepted')
+corentin_account_seat.platform_account = fred_account_hbo
+corentin_account_seat.user = corentin
+corentin_account_seat.save!
+ChatroomUser.create(chatroom: fred_account_hbo_chat, user: corentin, admin: false)
+
+
+
 puts "Creating account spotify - fred"
 fred_account_spotify = PlatformAccount.new( { seats_available: 2, account_type: spotify_normal.id } )
 
